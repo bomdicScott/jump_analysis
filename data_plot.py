@@ -141,12 +141,12 @@ def get_fig_time_force_notiation(time_sec_tick, force_N_join, stable_start_tick,
     jump_height_m = round(jump_height_m,2)
     jump_power = round(jump_power,2)
 
-    ax.text(4.1,Ylim * 0.9,'FT:{} sec'.format(fly_time_sec), bbox=dict(facecolor='white', edgecolor='none'))
-    ax.text(4.1,Ylim * (0.9 - 0.05),'CT:{} sec'.format(contact_time_sec), bbox=dict(facecolor='white', edgecolor='none'))
-    ax.text(4.1,Ylim * (0.9 - 0.10),'TtPF:{} sec'.format(TtPF_sec), bbox=dict(facecolor='white', edgecolor='none'))
-    ax.text(4.1,Ylim * (0.9 - 0.15),'RFD:{} N/sec'.format(RFD), bbox=dict(facecolor='white', edgecolor='none'))
-    ax.text(4.1,Ylim * (0.9 - 0.20),'jump_height:{} m'.format(jump_height_m), bbox=dict(facecolor='white', edgecolor='none'))
-    ax.text(4.1,Ylim * (0.9 - 0.25),'jump_power:{} W'.format(jump_power), bbox=dict(facecolor='white', edgecolor='none'))
+    ax.text(Xlim*0.4,Ylim * 0.9,'FT:{} sec'.format(fly_time_sec), bbox=dict(facecolor='white', edgecolor='none'))
+    ax.text(Xlim*0.4,Ylim * (0.9 - 0.05),'CT:{} sec'.format(contact_time_sec), bbox=dict(facecolor='white', edgecolor='none'))
+    ax.text(Xlim*0.4,Ylim * (0.9 - 0.10),'TtPF:{} sec'.format(TtPF_sec), bbox=dict(facecolor='white', edgecolor='none'))
+    ax.text(Xlim*0.4,Ylim * (0.9 - 0.15),'RFD:{} N/sec'.format(RFD), bbox=dict(facecolor='white', edgecolor='none'))
+    ax.text(Xlim*0.4,Ylim * (0.9 - 0.20),'jump_height:{} m'.format(jump_height_m), bbox=dict(facecolor='white', edgecolor='none'))
+    ax.text(Xlim*0.4,Ylim * (0.9 - 0.25),'jump_power:{} W'.format(jump_power), bbox=dict(facecolor='white', edgecolor='none'))
 
     return fig
 
