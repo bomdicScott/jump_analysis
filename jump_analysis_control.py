@@ -44,6 +44,7 @@ print("analysis_list:{}".format(analysis_list))
 
 # test only section
 #analysis_list = ['Lt1']
+#analysis_list = ['ULt1']
 
 if analysis_list == []:
     print("[No new data waited for analysis] Please copy new force plate csv file into data folder.")
@@ -79,7 +80,6 @@ else:
             stable_time = -1
             diff_pow2_mean = -1
             std = -1
-            stable_max = -1
 
             stable_start = time_sec_tick[0]
             stable_end = -1
@@ -125,8 +125,8 @@ else:
                             std = -1
                         stable_length += 1
 
-                        #if force_N_join[i] > stable_max:
-                        if True:
+                        if (mean - force_N_join[i])  < 20 :
+                        #if True:
                             #stable_max = force_N_join[i]
                             stable_end = time_sec_tick[i]
                             stable_end_tick = i
@@ -139,8 +139,8 @@ else:
                             # stage change
                             stg_num = 1
                             print("[Stage:{}]".format(stages[stg_num]))
-                            ec_start = time_sec_tick[0]
-                            ec_start_tick = i
+                            ec_start = stable_end
+                            ec_start_tick = stable_end_tick
                             ec_low = force_N_join[ec_start_tick]
 
                         else:
@@ -156,6 +156,17 @@ else:
 
                 # find the end point of eccentric_stage
                 if stg_num == 1:
+
+                    # go back to stg_num 0 ?
+                    if abs(force_N_join[i] - mean) < 5:
+                        stg_num = 0
+                        mean = force_N_join[i]
+                        stable_length = 1
+                        stable_time = 0
+                        diff_pow2_mean = 0
+                        std = 0
+                        stable_start = time_sec_tick[i]
+                        stable_start_tick = i
 
                     if force_N_join[i] <= ec_low:
                         ec_low = force_N_join[i]
