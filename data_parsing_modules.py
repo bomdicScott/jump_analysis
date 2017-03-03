@@ -20,6 +20,8 @@ def parsing_force_plate_raw_data(force_plate_raw_data_path):
     force_N_2 = []
     force_N_join = []
 
+    # [TODO] detect file comes from pasco or other brands
+
     # read csv
     f = open(force_plate_raw_data_path, 'rU')
     idx = 0

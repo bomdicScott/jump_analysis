@@ -11,7 +11,7 @@ import datetime
 import matplotlib.pyplot as plt
 from shutil import copyfile
 
-def get_statistics(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_end, ec_end_tick, ec_low, co_start, co_start_tick, co_end, co_end_tick, co_hight, air_start, air_start_tick, air_end, air_end_tick, a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick):
+def get_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_end, ec_end_tick, ec_low, co_start, co_start_tick, co_end, co_end_tick, co_hight, air_start, air_start_tick, air_end, air_end_tick, a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick):
 
     # statistics
     fly_time_sec = air_end - air_start
@@ -227,7 +227,7 @@ def get_analysis_list(file_list):
     csv_list = []
     plot_list = []
     for f in file_list:
-        if '.csv' in f:
+        if ('.csv' in f )and ('analysis_results' not in f) and ('user_statistics' not in f):
             csv_list += [f.replace('.csv','')]
 
         if '.png' in f:
