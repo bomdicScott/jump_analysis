@@ -46,14 +46,14 @@ def get_fig_time_force_with_err_msg(time_sec_tick, force_N_join, err_msg):
     return fig
 
 
-def get_fig_time_force(time_sec_tick, force_N_1, force_N_2, force_N_join):
+def get_fig_time_force(data_name, time_sec_tick, force_N_1, force_N_2, force_N_join):
     fig = plt.figure()
 
     ax = fig.add_subplot(311)
 
     ax.plot(time_sec_tick, force_N_1, 'b', label='force 1')
 
-    #ax.set_title('Heartrate')
+    ax.set_title(data_name)
     #ax.set_xlabel('distance (km)')
     ax.set_ylabel('Force (N)')
     ax.legend(loc='upper left')
@@ -100,7 +100,7 @@ def get_fig_time_force(time_sec_tick, force_N_1, force_N_2, force_N_join):
 
     return fig
 
-def get_fig_time_force_notiation(time_sec_tick, force_N_join, stable_start_tick, stable_end_tick, ec_start_tick, ec_end_tick, co_start_tick, co_end_tick, air_start_tick, air_end_tick,
+def get_fig_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start_tick, stable_end_tick, ec_start_tick, ec_end_tick, co_start_tick, co_end_tick, air_start_tick, air_end_tick,
     fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power):
     fig = plt.figure()
     ax = fig.add_subplot(111)
@@ -119,7 +119,7 @@ def get_fig_time_force_notiation(time_sec_tick, force_N_join, stable_start_tick,
     ax.plot(time_sec_tick[air_start_tick], force_N_join[air_start_tick], 'yo', label='air_start', markersize= 8, markeredgewidth = 0)
     ax.plot(time_sec_tick[air_end_tick], force_N_join[air_end_tick], 'yo', label='air_end', fillstyle = 'none', markeredgecolor = 'y', markersize = 10, markeredgewidth = 2)
 
-    #ax.set_title('Heartrate')
+    ax.set_title(data_name)
     #ax.set_xlabel('distance (km)')
     ax.set_ylabel('Force (N)')
     ax.legend(loc='upper left')
@@ -150,9 +150,10 @@ def get_fig_time_force_notiation(time_sec_tick, force_N_join, stable_start_tick,
 
     return fig
 
-def get_fig_time_f_a_v_p(time_sec_tick, force_N_join, a_mss, v_mps, p_watt, co_end_tick, p_watt_max_tick):
+def get_fig_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, co_end_tick, p_watt_max_tick):
 
     fig = plt.figure(figsize=(15,10))
+
 
     ax = fig.add_subplot(221)
     ax.plot(time_sec_tick, force_N_join, 'b', label='force join')

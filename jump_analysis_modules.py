@@ -96,6 +96,7 @@ def get_features_of_join_force(data_name, time_sec_tick, force_N_join):
     ec_end = -1
     ec_end_tick = -1
     ec_low = -1
+    goback_condition_count = 0
 
     co_start = -1
     co_start_tick = -1
@@ -139,7 +140,7 @@ def get_features_of_join_force(data_name, time_sec_tick, force_N_join):
             else:
                 
                 stable_time = stable_end - stable_start
-                if stable_time > 1.0 and stable_start > time_sec_tick[0]:
+                if stable_time > 0.5 and stable_start > time_sec_tick[0]:
                     #print("stable_start:{}, stable_end:{}, stable_start_tick:{}, stable_end_tick:{}".format(stable_start, stable_end, stable_start_tick, stable_end_tick))
                     # stage change
                     stg_num = 1
@@ -163,15 +164,23 @@ def get_features_of_join_force(data_name, time_sec_tick, force_N_join):
         if stg_num == 1:
 
             # go back to stg_num 0 ?
-            if abs(force_N_join[i] - mean) < 5:
-                stg_num = 0
-                mean = force_N_join[i]
-                stable_length = 1
-                stable_time = 0
-                diff_pow2_mean = 0
-                std = 0
-                stable_start = time_sec_tick[i]
-                stable_start_tick = i
+            if abs(force_N_join[i] - mean) < 10:
+
+                goback_condition_count += 1
+
+                if goback_condition_count >= 100:
+                    stg_num = 0
+                    mean = force_N_join[i]
+                    stable_length = 1
+                    stable_time = 0
+                    diff_pow2_mean = 0
+                    std = 0
+                    stable_start = time_sec_tick[i]
+                    stable_start_tick = i
+                    goback_condition_count = 0
+                    print("[go back to stg_num 0] stable_start:{}, stable_start_tick:{}".format(stable_start, stable_start_tick))
+            else:
+                goback_condition_count = 0
 
             if force_N_join[i] <= ec_low:
                 ec_low = force_N_join[i]
