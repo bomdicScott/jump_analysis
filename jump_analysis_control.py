@@ -28,7 +28,7 @@ for f_name in file_list:
     if os.path.isdir(dir_path):
         user_list += [f_name]
 print("user_list:{}".format(user_list))        
-print("this is a test version")
+#print("this is a test version")
 
 for user_name in user_list:
     data_dir = users_dir + "{}/".format(user_name)
