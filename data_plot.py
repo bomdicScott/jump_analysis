@@ -10,6 +10,187 @@ import datetime
 import sys
 from math import radians, cos, sin, asin, sqrt
 
+def get_fig_CMJ_compare(s_avg_ULCMJ_date, s_avg_ULCMJ_epoch_time_sec, s_avg_ULCMJ_jump_height_m, s_avg_LCMJ_date, s_avg_LCMJ_epoch_time_sec, s_avg_LCMJ_jump_height_m):
+
+    fig = plt.figure(figsize=[15,10])
+
+    ax = fig.add_subplot(111)
+    ax.set_title('CMJ_Jump_Height_Compare')
+    ax.plot(s_avg_ULCMJ_epoch_time_sec, s_avg_ULCMJ_jump_height_m, 'b', label='ULCMJ')
+    ax.plot(s_avg_LCMJ_epoch_time_sec, s_avg_LCMJ_jump_height_m, 'r', label='LCMJ')
+    ax.set_ylabel('meter')
+    ax.grid(True)
+    ax.set_xlim(min(s_avg_ULCMJ_epoch_time_sec) - 86400, max(s_avg_ULCMJ_epoch_time_sec)+86400)
+    leg = ax.legend(loc='upper left')
+    leg.get_frame().set_alpha(0.5)
+    
+    for i in range(len(s_avg_ULCMJ_date)):
+        s_avg_ULCMJ_date[i] = int(s_avg_ULCMJ_date[i])
+
+    ax.set_xticks(s_avg_ULCMJ_epoch_time_sec)
+    ax.set_xticklabels(s_avg_ULCMJ_date, rotation=45, ha='left')
+
+    return fig
+
+def get_fig_ULCMJ_analysis(s_ULCMJ_contact_time_sec,
+                           s_ULCMJ_TtPF_sec,
+                           s_ULCMJ_RFD,
+                           s_ULCMJ_jump_height_m,
+                           s_ULCMJ_jump_power,
+                           s_ULCMJ_date,
+                           s_ULCMJ_epoch_time_sec,
+                           s_avg_ULCMJ_contact_time_sec,
+                           s_avg_ULCMJ_TtPF_sec,
+                           s_avg_ULCMJ_RFD,
+                           s_avg_ULCMJ_jump_height_m,
+                           s_avg_ULCMJ_jump_power,
+                           s_avg_ULCMJ_date,
+                           s_avg_ULCMJ_epoch_time_sec):
+
+    fig = plt.figure(figsize=[10,15])
+
+    ax = fig.add_subplot(511)
+    ax.set_title('ULCMJ_analysis')
+    ax.plot(s_ULCMJ_epoch_time_sec, s_ULCMJ_contact_time_sec, 'bo', label='CT')
+    ax.plot(s_avg_ULCMJ_epoch_time_sec, s_avg_ULCMJ_contact_time_sec, 'r', label='avg_CT')
+    ax.set_ylabel('sec')
+    ax.grid(True)
+    ax.set_xlim(min(s_avg_ULCMJ_epoch_time_sec) - 86400, max(s_avg_ULCMJ_epoch_time_sec)+86400)
+    leg = ax.legend(loc='upper left')
+    leg.get_frame().set_alpha(0.5)
+    ax.set_xticks([])
+
+    ax = fig.add_subplot(512)
+    ax.plot(s_ULCMJ_epoch_time_sec, s_ULCMJ_TtPF_sec, 'bo', label='TtPF')
+    ax.plot(s_avg_ULCMJ_epoch_time_sec, s_avg_ULCMJ_TtPF_sec, 'r', label='avg_TtPF')
+    ax.set_ylabel('sec')
+    ax.grid(True)
+    ax.set_xlim(min(s_avg_ULCMJ_epoch_time_sec) - 86400, max(s_avg_ULCMJ_epoch_time_sec)+86400)
+    leg = ax.legend(loc='upper left')
+    leg.get_frame().set_alpha(0.5)
+    ax.set_xticks([])
+
+    ax = fig.add_subplot(513)
+    ax.plot(s_ULCMJ_epoch_time_sec, s_ULCMJ_RFD, 'bo', label='RFD')
+    ax.plot(s_avg_ULCMJ_epoch_time_sec, s_avg_ULCMJ_RFD, 'r', label='avg_RFD')
+    ax.set_ylabel('N/s')
+    ax.grid(True)
+    ax.set_xlim(min(s_avg_ULCMJ_epoch_time_sec) - 86400, max(s_avg_ULCMJ_epoch_time_sec)+86400)
+    leg = ax.legend(loc='upper left')
+    leg.get_frame().set_alpha(0.5)
+    ax.set_xticks([])
+
+    ax = fig.add_subplot(514)
+    ax.plot(s_ULCMJ_epoch_time_sec, s_ULCMJ_jump_height_m, 'bo', label='J_Height')
+    ax.plot(s_avg_ULCMJ_epoch_time_sec, s_avg_ULCMJ_jump_height_m, 'r', label='avg_J_Height')
+    ax.set_ylabel('meter')
+    ax.grid(True)
+    ax.set_xlim(min(s_avg_ULCMJ_epoch_time_sec) - 86400, max(s_avg_ULCMJ_epoch_time_sec)+86400)
+    leg = ax.legend(loc='upper left')
+    leg.get_frame().set_alpha(0.5)
+    ax.set_xticks([])
+
+    ax = fig.add_subplot(515)
+    ax.plot(s_ULCMJ_epoch_time_sec, s_ULCMJ_jump_power, 'bo', label='J_Power')
+    ax.plot(s_avg_ULCMJ_epoch_time_sec, s_avg_ULCMJ_jump_power, 'r', label='avg_J_Power')
+    ax.set_ylabel('Watts')
+    ax.grid(True)
+    ax.set_xlim(min(s_avg_ULCMJ_epoch_time_sec) - 86400, max(s_avg_ULCMJ_epoch_time_sec)+86400)
+    leg = ax.legend(loc='upper left')
+    leg.get_frame().set_alpha(0.5)
+
+
+    for i in range(len(s_avg_ULCMJ_date)):
+        s_avg_ULCMJ_date[i] = int(s_avg_ULCMJ_date[i])
+
+    ax.set_xticks(s_avg_ULCMJ_epoch_time_sec)
+    ax.set_xticklabels(s_avg_ULCMJ_date, rotation=45, ha='left')
+
+
+    return fig
+
+def get_fig_LCMJ_analysis(s_LCMJ_contact_time_sec,
+                          s_LCMJ_TtPF_sec,
+                          s_LCMJ_RFD,
+                          s_LCMJ_jump_height_m,
+                          s_LCMJ_jump_power,
+                          s_LCMJ_date,
+                          s_LCMJ_epoch_time_sec,
+                          s_avg_LCMJ_contact_time_sec,
+                          s_avg_LCMJ_TtPF_sec,
+                          s_avg_LCMJ_RFD,
+                          s_avg_LCMJ_jump_height_m,
+                          s_avg_LCMJ_jump_power,
+                          s_avg_LCMJ_date,
+                          s_avg_LCMJ_epoch_time_sec):
+    #print("s_LCMJ_epoch_time_sec:{}".format(s_LCMJ_epoch_time_sec))
+    #print("s_avg_LCMJ_epoch_time_sec:{}".format(s_avg_LCMJ_epoch_time_sec))
+    #print("s_LCMJ_contact_time_sec:{}".format(s_LCMJ_contact_time_sec))
+    #print("s_avg_LCMJ_contact_time_sec:{}".format(s_avg_LCMJ_contact_time_sec))
+
+    fig = plt.figure(figsize=[10,15])
+
+    ax = fig.add_subplot(511)
+    ax.set_title('LCMJ_analysis')
+    ax.plot(s_LCMJ_epoch_time_sec, s_LCMJ_contact_time_sec, 'bo', label='CT')
+    ax.plot(s_avg_LCMJ_epoch_time_sec, s_avg_LCMJ_contact_time_sec, 'r', label='avg_CT')
+    ax.set_ylabel('sec')
+    ax.grid(True)
+    ax.set_xlim(min(s_avg_LCMJ_epoch_time_sec) - 86400, max(s_avg_LCMJ_epoch_time_sec)+86400)
+    leg = ax.legend(loc='upper left')
+    leg.get_frame().set_alpha(0.5)
+    ax.set_xticks([])
+
+    ax = fig.add_subplot(512)
+    ax.plot(s_LCMJ_epoch_time_sec, s_LCMJ_TtPF_sec, 'bo', label='TtPF')
+    ax.plot(s_avg_LCMJ_epoch_time_sec, s_avg_LCMJ_TtPF_sec, 'r', label='avg_TtPF')
+    ax.set_ylabel('sec')
+    ax.grid(True)
+    ax.set_xlim(min(s_avg_LCMJ_epoch_time_sec) - 86400, max(s_avg_LCMJ_epoch_time_sec)+86400)
+    leg = ax.legend(loc='upper left')
+    leg.get_frame().set_alpha(0.5)
+    ax.set_xticks([])
+
+    ax = fig.add_subplot(513)
+    ax.plot(s_LCMJ_epoch_time_sec, s_LCMJ_RFD, 'bo', label='RFD')
+    ax.plot(s_avg_LCMJ_epoch_time_sec, s_avg_LCMJ_RFD, 'r', label='avg_RFD')
+    ax.set_ylabel('N/s')
+    ax.grid(True)
+    ax.set_xlim(min(s_avg_LCMJ_epoch_time_sec) - 86400, max(s_avg_LCMJ_epoch_time_sec)+86400)
+    leg = ax.legend(loc='upper left')
+    leg.get_frame().set_alpha(0.5)
+    ax.set_xticks([])
+
+    ax = fig.add_subplot(514)
+    ax.plot(s_LCMJ_epoch_time_sec, s_LCMJ_jump_height_m, 'bo', label='J_Height')
+    ax.plot(s_avg_LCMJ_epoch_time_sec, s_avg_LCMJ_jump_height_m, 'r', label='avg_J_Height')
+    ax.set_ylabel('meter')
+    ax.grid(True)
+    ax.set_xlim(min(s_avg_LCMJ_epoch_time_sec) - 86400, max(s_avg_LCMJ_epoch_time_sec)+86400)
+    leg = ax.legend(loc='upper left')
+    leg.get_frame().set_alpha(0.5)
+    ax.set_xticks([])
+
+    ax = fig.add_subplot(515)
+    ax.plot(s_LCMJ_epoch_time_sec, s_LCMJ_jump_power, 'bo', label='J_Power')
+    ax.plot(s_avg_LCMJ_epoch_time_sec, s_avg_LCMJ_jump_power, 'r', label='avg_J_Power')
+    ax.set_ylabel('Watts')
+    ax.grid(True)
+    ax.set_xlim(min(s_avg_LCMJ_epoch_time_sec) - 86400, max(s_avg_LCMJ_epoch_time_sec)+86400)
+    leg = ax.legend(loc='upper left')
+    leg.get_frame().set_alpha(0.5)
+
+
+    for i in range(len(s_avg_LCMJ_date)):
+        s_avg_LCMJ_date[i] = int(s_avg_LCMJ_date[i])
+
+    ax.set_xticks(s_avg_LCMJ_epoch_time_sec)
+    ax.set_xticklabels(s_avg_LCMJ_date, rotation=45, ha='left')
+
+
+    return fig
+
+
 def get_fig_no_data_with_err_msg(error_code,err_msg):
     fig = plt.figure()
 
