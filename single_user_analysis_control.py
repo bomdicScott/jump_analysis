@@ -130,8 +130,8 @@ def get_sorted_LCMJ_ULCMJ_list(s_contact_time_sec,
     s_ULCMJ_try_num = t_sorted(s_ULCMJ_try_num, s_LCMJ_epoch_time_sec)
     s_ULCMJ_epoch_time_sec = t_sorted(s_ULCMJ_epoch_time_sec, s_LCMJ_epoch_time_sec)
 
-    print("s_LCMJ_contact_time_sec:{}".format(s_LCMJ_contact_time_sec))
-    print("s_LCMJ_date:{}".format(s_LCMJ_date))
+    #print("s_LCMJ_contact_time_sec:{}".format(s_LCMJ_contact_time_sec))
+    #print("s_LCMJ_date:{}".format(s_LCMJ_date))
 
     return s_LCMJ_contact_time_sec,s_LCMJ_TtPF_sec,s_LCMJ_RFD,s_LCMJ_jump_height_m,s_LCMJ_jump_power,s_LCMJ_date,s_LCMJ_jump_type,s_LCMJ_try_num,s_LCMJ_epoch_time_sec,s_ULCMJ_contact_time_sec,s_ULCMJ_TtPF_sec,s_ULCMJ_RFD,s_ULCMJ_jump_height_m,s_ULCMJ_jump_power,s_ULCMJ_date,s_ULCMJ_jump_type,s_ULCMJ_try_num,s_ULCMJ_epoch_time_sec
 
@@ -179,9 +179,9 @@ def get_avg_LCMJ_ULCMJ_list(s_LCMJ_contact_time_sec,s_LCMJ_TtPF_sec,s_LCMJ_RFD,s
     s_avg_ULCMJ_date = get_avg_list(s_ULCMJ_date, s_ULCMJ_date)
     s_avg_ULCMJ_epoch_time_sec = get_avg_list(s_ULCMJ_epoch_time_sec, s_ULCMJ_date)
     
-    print("s_avg_LCMJ_date:{}".format(s_avg_LCMJ_date))
-    print("s_avg_LCMJ_epoch_time_sec:{}".format(s_avg_LCMJ_epoch_time_sec))
-    print("s_avg_LCMJ_jump_height_m:{}".format(s_avg_LCMJ_jump_height_m))
+    #print("s_avg_LCMJ_date:{}".format(s_avg_LCMJ_date))
+    #print("s_avg_LCMJ_epoch_time_sec:{}".format(s_avg_LCMJ_epoch_time_sec))
+    #print("s_avg_LCMJ_jump_height_m:{}".format(s_avg_LCMJ_jump_height_m))
 
     return s_avg_LCMJ_contact_time_sec,s_avg_LCMJ_TtPF_sec,s_avg_LCMJ_RFD,s_avg_LCMJ_jump_height_m,s_avg_LCMJ_jump_power,s_avg_LCMJ_date,s_avg_LCMJ_epoch_time_sec,s_avg_ULCMJ_contact_time_sec,s_avg_ULCMJ_TtPF_sec,s_avg_ULCMJ_RFD,s_avg_ULCMJ_jump_height_m,s_avg_ULCMJ_jump_power,s_avg_ULCMJ_date,s_avg_ULCMJ_epoch_time_sec
 
@@ -216,7 +216,7 @@ def update_user_statistics(data_dir):
 
             # if data_name uses standard format
             data_name_split = data_name.split('_')
-            print("data_name_split:{}".format(data_name_split))
+            #print("data_name_split:{}".format(data_name_split))
 
             if len(data_name_split) == 4 and len(data_name_split[1]) == 8 and data_name_split[1][0:2] == '20' and 't' in data_name_split[3]:
                 s_date += [data_name_split[1]]
@@ -320,9 +320,11 @@ def single_user_analysis(data_dir):
     #    analysis_list = ['Lg1']
     #if 'Tom' in data_dir:
     #    analysis_list = ['Lt1']
+    #if 'user1' in data_dir:
+    #    analysis_list = ['benson']
 
     if analysis_list == []:
-        print("[No new data waited for analysis] Please copy new force plate csv file into data folder.")
+        print("[No new data waited for analysis] Please copy new force plate csv file into data folder:[{}]".format(data_dir))
     else:
         for data_name in analysis_list:
 

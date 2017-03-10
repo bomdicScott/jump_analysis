@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 import matplotlib.dates as md
@@ -8,6 +10,8 @@ import os
 import dateutil
 import datetime
 import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
 from math import radians, cos, sin, asin, sqrt
 
 def get_fig_CMJ_compare(s_avg_ULCMJ_date, s_avg_ULCMJ_epoch_time_sec, s_avg_ULCMJ_jump_height_m, s_avg_LCMJ_date, s_avg_LCMJ_epoch_time_sec, s_avg_LCMJ_jump_height_m):
