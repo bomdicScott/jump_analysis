@@ -19,6 +19,7 @@ def get_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_e
     TtPF_sec = co_end - co_start     # time to peak force
     RFD = force_N_join[co_end_tick] / TtPF_sec
     #jump_height = 9.8 * (0.5 * fly_time)**2 + -9.8 * 0.5 * (0.5 * fly_time)**2
+    PF = force_N_join[co_end_tick]
     jump_height_m = 0.5 * 9.8 * (0.5 * fly_time_sec)**2
     jump_power = p_watt_max
     #print("co_end_tick:{}".format(co_end_tick))
@@ -28,10 +29,11 @@ def get_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_e
     print("contact_time_sec:{}".format(contact_time_sec))
     print("TtPF_sec:{}".format(TtPF_sec))
     print("RFD:{}".format(RFD))
+    print("PF:{}".format(PF))
     print("jump_height_m:{}".format(jump_height_m))
     print("jump_power:{}".format(jump_power))
 
-    return fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power
+    return fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power
 
 def get_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_end, ec_end_tick, ec_low, co_start, co_start_tick, co_end, co_end_tick, co_hight, air_start, air_start_tick, air_end, air_end_tick):
 

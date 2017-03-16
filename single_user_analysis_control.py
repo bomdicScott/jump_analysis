@@ -40,8 +40,10 @@ def read_analysis_result(result_path):
         RFD = row['RFD']
         jump_height_m = row['jump_height_m']
         jump_power = row['jump_power']
+        fly_time_sec = row['fly_time_sec']
+        PF = row['PF']
 
-    return data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power
+    return data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power, fly_time_sec, PF
 
 def get_epoch_sec(YMD_string):
     epoch_time = dateutil.parser.parse("1970-01-01T00:00:00Z")
@@ -207,12 +209,14 @@ def update_user_statistics(data_dir):
     s_date = []
     s_jump_type = []
     s_try_num = []
+    s_fly_time_sec = []
+    s_PF = []
 
     for result_name in result_list:
         result_path = data_dir + result_name
 
         if os.path.exists(result_path):
-            data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power = read_analysis_result(result_path)
+            data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power, fly_time_sec, PF = read_analysis_result(result_path)
 
             s_data_name += [data_name]
             s_contact_time_sec += [contact_time_sec]
@@ -220,6 +224,8 @@ def update_user_statistics(data_dir):
             s_RFD += [RFD]
             s_jump_height_m += [jump_height_m]
             s_jump_power += [jump_power]
+            s_fly_time_sec += [fly_time_sec]
+            s_PF += [PF]
 
             # if data_name uses standard format
             data_name_split = data_name.split('_')
@@ -237,7 +243,9 @@ def update_user_statistics(data_dir):
     csv_header = []
     csv_header += ["s_data_name"]
     csv_header += ["s_contact_time_sec"]
+    csv_header += ["s_fly_time_sec"]
     csv_header += ["s_TtPF_sec"]
+    csv_header += ["s_PF"]
     csv_header += ["s_RFD"]
     csv_header += ["s_jump_height_m"]
     csv_header += ["s_jump_power"]
@@ -390,7 +398,7 @@ def single_user_analysis(data_dir):
 
                 else:    
 
-                    fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power = JAM.get_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_end, ec_end_tick, ec_low, co_start, co_start_tick, co_end, co_end_tick, co_hight, air_start, air_start_tick, air_end, air_end_tick, a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick)
+                    fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power = JAM.get_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_end, ec_end_tick, ec_low, co_start, co_start_tick, co_end, co_end_tick, co_hight, air_start, air_start_tick, air_end, air_end_tick, a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick)
 
                     # plot
                     fig = DP.get_fig_time_force(data_name, time_sec_tick, force_N_1, force_N_2, force_N_join)
@@ -416,6 +424,7 @@ def single_user_analysis(data_dir):
                     csv_header += ["contact_time_sec"]
                     csv_header += ["TtPF_sec"]
                     csv_header += ["RFD"]
+                    csv_header += ["PF"]
                     csv_header += ["jump_height_m"]
                     csv_header += ["jump_power"]
                             
