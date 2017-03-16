@@ -33,6 +33,8 @@ print("user_list:{}".format(user_list))
 for user_name in user_list:
     data_dir = users_dir + "{}/".format(user_name)
     
+    DPM.copy_txt_as_csv(data_dir)
+
     SUAC.single_user_analysis(data_dir)
     
     #[TODO] add user statistics
