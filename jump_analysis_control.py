@@ -19,7 +19,10 @@ import single_user_analysis_control as SUAC
 #########################################
 workspace_dir = "{}/".format(os.getcwd())
 #data_dir = workspace_dir + "test_data/"
-users_dir = workspace_dir + "test_data/"
+#print("workspace_dir:{}".format(workspace_dir))
+users_dir = workspace_dir.replace('git_jump_analysis/','') + "jump_analysis_data/"
+#print("users_dir:{}".format(users_dir))
+
 
 file_list = os.listdir(users_dir)
 user_list = []
