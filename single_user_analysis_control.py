@@ -343,6 +343,9 @@ def single_user_analysis(data_dir):
     file_list = os.listdir(data_dir)
     analysis_list = JAM.get_analysis_list(file_list)
 
+    list_new_fig_time_force_notiation_path = []
+    list_new_error_fig_path = []
+
     # test only section
     #analysis_list = ['Lt1']
     #analysis_list = ['ULt1']
@@ -373,6 +376,7 @@ def single_user_analysis(data_dir):
                 # plot err msg
                 fig = DP.get_fig_no_data_with_err_msg(error_code,err_msg)
                 fig.savefig( data_dir + '{}_error_message.png'.format(data_name))
+                list_new_error_fig_path += [data_dir + '{}_error_message.png'.format(data_name)]
                 plt.close(fig)
 
                 #sys.exit()
@@ -406,6 +410,7 @@ def single_user_analysis(data_dir):
                     # plot err msg
                     fig = DP.get_fig_time_force_with_err_msg(time_sec_tick, force_N_join, err_msg)
                     fig.savefig( data_dir + '{}_error_message.png'.format(data_name))
+                    list_new_error_fig_path += [data_dir + '{}_error_message.png'.format(data_name)]
                     plt.close(fig)
 
                 else:    
@@ -425,6 +430,9 @@ def single_user_analysis(data_dir):
                     #plt.ion()
                     #plt.show()
                     #plt.pause(0.001)
+
+                    list_new_fig_time_force_notiation_path += [data_dir + '{}_time_force_notation.png'.format(data_name)]
+
                     plt.close(fig)
 
                     fig = DP.get_fig_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, co_end_tick, p_watt_max_tick)
@@ -452,6 +460,8 @@ def single_user_analysis(data_dir):
                             anlysis_result += [eval(csv_header[col])]
                         writer.writerow(anlysis_result)
                         csvfile.close()
+
+    return list_new_error_fig_path, list_new_fig_time_force_notiation_path
 
 
 
