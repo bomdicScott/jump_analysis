@@ -246,7 +246,7 @@ def get_analysis_list(file_list):
     csv_list = []
     plot_list = []
     for f in file_list:
-        if ('.csv' in f )and ('analysis_results' not in f) and ('user_statistics' not in f):
+        if ('.csv' in f )and ('analysis_results' not in f) and ('user_statistics' not in f) and ('dual_input' not in f):
             csv_list += [f.replace('.csv','')]
 
         if '.png' in f:

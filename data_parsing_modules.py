@@ -93,6 +93,7 @@ def dispatch_daul_input(dual_input_dir, users_dir):
                 user1_raw += ['{}    {}'.format(split_list[0], split_list[1])]
                 user2_raw += ['{}    {}'.format(split_list[0], split_list[2])]
             idx += 1
+        f.close()
 
         print("user1_raw:{}".format(user1_raw))
         print("user2_raw:{}".format(user2_raw))
