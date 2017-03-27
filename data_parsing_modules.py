@@ -11,6 +11,8 @@ import datetime
 import matplotlib.pyplot as plt
 from shutil import copyfile
 
+import data_plot as DP
+
 def copy_txt_as_csv(data_dir): # for KISLER data
     
     file_list = os.listdir(data_dir)
@@ -39,6 +41,8 @@ def dispatch_daul_input(dual_input_dir, users_dir):
 
     file_list = os.listdir(dual_input_dir)
     txt_list = []
+    list_new_error_fig_path = []
+
     for f in file_list:
         if (
             '.txt' in f and 
@@ -49,10 +53,19 @@ def dispatch_daul_input(dual_input_dir, users_dir):
             txt_list += [f]
         elif (not os.path.isdir(f)) and '.txt' in f and (not 'ERROR' in f):
             err_msg = 'not_a_correct_dual_input_format'
+            error_code = 10101
+            fig = DP.get_fig_no_data_with_err_msg(error_code,err_msg)
+            fig.savefig( dual_input_dir+'{}_ERROR_{}.png'.format(f,err_msg))
+            list_new_error_fig_path += [dual_input_dir+'{}_ERROR_{}.png'.format(f,err_msg)]
+            plt.close(fig)
+
+            '''
             with open(dual_input_dir+'{}_ERROR_{}'.format(f,err_msg), 'w') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow([err_msg])                    
                 csvfile.close()
+            '''
+
 
     for f_name in txt_list:
         # file name split
@@ -115,6 +128,8 @@ def dispatch_daul_input(dual_input_dir, users_dir):
             os.makedirs(processed_folder_dir)
         copyfile(dual_input_dir+f_name, processed_folder_dir+f_name)
         os.remove(dual_input_dir+f_name)
+
+    return list_new_error_fig_path
 
 
 

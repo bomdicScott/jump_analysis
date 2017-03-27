@@ -28,11 +28,15 @@ print("users_dir:{}".format(users_dir))
 
 
 sys_show_fig_cmd = 'open -a Preview' # for mac preview
+enable_sys_fig_show = 1
 
 #########################################
 
 # dispatch files in dual input folder
-DPM.dispatch_daul_input(dual_input_dir, users_dir)
+list_new_error_fig_path = DPM.dispatch_daul_input(dual_input_dir, users_dir)
+if enable_sys_fig_show == 1:
+    for fig_path in list_new_error_fig_path:
+        os.system('{} {}'.format(sys_show_fig_cmd, fig_path))
 
 
 file_list = os.listdir(users_dir)
@@ -53,10 +57,11 @@ for user_name in user_list:
     print("list_new_error_fig_path:{}".format(list_new_error_fig_path))
     print("list_new_fig_time_force_notiation_path:{}".format(list_new_fig_time_force_notiation_path))
     
-    for fig_path in list_new_fig_time_force_notiation_path:
-        os.system('{} {}'.format(sys_show_fig_cmd, fig_path))
-    for fig_path in list_new_error_fig_path:
-        os.system('{} {}'.format(sys_show_fig_cmd, fig_path))
+    if enable_sys_fig_show == 1:
+        for fig_path in list_new_fig_time_force_notiation_path:
+            os.system('{} {}'.format(sys_show_fig_cmd, fig_path))
+        for fig_path in list_new_error_fig_path:
+            os.system('{} {}'.format(sys_show_fig_cmd, fig_path))
 
     #[TODO] add user statistics
     SUAC.update_user_statistics(data_dir)
