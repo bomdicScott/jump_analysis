@@ -63,6 +63,8 @@ def get_sorted_LCMJ_ULCMJ_list(s_contact_time_sec,
                                s_date,
                                s_jump_type,
                                s_try_num):
+    #print("s_date:{}".format(s_date))
+    #print("s_jump_type:{}".format(s_jump_type))
     s_LCMJ_contact_time_sec = []
     s_LCMJ_TtPF_sec = []
     s_LCMJ_RFD = []
@@ -84,6 +86,7 @@ def get_sorted_LCMJ_ULCMJ_list(s_contact_time_sec,
     s_ULCMJ_epoch_time_sec = []
 
     for i in range(len(s_date)):
+        #print("s_jump_type[i]:{}".format(s_jump_type[i]))
         if s_jump_type[i] == 'LCMJ':
             s_LCMJ_contact_time_sec += [s_contact_time_sec[i]]
             s_LCMJ_TtPF_sec += [s_TtPF_sec[i]]
@@ -96,6 +99,7 @@ def get_sorted_LCMJ_ULCMJ_list(s_contact_time_sec,
             s_LCMJ_epoch_time_sec += [get_epoch_sec(s_date[i])]
 
         elif s_jump_type[i] == 'ULCMJ':
+            #print("s_ULCMJ_epoch_time_sec:{}".format(s_ULCMJ_epoch_time_sec))
             s_ULCMJ_contact_time_sec += [s_contact_time_sec[i]]
             s_ULCMJ_TtPF_sec += [s_TtPF_sec[i]]
             s_ULCMJ_RFD += [s_RFD[i]]
@@ -104,6 +108,7 @@ def get_sorted_LCMJ_ULCMJ_list(s_contact_time_sec,
             s_ULCMJ_date += [s_date[i]]
             s_ULCMJ_jump_type += [s_jump_type[i]]
             s_ULCMJ_try_num += [s_try_num[i]]
+            #print("get_epoch_sec(s_date[i]):{}".format(get_epoch_sec(s_date[i])))
             s_ULCMJ_epoch_time_sec += [get_epoch_sec(s_date[i])]
 
     #print("LCMJ_date:{}".format(LCMJ_date))
@@ -111,9 +116,9 @@ def get_sorted_LCMJ_ULCMJ_list(s_contact_time_sec,
     #print("ULCMJ_date:{}".format(ULCMJ_date))
     #print("ULCMJ_epoch_time_sec:{}".format(ULCMJ_epoch_time_sec))
     #print("s_LCMJ_date:{}".format(s_LCMJ_date))
-    #print("s_LCMJ_epoch_time_sec:{}".format(s_LCMJ_epoch_time_sec))
+    #print("[c1]s_LCMJ_epoch_time_sec:{}".format(s_LCMJ_epoch_time_sec))
     #print("s_ULCMJ_date:{}".format(s_ULCMJ_date))
-    #print("s_ULCMJ_epoch_time_sec:{}".format(s_ULCMJ_epoch_time_sec))
+    #print("[c1]s_ULCMJ_epoch_time_sec:{}".format(s_ULCMJ_epoch_time_sec))
 
     # sort data
     # t_sorted(to_be_sorted_list, time_sec_list)
@@ -127,15 +132,15 @@ def get_sorted_LCMJ_ULCMJ_list(s_contact_time_sec,
     s_LCMJ_try_num = t_sorted(s_LCMJ_try_num, s_LCMJ_epoch_time_sec)
     s_LCMJ_epoch_time_sec = t_sorted(s_LCMJ_epoch_time_sec, s_LCMJ_epoch_time_sec)
 
-    s_ULCMJ_contact_time_sec = t_sorted(s_ULCMJ_contact_time_sec, s_LCMJ_epoch_time_sec)
-    s_ULCMJ_TtPF_sec = t_sorted(s_ULCMJ_TtPF_sec, s_LCMJ_epoch_time_sec)
-    s_ULCMJ_RFD = t_sorted(s_ULCMJ_RFD, s_LCMJ_epoch_time_sec)
-    s_ULCMJ_jump_height_m = t_sorted(s_ULCMJ_jump_height_m, s_LCMJ_epoch_time_sec)
-    s_ULCMJ_jump_power = t_sorted(s_ULCMJ_jump_power, s_LCMJ_epoch_time_sec)
-    s_ULCMJ_date = t_sorted(s_ULCMJ_date, s_LCMJ_epoch_time_sec)
-    s_ULCMJ_jump_type = t_sorted(s_ULCMJ_jump_type, s_LCMJ_epoch_time_sec)
-    s_ULCMJ_try_num = t_sorted(s_ULCMJ_try_num, s_LCMJ_epoch_time_sec)
-    s_ULCMJ_epoch_time_sec = t_sorted(s_ULCMJ_epoch_time_sec, s_LCMJ_epoch_time_sec)
+    s_ULCMJ_contact_time_sec = t_sorted(s_ULCMJ_contact_time_sec, s_ULCMJ_epoch_time_sec)
+    s_ULCMJ_TtPF_sec = t_sorted(s_ULCMJ_TtPF_sec, s_ULCMJ_epoch_time_sec)
+    s_ULCMJ_RFD = t_sorted(s_ULCMJ_RFD, s_ULCMJ_epoch_time_sec)
+    s_ULCMJ_jump_height_m = t_sorted(s_ULCMJ_jump_height_m, s_ULCMJ_epoch_time_sec)
+    s_ULCMJ_jump_power = t_sorted(s_ULCMJ_jump_power, s_ULCMJ_epoch_time_sec)
+    s_ULCMJ_date = t_sorted(s_ULCMJ_date, s_ULCMJ_epoch_time_sec)
+    s_ULCMJ_jump_type = t_sorted(s_ULCMJ_jump_type, s_ULCMJ_epoch_time_sec)
+    s_ULCMJ_try_num = t_sorted(s_ULCMJ_try_num, s_ULCMJ_epoch_time_sec)
+    s_ULCMJ_epoch_time_sec = t_sorted(s_ULCMJ_epoch_time_sec, s_ULCMJ_epoch_time_sec)
 
     #print("s_LCMJ_contact_time_sec:{}".format(s_LCMJ_contact_time_sec))
     #print("s_LCMJ_date:{}".format(s_LCMJ_date))
@@ -147,12 +152,16 @@ def get_sorted_LCMJ_ULCMJ_list(s_contact_time_sec,
 def get_avg_list(data_list, time_list):
     avg_data_list = []
     avg_time_list = []
+    #print("data_list:{}".format(data_list))
+    #print("time_list:{}".format(time_list))
     for i in range(len(time_list)):
         data_list[i] = float(data_list[i])
         if avg_time_list == []:
             avg_time_list += [time_list[i]] # add time
             avg_temp = data_list[i]
             avg_count = 1
+            if len(time_list) == 1: # has only one element
+                avg_data_list += [avg_temp] # add avg and quit for
         else:
             if time_list[i] == avg_time_list[-1]:
                 avg_count += 1
@@ -165,6 +174,8 @@ def get_avg_list(data_list, time_list):
                 avg_temp = data_list[i]
                 avg_count = 1
 
+    #print("avg_data_list:{}".format(avg_data_list))
+    #print("avg_time_list:{}".format(avg_time_list))
     assert len(avg_time_list) == len(avg_data_list)
 
     return avg_data_list
@@ -301,7 +312,8 @@ def update_user_statistics(data_dir):
                               s_avg_LCMJ_epoch_time_sec)
         fig.savefig( data_dir + '____LCMJ_analysis.png'.format(data_name))
         plt.close(fig)
-
+    #print("s_ULCMJ_epoch_time_sec:{}".format(s_ULCMJ_epoch_time_sec))
+    if s_ULCMJ_epoch_time_sec != []:
         fig = DP.get_fig_ULCMJ_analysis(s_ULCMJ_contact_time_sec,
                            s_ULCMJ_TtPF_sec,
                            s_ULCMJ_RFD,
@@ -318,7 +330,7 @@ def update_user_statistics(data_dir):
                            s_avg_ULCMJ_epoch_time_sec)
         fig.savefig( data_dir + '____ULCMJ_analysis.png'.format(data_name))
         plt.close(fig)
-
+    if s_avg_ULCMJ_epoch_time_sec != [] and s_avg_LCMJ_epoch_time_sec != []:
         fig = DP.get_fig_CMJ_compare(s_avg_ULCMJ_date, s_avg_ULCMJ_epoch_time_sec, s_avg_ULCMJ_jump_height_m, s_avg_LCMJ_date, s_avg_LCMJ_epoch_time_sec, s_avg_LCMJ_jump_height_m)
         fig.savefig( data_dir + '____CMJ_compare.png'.format(data_name))
         plt.close(fig)
@@ -409,6 +421,10 @@ def single_user_analysis(data_dir):
                     fig = DP.get_fig_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start_tick, stable_end_tick, ec_start_tick, ec_end_tick, co_start_tick, co_end_tick, air_start_tick, air_end_tick,
                         fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power)
                     fig.savefig( data_dir + '{}_time_force_notation.png'.format(data_name))
+                    #plt.show(block=False)
+                    #plt.ion()
+                    #plt.show()
+                    #plt.pause(0.001)
                     plt.close(fig)
 
                     fig = DP.get_fig_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, co_end_tick, p_watt_max_tick)

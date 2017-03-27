@@ -18,11 +18,16 @@ import single_user_analysis_control as SUAC
 
 #########################################
 workspace_dir = "{}/".format(os.getcwd())
-#data_dir = workspace_dir + "test_data/"
-#print("workspace_dir:{}".format(workspace_dir))
-#users_dir = workspace_dir.replace('git_jump_analysis/','') + "jump_analysis_data/"
-users_dir = workspace_dir
-#print("users_dir:{}".format(users_dir))
+
+users_dir = workspace_dir + "test_data/"
+dual_input_dir = workspace_dir + "dual_input/"
+
+#users_dir = workspace_dir # for windows
+
+print("users_dir:{}".format(users_dir))
+
+# dispatch files in dual input folder
+DPM.dispatch_daul_input(dual_input_dir, users_dir)
 
 
 file_list = os.listdir(users_dir)
