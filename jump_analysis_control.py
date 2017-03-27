@@ -19,15 +19,19 @@ import single_user_analysis_control as SUAC
 #########################################
 workspace_dir = "{}/".format(os.getcwd())
 
+# for develop enviroment in mac 
 users_dir = workspace_dir + "test_data/"
 dual_input_dir = workspace_dir + "dual_input/"
+sys_show_fig_cmd = 'open -a Preview' # for mac preview
 
+# for app enviroment in windows
 #users_dir = workspace_dir # for windows
+#dual_input_dir = ?
+#sys_show_fig_cmd = ?
 
 print("users_dir:{}".format(users_dir))
 
 
-sys_show_fig_cmd = 'open -a Preview' # for mac preview
 enable_sys_fig_show = 1
 
 #########################################
