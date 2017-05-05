@@ -48,7 +48,8 @@ def dispatch_daul_input(dual_input_dir, users_dir):
             '.txt' in f and 
             'AND' in f and 
             len(f.split('_')) == 8 and 
-            '20' in f.split('_')[0]
+            '20' in f.split('_')[0] and 
+            'CMJ' in f
            ): # make sure the dual data has standard format
             txt_list += [f]
         elif (not os.path.isdir(f)) and '.txt' in f and (not 'ERROR' in f):

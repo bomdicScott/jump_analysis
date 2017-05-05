@@ -1,1 +1,3 @@
 *.pyc
+/data_parsing_modules.pyc
+/data_plot.pyc

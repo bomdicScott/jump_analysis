@@ -37,7 +37,7 @@ sys_show_fig_cmd = 'open -a Preview' # for mac preview
 print("users_dir:{}".format(users_dir))
 
 
-enable_sys_fig_show = 1
+enable_sys_fig_show = 0
 
 #########################################
 

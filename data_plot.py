@@ -313,7 +313,7 @@ def get_fig_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_
     ax.legend(loc='upper left')
 
     Xlim = max(time_sec_tick)
-    Ylim = max(force_N_join) * 1.3
+    Ylim = max(force_N_join) * 3.0
 
     ax.set_xlim(0, Xlim)
     ax.set_ylim(0, Ylim)
