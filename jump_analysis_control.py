@@ -21,14 +21,14 @@ from subprocess import check_output
 workspace_dir = "{}/".format(os.getcwd())
 
 # for develop enviroment in mac 
-#users_dir = workspace_dir + "test_data/"
-#dual_input_dir = workspace_dir + "dual_input/"
-#sys_show_fig_cmd = 'open -a Preview' # for mac preview
+users_dir = workspace_dir + "test_data/"
+dual_input_dir = users_dir + "_dual_input/"
+sys_show_fig_cmd = 'open -a Preview' # for mac preview
 
 # for app enviroment in windows
-users_dir = workspace_dir # for windows
-dual_input_dir = workspace_dir + 'dual_input/'
-sys_show_fig_cmd = ' start "" /I "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" '
+#users_dir = workspace_dir # for windows
+#dual_input_dir = workspace_dir + 'dual_input/'
+#sys_show_fig_cmd = ' start "" /I "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" '
 
 print("users_dir:{}".format(users_dir))
 
