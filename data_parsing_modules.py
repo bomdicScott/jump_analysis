@@ -13,7 +13,7 @@ from shutil import copyfile
 
 import data_plot as DP
 
-def copy_txt_as_csv(data_dir): # for KISLER data
+def copy_txt_as_csv(data_dir): # for KISLER single input data
     
     file_list = os.listdir(data_dir)
     csv_list = []

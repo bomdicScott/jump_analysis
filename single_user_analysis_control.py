@@ -461,7 +461,7 @@ def single_user_analysis(data_dir):
                         writer.writerow(anlysis_result)
                         csvfile.close()
 
-    return list_new_error_fig_path, list_new_fig_time_force_notiation_path
+    return list_new_error_fig_path, list_new_fig_time_force_notiation_path, analysis_list
 
 
 
