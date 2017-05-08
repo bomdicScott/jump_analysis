@@ -15,7 +15,7 @@ def get_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_e
 
     # statistics
     fly_time_sec = air_end - air_start
-    contact_time_sec = co_end - ec_start
+    contact_time_sec = air_start - ec_start
     TtPF_sec = co_end - co_start     # time to peak force
     RFD = force_N_join[co_end_tick] / TtPF_sec
     #jump_height = 9.8 * (0.5 * fly_time)**2 + -9.8 * 0.5 * (0.5 * fly_time)**2

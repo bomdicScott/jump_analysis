@@ -424,7 +424,7 @@ def single_user_analysis(data_dir):
 
 
                     fig = DP.get_fig_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start_tick, stable_end_tick, ec_start_tick, ec_end_tick, co_start_tick, co_end_tick, air_start_tick, air_end_tick,
-                        fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power)
+                        fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power, PF)
                     fig.savefig( data_dir + '{}_time_force_notation.png'.format(data_name))
                     #plt.show(block=False)
                     #plt.ion()

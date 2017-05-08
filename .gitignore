@@ -1,3 +1,5 @@
 *.pyc
 /data_parsing_modules.pyc
 /data_plot.pyc
+/single_user_analysis_control.pyc
+/jump_analysis_modules.pyc

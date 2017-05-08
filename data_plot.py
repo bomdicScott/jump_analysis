@@ -289,7 +289,7 @@ def get_fig_time_force(data_name, time_sec_tick, force_N_1, force_N_2, force_N_j
     return fig
 
 def get_fig_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start_tick, stable_end_tick, ec_start_tick, ec_end_tick, co_start_tick, co_end_tick, air_start_tick, air_end_tick,
-    fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power):
+    fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power, PF):
     fig = plt.figure()
     ax = fig.add_subplot(111)
 
@@ -322,12 +322,13 @@ def get_fig_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_
 
     # fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m
     # round
-    fly_time_sec = round(fly_time_sec,2)
-    contact_time_sec = round(contact_time_sec,2)
-    TtPF_sec = round(TtPF_sec,2)
-    RFD = round(RFD,2)
-    jump_height_cm = round(jump_height_m*100.0,2)
-    jump_power = round(jump_power,2)
+    fly_time_sec = round(fly_time_sec,3)
+    contact_time_sec = round(contact_time_sec,3)
+    TtPF_sec = round(TtPF_sec,3)
+    RFD = round(RFD,3)
+    jump_height_cm = round(jump_height_m*100.0,3)
+    jump_power = round(jump_power,3)
+    PF = round(PF,3)
 
     ax.text(Xlim*0.4,Ylim * 0.9,'FT:{} sec'.format(fly_time_sec), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.4,Ylim * (0.9 - 0.05),'CT:{} sec'.format(contact_time_sec), bbox=dict(facecolor='white', edgecolor='none'))
@@ -335,6 +336,7 @@ def get_fig_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_
     ax.text(Xlim*0.4,Ylim * (0.9 - 0.15),'RFD:{} N/sec'.format(RFD), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.4,Ylim * (0.9 - 0.20),'jump_height:{} cm'.format(jump_height_cm), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.4,Ylim * (0.9 - 0.25),'jump_power:{} W'.format(jump_power), bbox=dict(facecolor='white', edgecolor='none'))
+    ax.text(Xlim*0.4,Ylim * (0.9 - 0.30),'PF:{} N'.format(PF), bbox=dict(facecolor='white', edgecolor='none'))
 
     #fig.show()
     #plt.show()
