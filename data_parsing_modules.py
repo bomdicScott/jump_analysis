@@ -96,8 +96,8 @@ def dispatch_daul_input(dual_input_dir, users_dir):
             idx += 1
         f.close()
 
-        print("user1_raw:{}".format(user1_raw))
-        print("user2_raw:{}".format(user2_raw))
+        #print("user1_raw:{}".format(user1_raw))
+        #print("user2_raw:{}".format(user2_raw))
 
         # write data into corresponding files
         # check user folder
@@ -111,6 +111,8 @@ def dispatch_daul_input(dual_input_dir, users_dir):
 
         user1_file_path = user1_folder + '{}_{}_{}_{}.csv'.format(user1_name, date, user1_jump_type, user1_jump_try)
         user2_file_path = user2_folder + '{}_{}_{}_{}.csv'.format(user2_name, date, user2_jump_type, user2_jump_try)
+
+        #print("user1_raw:{}".format(user1_raw))
 
         with open(user1_file_path, 'w') as csvfile:
             writer = csv.writer(csvfile)
@@ -158,80 +160,83 @@ def parsing_force_plate_raw_data(force_plate_raw_data_path):
     #is_KISLER_type_no_row_1 = 0 # no row [1]
     idx = 0
     for row in csv.reader(f):
+        #print("row:{}".format(row))
         #print('row[0]:{}'.format(row[0]))
         
-        if (idx <=1):
-            if 'Device:' in row[0]:
-                is_KISLER_file = 1
+        if row != []:
+            if (idx <=1):
+                if 'Device:' in row[0]:
+                    is_KISLER_file = 1
 
-        if is_KISLER_file != 1:
-            if (
-                idx >=2 and 
-                row[0] != '' and 
-                row[1] != '' and 
-                row[2] != '' and
-                row[3] != ''
-               ):
-                
-                # format detection
-                try:
-                    val = float(row[0])
-                    time_sec_tick += [float(row[0])]
-                    force_N_1 += [float(row[1])]
-                    force_N_2 += [float(row[2])]
-                    force_N_join += [float(row[3])]
-                except:
-                    #print("Input is not a standard CSV file")
-                    error_code = 10001
-
-                if idx == 3:
-                    try:
-                        assert float(row[0]) == 0.001
-                    except:
-                        error_code = 10003   
-        elif is_KISLER_file == 1:
-            #print("is_KISLER_file")
-            # serach abs key word
-            if 'abs' in row[0]:
-                KISLER_abs_idx = idx
-
-            # found key word
-            if KISLER_abs_idx != -1:
-                #print("found key word")
-                data_start_idx = KISLER_abs_idx + 2
+            if is_KISLER_file != 1:
                 if (
-                    idx >=data_start_idx and 
-                    len(row) == 1 and 
-                    row[0] != ''                
+                    idx >=2 and 
+                    row[0] != '' and 
+                    row[1] != '' and 
+                    row[2] != '' and
+                    row[3] != ''
                    ):
-                    split_list = row[0].split()
-                    #print("split_list:{}").format(split_list)
-
-                    #assert False
+                    
+                    # format detection
                     try:
-                        time_sec_tick += [float(split_list[0])]
-                        force_N_1 += [-1]
-                        force_N_2 += [-1]
-                        force_N_join += [float(split_list[1])]
-                    except:
-                        error_code = 10005
-                elif (
-                      idx >=data_start_idx and 
-                      len(row) >= 2 and 
-                      row[0] != '' and
-                      row[1] != ''               
-                    ):
-                    #print("two column KISLER")
-                    try:
+                        val = float(row[0])
                         time_sec_tick += [float(row[0])]
-                        force_N_1 += [-1]
-                        force_N_2 += [-1]
-                        force_N_join += [float(row[1])]
+                        force_N_1 += [float(row[1])]
+                        force_N_2 += [float(row[2])]
+                        force_N_join += [float(row[3])]
                     except:
-                        error_code = 10004
+                        #print("Input is not a standard CSV file")
+                        error_code = 10001
+
+                    if idx == 3:
+                        try:
+                            assert float(row[0]) == 0.001
+                        except:
+                            error_code = 10003   
+            elif is_KISLER_file == 1:
+                #print("is_KISLER_file")
+                # serach abs key word
+                if 'abs' in row[0]:
+                    KISLER_abs_idx = idx
+
+                # found key word
+                if KISLER_abs_idx != -1:
+                    #print("found key word")
+                    data_start_idx = KISLER_abs_idx + 2
+                    if (
+                        idx >=data_start_idx and 
+                        len(row) == 1 and 
+                        row[0] != ''                
+                       ):
+                        split_list = row[0].split()
+                        #print("split_list:{}").format(split_list)
+
+                        #assert False
+                        try:
+                            time_sec_tick += [float(split_list[0])]
+                            force_N_1 += [-1]
+                            force_N_2 += [-1]
+                            force_N_join += [float(split_list[1])]
+                        except:
+                            error_code = 10005
+                    elif (
+                          idx >=data_start_idx and 
+                          len(row) >= 2 and 
+                          row[0] != '' and
+                          row[1] != ''               
+                        ):
+                        #print("two column KISLER")
+                        try:
+                            time_sec_tick += [float(row[0])]
+                            force_N_1 += [-1]
+                            force_N_2 += [-1]
+                            force_N_join += [float(row[1])]
+                        except:
+                            error_code = 10004
 
 
-        idx += 1
+            idx += 1
+
     #print("idx:{}".format(idx))
     if time_sec_tick[0] != 0:
         error_code = 10002
