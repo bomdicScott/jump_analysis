@@ -124,7 +124,7 @@ def get_features_of_join_force(data_name, time_sec_tick, force_N_join):
             #print("i:{}, time_sec_tick[i]:{}, force_N_join[i]:{}".format(i,time_sec_tick[i], force_N_join[i]))
             #print("stable_start_tick:{}, stable_end_tick:{}, std:{}, stable_length:{}, mean:{}, stable_start:{}, stable_end:{}".format(stable_start_tick, stable_end_tick, std, stable_length, mean, stable_start, stable_end))
 
-            if std < 10.0:
+            if std < 15.0:
                 mean = (force_N_join[i] + mean*(stable_length-1))/stable_length
                 diff_pow2_mean = (math.pow(abs(force_N_join[i] - mean), 2) + diff_pow2_mean*(stable_length-1))/stable_length
                 if diff_pow2_mean > 0:
