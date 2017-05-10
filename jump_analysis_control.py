@@ -21,18 +21,18 @@ from subprocess import check_output
 workspace_dir = "{}/".format(os.getcwd())
 
 # for develop enviroment in mac 
-#users_dir = workspace_dir + "test_data/"
+users_dir = workspace_dir + "test_data/"
 #simualte formal user folder
 #users_dir = workspace_dir.replace('jump_analysis','jump_analysis_data')
-#print("users_dir:{}".format(users_dir))
-#dual_input_dir = users_dir + "_dual_input/"
+print("users_dir:{}".format(users_dir))
+dual_input_dir = users_dir + "_dual_input/"
 #sys_show_fig_cmd = 'open -a Preview' # for mac preview
 
 
 # for app enviroment in windows
-users_dir = workspace_dir # for windows
-print("users_dir:{}".format(users_dir))
-dual_input_dir = workspace_dir + '_dual_input/'
+#users_dir = workspace_dir # for windows
+#print("users_dir:{}".format(users_dir))
+#dual_input_dir = workspace_dir + '_dual_input/'
 #sys_show_fig_cmd = ' start "" /I "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" '
 
 print("users_dir:{}".format(users_dir))
@@ -67,6 +67,7 @@ for user_name in user_list:
     list_new_error_fig_path, list_new_fig_time_force_notiation_path, analysis_list = SUAC.single_user_analysis(data_dir)
     print("list_new_error_fig_path:{}".format(list_new_error_fig_path))
     print("list_new_fig_time_force_notiation_path:{}".format(list_new_fig_time_force_notiation_path))
+    print("analysis_list:{}".format(analysis_list))
     
     if enable_sys_fig_show == 1:
         for fig_path in list_new_fig_time_force_notiation_path:
@@ -77,7 +78,7 @@ for user_name in user_list:
 
     #[TODO] add user statistics
     if analysis_list != []:
-        SUAC.update_user_statistics(data_dir)
+        SUAC.update_user_CMJ_statistics(data_dir)
 
 
 
