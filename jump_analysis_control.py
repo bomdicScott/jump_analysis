@@ -21,9 +21,9 @@ from subprocess import check_output
 workspace_dir = "{}/".format(os.getcwd())
 
 # for develop enviroment in mac 
-users_dir = workspace_dir + "test_data/"
+#users_dir = workspace_dir + "test_data/"
 #simualte formal user folder
-#users_dir = workspace_dir.replace('jump_analysis','jump_analysis_data')
+users_dir = workspace_dir.replace('jump_analysis','jump_analysis_data')
 print("users_dir:{}".format(users_dir))
 dual_input_dir = users_dir + "_dual_input/"
 #sys_show_fig_cmd = 'open -a Preview' # for mac preview
@@ -79,6 +79,7 @@ for user_name in user_list:
     #[TODO] add user statistics
     if analysis_list != []:
         SUAC.update_user_CMJ_statistics(data_dir)
+        SUAC.update_user_SJ_statistics(data_dir)
 
 
 
