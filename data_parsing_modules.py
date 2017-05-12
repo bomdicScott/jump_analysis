@@ -82,55 +82,71 @@ def dispatch_daul_input(dual_input_dir, users_dir):
         user1_raw = []
         user2_raw = []
         # load raw
+        has_two_force_data = 1
         idx = 0
         f = open(dual_input_dir + f_name, 'rU')
         for row in csv.reader(f):
+            #print("row:{}".format(row))
             if idx <= 18: # device infos
                 user1_raw += [row[0]]
                 user2_raw += [row[0]]
             else:
                 split_list = row[0].split()
-                user1_raw += ['{}    {}'.format(split_list[0], split_list[1])]
-                user2_raw += ['{}    {}'.format(split_list[0], split_list[2])]
+                #print("split_list:{}, len(split_list):{}".format(split_list, len(split_list)))
+                if len(split_list) >= 3:
+                    user1_raw += ['{}    {}'.format(split_list[0], split_list[1])]
+                    user2_raw += ['{}    {}'.format(split_list[0], split_list[2])]
+                else:
+                    has_two_force_data = 0
+
             idx += 1
         f.close()
 
-        #print("user1_raw:{}".format(user1_raw))
-        #print("user2_raw:{}".format(user2_raw))
+        if has_two_force_data == 1:
+            #print("user1_raw:{}".format(user1_raw))
+            #print("user2_raw:{}".format(user2_raw))
 
-        # write data into corresponding files
-        # check user folder
-        user1_folder = users_dir + '{}/'.format(user1_name)
-        user2_folder = users_dir + '{}/'.format(user2_name)
-        if not os.path.exists(user1_folder):
-            os.makedirs(user1_folder)
-        if not os.path.exists(user2_folder):
-            os.makedirs(user2_folder)
+            # write data into corresponding files
+            # check user folder
+            user1_folder = users_dir + '{}/'.format(user1_name)
+            user2_folder = users_dir + '{}/'.format(user2_name)
+            if not os.path.exists(user1_folder):
+                os.makedirs(user1_folder)
+            if not os.path.exists(user2_folder):
+                os.makedirs(user2_folder)
 
 
-        user1_file_path = user1_folder + '{}_{}_{}_{}.csv'.format(user1_name, date, user1_jump_type, user1_jump_try)
-        user2_file_path = user2_folder + '{}_{}_{}_{}.csv'.format(user2_name, date, user2_jump_type, user2_jump_try)
+            user1_file_path = user1_folder + '{}_{}_{}_{}.csv'.format(user1_name, date, user1_jump_type, user1_jump_try)
+            user2_file_path = user2_folder + '{}_{}_{}_{}.csv'.format(user2_name, date, user2_jump_type, user2_jump_try)
 
-        #print("user1_raw:{}".format(user1_raw))
+            #print("user1_raw:{}".format(user1_raw))
 
-        with open(user1_file_path, 'w') as csvfile:
-            writer = csv.writer(csvfile)
-            for row in user1_raw:
-                writer.writerow([row])
-            csvfile.close()
-        
-        with open(user2_file_path, 'w') as csvfile:
-            writer = csv.writer(csvfile)
-            for row in user2_raw:
-                writer.writerow([row])
-            csvfile.close()
-        
-        # put original input txt into processed folder
-        processed_folder_dir = dual_input_dir + 'processed/'
-        if not os.path.exists(processed_folder_dir):
-            os.makedirs(processed_folder_dir)
-        copyfile(dual_input_dir+f_name, processed_folder_dir+f_name)
-        os.remove(dual_input_dir+f_name)
+            with open(user1_file_path, 'w') as csvfile:
+                writer = csv.writer(csvfile)
+                for row in user1_raw:
+                    writer.writerow([row])
+                csvfile.close()
+            
+            with open(user2_file_path, 'w') as csvfile:
+                writer = csv.writer(csvfile)
+                for row in user2_raw:
+                    writer.writerow([row])
+                csvfile.close()
+            
+            # put original input txt into processed folder
+            processed_folder_dir = dual_input_dir + 'processed/'
+            if not os.path.exists(processed_folder_dir):
+                os.makedirs(processed_folder_dir)
+            copyfile(dual_input_dir+f_name, processed_folder_dir+f_name)
+            os.remove(dual_input_dir+f_name)
+        else:
+            err_msg = 'does not have two force data'
+            error_code = 10102
+            fig = DP.get_fig_no_data_with_err_msg(error_code,err_msg)
+            fig.savefig( dual_input_dir+'{}_ERROR_{}.png'.format(f_name,err_msg))
+            list_new_error_fig_path += [dual_input_dir+'{}_ERROR_{}.png'.format(f_name,err_msg)]
+            plt.close(fig)
+
 
     return list_new_error_fig_path
 
