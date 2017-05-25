@@ -272,7 +272,7 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
                 co_end_tick = i
             #elif force_N_join[i] <= force_N_join[co_start_tick]: # keep searching
             #    co_height = force_N_join[co_start_tick]
-            elif force_N_join[i] <= 20: # condition of leaving concetric_stage
+            elif force_N_join[i] <= 100: # condition of leaving concetric_stage
                 stg_num = 2
                 print("[Stage:{}]".format(stages[stg_num]))
                 air_start = time_sec_tick[i]
@@ -435,7 +435,7 @@ def get_CMJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
                 co_end_tick = i
             #elif force_N_join[i] <= force_N_join[co_start_tick]: # keep searching
             #    co_height = force_N_join[co_start_tick]
-            elif force_N_join[i] <= 20: # condition of leaving concetric_stage
+            elif force_N_join[i] <= 100: # condition of leaving concetric_stage
                 stg_num = 3
                 print("[Stage:{}]".format(stages[stg_num]))
                 air_start = time_sec_tick[i]
