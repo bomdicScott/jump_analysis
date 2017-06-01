@@ -622,6 +622,7 @@ def single_user_analysis(data_dir):
     #    analysis_list = ['user1_20170428_ULSJ_t1']
     #    analysis_list = ['user1_20170530_ULCMJ_t1']
     #    analysis_list = ['user1_20170530_ULCMJ_t8']
+    #    analysis_list = ['user1_20170530_ULCMJ_t44']
     #if 'user2' in data_dir:
     #    analysis_list = ['user2_20170428_LSJ_t1']
     #if 'user12' in data_dir:

@@ -52,7 +52,10 @@ def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stab
     time_con_sec = co_end - co_start
     total_time_sec = time_ecc_sec + time_con_sec
     fly_contact_ratio = fly_time_sec / contact_time_sec
-    RSI_mod = contact_time_sec / fly_time_sec
+    if fly_time_sec == 0:
+        RSI_mod = 0
+    else:
+        RSI_mod = contact_time_sec / fly_time_sec
     mean_co_force = np.mean(force_N_join[co_start_tick:co_end_tick])
     velocity_pf = v_mps[pf_tick]
     force_pf = force_N_join[pf_tick]
@@ -591,7 +594,7 @@ def get_CMJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
 
             #elif force_N_join[i] <= force_N_join[ec_deacc_start_tick]: # keep searching
             #    co_height = force_N_join[ec_deacc_start_tick]
-            elif force_N_join[i] <= 100: # condition of leaving ec_deacc_and_concetric_stage
+            elif force_N_join[i] <= 100 and force_N_join[pf_tick] > mean: # condition of leaving ec_deacc_and_concetric_stage
                 stg_num = 3
                 print("[Stage:{}]".format(stages[stg_num]))
                 air_start = time_sec_tick[i]
