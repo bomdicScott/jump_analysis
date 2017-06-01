@@ -401,7 +401,7 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
                 pf_tick = i
             #elif force_N_join[i] <= force_N_join[ec_deacc_start_tick]: # keep searching
             #    co_height = force_N_join[ec_deacc_start_tick]
-            elif force_N_join[i] <= 20: # condition of leaving ec_deacc_and_concetric_stage
+            elif force_N_join[i] <= 100: # condition of leaving ec_deacc_and_concetric_stage
                 stg_num = 2
                 print("[Stage:{}]".format(stages[stg_num]))
                 co_end = time_sec_tick[i]
@@ -411,7 +411,7 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
         # find the end point of on air stage
         if stg_num == 2:
             #print("time_sec_tick[i]:{}, force_N_join[i]:{}".format(time_sec_tick[i], force_N_join[i]))
-            if force_N_join[i] <= 20:
+            if force_N_join[i] <= 100:
                 air_end = time_sec_tick[i]
                 air_end_tick = i
             else: # condition of leaving air stage
@@ -591,7 +591,7 @@ def get_CMJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
 
             #elif force_N_join[i] <= force_N_join[ec_deacc_start_tick]: # keep searching
             #    co_height = force_N_join[ec_deacc_start_tick]
-            elif force_N_join[i] <= 20: # condition of leaving ec_deacc_and_concetric_stage
+            elif force_N_join[i] <= 100: # condition of leaving ec_deacc_and_concetric_stage
                 stg_num = 3
                 print("[Stage:{}]".format(stages[stg_num]))
                 air_start = time_sec_tick[i]
@@ -600,7 +600,7 @@ def get_CMJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
         # find the end point of on air stage
         if stg_num == 3:
             #print("time_sec_tick[i]:{}, force_N_join[i]:{}".format(time_sec_tick[i], force_N_join[i]))
-            if force_N_join[i] <= 20:
+            if force_N_join[i] <= 100:
                 air_end = time_sec_tick[i]
                 air_end_tick = i
             else: # condition of leaving air stage
