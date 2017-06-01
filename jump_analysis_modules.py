@@ -227,7 +227,7 @@ def get_CMJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stab
                 ec_acc_end = time_sec_tick[i]
                 ec_deacc_start_tick = i
                 ec_deacc_start = time_sec_tick[i]
-            if -0.02 <= v_mps[i] <= 0.02:
+            if -0.05 <= v_mps[i] <= 0.05:
                 ec_deacc_end_tick = i
                 ec_deacc_end = time_sec_tick[i]
                 co_start_tick = i
@@ -236,7 +236,8 @@ def get_CMJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stab
     find_start_tick = pf_tick
     for i in range(len(time_sec_tick)):
         if find_start_tick < i < air_start_tick:
-            if -0.05 <= a_mss[i] <= 0.05:
+            #print("time_sec_tick:{}, force_N_join:{}, a_mss:{}, v_mps:{}, p_watt:{}".format(time_sec_tick[i], force_N_join[i], a_mss[i], v_mps[i], p_watt[i]))
+            if -0.5 <= a_mss[i] <= 0.5:
                 co_end_tick = i
                 co_end = time_sec_tick[i]
 
