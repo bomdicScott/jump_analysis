@@ -471,8 +471,7 @@ def get_fig_time_force(data_name, time_sec_tick, force_N_1, force_N_2, force_N_j
 
     return fig
 
-def get_fig_SJ_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start_tick, stable_end_tick, ec_deacc_start_tick, co_pf_tick, air_start_tick, air_end_tick,
-    fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power, PF):
+def get_fig_SJ_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start_tick, stable_end_tick, co_start_tick, co_pf_tick, air_start_tick, air_end_tick,fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power, PF, co_end_tick):
     fig = plt.figure()
     ax = fig.add_subplot(111)
 
@@ -481,8 +480,9 @@ def get_fig_SJ_time_force_notiation(data_name, time_sec_tick, force_N_join, stab
     ax.plot(time_sec_tick[stable_start_tick], force_N_join[stable_start_tick], 'go', label='stable_start', markersize= 8, markeredgewidth = 0)
     ax.plot(time_sec_tick[stable_end_tick], force_N_join[stable_end_tick], 'go', label='stable_end', fillstyle = 'none', markeredgecolor = 'g', markersize = 10, markeredgewidth = 2)
 
-    ax.plot(time_sec_tick[ec_deacc_start_tick], force_N_join[ec_deacc_start_tick], 'ro', label='ec_deacc_start', markersize= 8, markeredgewidth = 0)
-    ax.plot(time_sec_tick[co_pf_tick], force_N_join[co_pf_tick], 'ro', label='co_pf', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
+    ax.plot(time_sec_tick[co_start_tick], force_N_join[co_start_tick], 'ro', label='co_start', markersize= 8, markeredgewidth = 0)
+    ax.plot(time_sec_tick[co_pf_tick], force_N_join[co_pf_tick], 'r^', label='co_pf', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
+    ax.plot(time_sec_tick[co_end_tick], force_N_join[co_end_tick], 'ro', label='co_end', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
 
     ax.plot(time_sec_tick[air_start_tick], force_N_join[air_start_tick], 'yo', label='air_start', markersize= 8, markeredgewidth = 0)
     ax.plot(time_sec_tick[air_end_tick], force_N_join[air_end_tick], 'yo', label='air_end', fillstyle = 'none', markeredgecolor = 'y', markersize = 10, markeredgewidth = 2)
@@ -629,6 +629,95 @@ def get_fig_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p
     ax.plot(time_sec_tick[p_watt_max_tick], p_watt[p_watt_max_tick], 'yo')
     ax.set_ylabel('watts')
     ax.legend(loc='upper left')
+
+    ax.grid(True)
+    ax.set_xlabel('time (sec)')
+
+    return fig
+
+def get_fig_SJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, p_watt_max_tick, stable_start_tick, stable_end_tick, co_start_tick, co_pf_tick, co_end_tick, air_start_tick, air_end_tick):
+
+    fig = plt.figure(figsize=(15,10))
+
+
+    ax = fig.add_subplot(221)
+    ax.plot(time_sec_tick, force_N_join, 'b', label='force join')
+    ax.set_ylabel('Force (N)')
+    ax.legend(loc='upper left')
+
+    data_line = force_N_join
+    ax.plot(time_sec_tick[stable_start_tick], data_line[stable_start_tick], 'go', label='stable_start', markersize= 8, markeredgewidth = 0)
+    ax.plot(time_sec_tick[stable_end_tick], data_line[stable_end_tick], 'go', label='stable_end', fillstyle = 'none', markeredgecolor = 'g', markersize = 10, markeredgewidth = 2)
+
+    ax.plot(time_sec_tick[co_start_tick], data_line[co_start_tick], 'ro', label='co_start', markersize= 8, markeredgewidth = 0)
+    ax.plot(time_sec_tick[co_end_tick], data_line[co_end_tick], 'mo', label='co_end', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
+
+    ax.plot(time_sec_tick[co_pf_tick], data_line[co_pf_tick], 'r^', label='co_pf', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
+
+    ax.plot(time_sec_tick[air_start_tick], data_line[air_start_tick], 'yo', label='air_start', markersize= 8, markeredgewidth = 0)
+    ax.plot(time_sec_tick[air_end_tick], data_line[air_end_tick], 'yo', label='air_end', fillstyle = 'none', markeredgecolor = 'y', markersize = 10, markeredgewidth = 2)
+
+    Xlim = max(time_sec_tick)
+    Ylim = max(force_N_join) * 1.3
+
+    ax.set_xlim(0, Xlim)
+    ax.set_ylim(0, Ylim)
+    ax.grid(True)
+    #ax.set_xlabel('time (sec)')
+
+    ax = fig.add_subplot(222)
+    ax.plot(time_sec_tick, a_mss, 'b', label='Acc')
+    data_line = a_mss
+    ax.plot(time_sec_tick[stable_start_tick], data_line[stable_start_tick], 'go', label='stable_start', markersize= 8, markeredgewidth = 0)
+    ax.plot(time_sec_tick[stable_end_tick], data_line[stable_end_tick], 'go', label='stable_end', fillstyle = 'none', markeredgecolor = 'g', markersize = 10, markeredgewidth = 2)
+
+    ax.plot(time_sec_tick[co_start_tick], data_line[co_start_tick], 'ro', label='co_start', markersize= 8, markeredgewidth = 0)
+    ax.plot(time_sec_tick[co_end_tick], data_line[co_end_tick], 'mo', label='co_end', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
+
+    ax.plot(time_sec_tick[co_pf_tick], data_line[co_pf_tick], 'r^', label='co_pf', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
+
+    ax.plot(time_sec_tick[air_start_tick], data_line[air_start_tick], 'yo', label='air_start', markersize= 8, markeredgewidth = 0)
+    ax.plot(time_sec_tick[air_end_tick], data_line[air_end_tick], 'yo', label='air_end', fillstyle = 'none', markeredgecolor = 'y', markersize = 10, markeredgewidth = 2)
+    ax.set_ylabel('Acc (m/s^2)')
+    #ax.legend(loc='upper left')
+
+    ax.grid(True)
+    #ax.set_xlabel('time (sec)')
+
+    ax = fig.add_subplot(223)
+    ax.plot(time_sec_tick, v_mps, 'b', label='Speed')
+    data_line = v_mps
+    ax.plot(time_sec_tick[stable_start_tick], data_line[stable_start_tick], 'go', label='stable_start', markersize= 8, markeredgewidth = 0)
+    ax.plot(time_sec_tick[stable_end_tick], data_line[stable_end_tick], 'go', label='stable_end', fillstyle = 'none', markeredgecolor = 'g', markersize = 10, markeredgewidth = 2)
+
+    ax.plot(time_sec_tick[co_start_tick], data_line[co_start_tick], 'ro', label='co_start', markersize= 8, markeredgewidth = 0)
+    ax.plot(time_sec_tick[co_end_tick], data_line[co_end_tick], 'mo', label='co_end', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
+
+    ax.plot(time_sec_tick[co_pf_tick], data_line[co_pf_tick], 'r^', label='co_pf', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
+
+    ax.plot(time_sec_tick[air_start_tick], data_line[air_start_tick], 'yo', label='air_start', markersize= 8, markeredgewidth = 0)
+    ax.plot(time_sec_tick[air_end_tick], data_line[air_end_tick], 'yo', label='air_end', fillstyle = 'none', markeredgecolor = 'y', markersize = 10, markeredgewidth = 2)
+    ax.set_ylabel('V (m/s)')
+    #ax.legend(loc='upper left')
+
+    ax.grid(True)
+    ax.set_xlabel('time (sec)')
+
+    ax = fig.add_subplot(224)
+    ax.plot(time_sec_tick, p_watt, 'b', label='Power')
+    data_line = p_watt
+    ax.plot(time_sec_tick[stable_start_tick], data_line[stable_start_tick], 'go', label='stable_start', markersize= 8, markeredgewidth = 0)
+    ax.plot(time_sec_tick[stable_end_tick], data_line[stable_end_tick], 'go', label='stable_end', fillstyle = 'none', markeredgecolor = 'g', markersize = 10, markeredgewidth = 2)
+
+    ax.plot(time_sec_tick[co_start_tick], data_line[co_start_tick], 'ro', label='co_start', markersize= 8, markeredgewidth = 0)
+    ax.plot(time_sec_tick[co_end_tick], data_line[co_end_tick], 'mo', label='co_end', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
+
+    ax.plot(time_sec_tick[co_pf_tick], data_line[co_pf_tick], 'r^', label='co_pf', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
+
+    ax.plot(time_sec_tick[air_start_tick], data_line[air_start_tick], 'yo', label='air_start', markersize= 8, markeredgewidth = 0)
+    ax.plot(time_sec_tick[air_end_tick], data_line[air_end_tick], 'yo', label='air_end', fillstyle = 'none', markeredgecolor = 'y', markersize = 10, markeredgewidth = 2)
+    ax.set_ylabel('watts')
+    #ax.legend(loc='upper left')
 
     ax.grid(True)
     ax.set_xlabel('time (sec)')

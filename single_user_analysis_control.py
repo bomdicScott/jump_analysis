@@ -619,6 +619,7 @@ def single_user_analysis(data_dir):
     #if 'user1' in data_dir:
     #    analysis_list = ['user1_20170329_ULSJ_t1','user1_20170329_ULSJ_t2']
     #    analysis_list = ['user1_20170329_ULSJ_t2']
+    #    analysis_list = ['user1_20170428_ULSJ_t1']
     #if 'user2' in data_dir:
     #    analysis_list = ['user2_20170428_LSJ_t1']
     #if 'user12' in data_dir:
@@ -628,6 +629,7 @@ def single_user_analysis(data_dir):
     #    analysis_list = ['scott_20170525_ULSJ_t1'] # uneven floor ?
     #if 'scott' in data_dir:
     #    analysis_list = ['scott_20170525_LCMJ_t1']
+        #analysis_list = ['scott_20170525_ULSJ_t1'] # one air force error
 
     if analysis_list == []:
         print("[No new data waited for analysis] Please copy new force plate csv file into data folder:[{}]".format(data_dir))
@@ -747,9 +749,9 @@ def single_user_analysis(data_dir):
 
             elif 'SJ' in data_name:
                 #print("get_SJ_features_of_join_force")
-                stg_num, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_deacc_start, ec_deacc_start_tick, co_pf, co_pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick = JAM.get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join)
+                stg_num, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, co_pf, co_pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, co_end, co_end_tick = JAM.get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join)
 
-                a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick = JAM.get_SJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_deacc_start, ec_deacc_start_tick, co_pf, co_pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick)
+                a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick, co_end, co_end_tick = JAM.get_SJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, co_pf, co_pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, co_end, co_end_tick)
 
                 if stg_num != 3: # not finish test correctly. should return error message.
                     print("stg_num:{}".format(stg_num))
@@ -777,25 +779,25 @@ def single_user_analysis(data_dir):
 
                 else:    
 
-                    fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power = JAM.get_SJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_deacc_start, ec_deacc_start_tick, co_pf, co_pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick)
+                    fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power = JAM.get_SJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, co_pf, co_pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick, co_end, co_end_tick)
 
                     # plot
                     fig = DP.get_fig_time_force(data_name, time_sec_tick, force_N_1, force_N_2, force_N_join)
                     fig.savefig( data_dir + '{}_time_force_raw.png'.format(data_name))
                     plt.close(fig)
 
-                    fig = DP.get_fig_SJ_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start_tick, stable_end_tick, ec_deacc_start_tick, co_pf_tick, air_start_tick, air_end_tick,
-                        fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power, PF)
+                    fig = DP.get_fig_SJ_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start_tick, stable_end_tick, co_start_tick, co_pf_tick, air_start_tick, air_end_tick,
+                        fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power, PF, co_end_tick)
                     fig.savefig( data_dir + '{}_time_force_notation.png'.format(data_name))
 
                     list_new_fig_time_force_notiation_path += [data_dir + '{}_time_force_notation.png'.format(data_name)]
 
                     plt.close(fig)
 
-                    fig = DP.get_fig_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, co_pf_tick, p_watt_max_tick)
+                    fig = DP.get_fig_SJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, p_watt_max_tick, stable_start_tick, stable_end_tick, co_start_tick, co_pf_tick, co_end_tick, air_start_tick, air_end_tick)
                     fig.savefig( data_dir + '{}_time_f_a_v_p.png'.format(data_name))
                     plt.close(fig)
-
+                    
                     # dump analysis_results
                     data_analysis_results_path = data_dir + data_name +"_analysis_results.csv"
 
