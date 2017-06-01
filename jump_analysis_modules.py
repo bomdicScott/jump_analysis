@@ -217,7 +217,8 @@ def get_CMJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stab
     v_low = 0
     find_start_tick = ec_acc_end_tick
     for i in range(len(time_sec_tick)):
-        if find_start_tick < i < co_pf_tick:
+        if find_start_tick < i < co_end_tick:
+            print("time_sec_tick:{}, force_N_join:{}, a_mss:{}, v_mps:{}, p_watt:{}".format(time_sec_tick[i], force_N_join[i], a_mss[i], v_mps[i], p_watt[i]))
             if v_mps[i] < v_low:
                 v_low = v_mps[i]
                 ec_acc_end_tick = i
@@ -572,18 +573,19 @@ def get_CMJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
 
         # find the end point of ec_deacc_and_concetric_stage
         if stg_num == 2:
-            #print("time_sec_tick[i]:{}, force_N_join[i]:{}".format(time_sec_tick[i], force_N_join[i]))
-
-            if mean-5 <= force_N_join[i] <= mean+5:
-                ec_deacc_end = time_sec_tick[i]
-                ec_deacc_end_tick = i
-                co_start = ec_deacc_end
-                co_start_tick = ec_deacc_end_tick
+            #print("time_sec_tick[i]:{}, force_N_join[i]:{}, mean:{}, co_pf_tick:{}".format(time_sec_tick[i], force_N_join[i], mean, co_pf_tick))
 
             if force_N_join[i] >= co_height:
                 co_height = force_N_join[i]
                 co_pf = time_sec_tick[i]
                 co_pf_tick = i
+
+            if mean-15 <= force_N_join[i] <= mean+15 and i <= co_pf_tick:
+                ec_deacc_end = time_sec_tick[i]
+                ec_deacc_end_tick = i
+                co_start = ec_deacc_end
+                co_start_tick = ec_deacc_end_tick
+
             #elif force_N_join[i] <= force_N_join[ec_deacc_start_tick]: # keep searching
             #    co_height = force_N_join[ec_deacc_start_tick]
             elif force_N_join[i] <= 20: # condition of leaving ec_deacc_and_concetric_stage
