@@ -11,18 +11,18 @@ import datetime
 import matplotlib.pyplot as plt
 from shutil import copyfile
 
-def get_SJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, co_pf, co_pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick, co_end, co_end_tick):
+def get_SJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick, co_end, co_end_tick):
 
     # statistics
     fly_time_sec = air_end - air_start
     contact_time_sec = air_start - co_start
-    TtPF_sec = co_pf - co_start     # time to peak force
-    RFD = force_N_join[co_pf_tick] / TtPF_sec
+    TtPF_sec = pf - co_start     # time to peak force
+    RFD = force_N_join[pf_tick] / TtPF_sec
     #jump_height = 9.8 * (0.5 * fly_time)**2 + -9.8 * 0.5 * (0.5 * fly_time)**2
-    PF = force_N_join[co_pf_tick]
+    PF = force_N_join[pf_tick]
     jump_height_m = 0.5 * 9.8 * (0.5 * fly_time_sec)**2
     jump_power = p_watt_max
-    #print("co_pf_tick:{}".format(co_pf_tick))
+    #print("pf_tick:{}".format(pf_tick))
 
 
     print("fly_time_sec:{}".format(fly_time_sec))
@@ -35,18 +35,18 @@ def get_SJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stabl
 
     return fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power
 
-def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_acc_end, ec_acc_end_tick, ec_low, ec_deacc_start, ec_deacc_start_tick, co_pf, co_pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick):
+def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_acc_end, ec_acc_end_tick, ec_low, ec_deacc_start, ec_deacc_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick):
 
     # statistics
     fly_time_sec = air_end - air_start
     contact_time_sec = air_start - ec_start
-    TtPF_sec = co_pf - ec_deacc_start     # time to peak force
-    RFD = force_N_join[co_pf_tick] / TtPF_sec
+    TtPF_sec = pf - ec_deacc_start     # time to peak force
+    RFD = force_N_join[pf_tick] / TtPF_sec
     #jump_height = 9.8 * (0.5 * fly_time)**2 + -9.8 * 0.5 * (0.5 * fly_time)**2
-    PF = force_N_join[co_pf_tick]
+    PF = force_N_join[pf_tick]
     jump_height_m = 0.5 * 9.8 * (0.5 * fly_time_sec)**2
     jump_power = p_watt_max
-    #print("co_pf_tick:{}".format(co_pf_tick))
+    #print("pf_tick:{}".format(pf_tick))
 
     time_ecc_sec = ec_deacc_end - ec_start
     time_con_sec = co_end - co_start
@@ -54,8 +54,8 @@ def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stab
     fly_contact_ratio = fly_time_sec / contact_time_sec
     RSI_mod = contact_time_sec / fly_time_sec
     mean_co_force = np.mean(force_N_join[co_start_tick:co_end_tick])
-    velocity_pf = v_mps[co_pf_tick]
-    force_pf = force_N_join[co_pf_tick]
+    velocity_pf = v_mps[pf_tick]
+    force_pf = force_N_join[pf_tick]
     pVelocity = v_mps[co_end_tick]
     mean_power_con = np.mean(p_watt[co_start_tick:co_end_tick])
     time_to_pp_sec = time_sec_tick[p_watt_max_tick] - ec_start
@@ -128,11 +128,12 @@ def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stab
 
     return fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power, time_ecc_sec, time_con_sec, total_time_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pf, force_pf, pVelocity, mean_power_con, time_to_pp_sec, min_velocity, force_at_zero_velocity, mean_ec_con_power, velocity_take_off, imp_ec_deacc_con, RNI, imp_ec_acc, area_force_velocity, ec_displacement_cm, vertical_stiffness
 
-def get_SJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, co_pf, co_pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, co_end, co_end_tick):
+def get_SJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, co_end, co_end_tick):
 
     # calculate a / v / p # using stable start
     #body_weight = force_N_join[stable_start_tick] / 9.81
     body_weight = np.mean(force_N_join[stable_start_tick:stable_end_tick]) / 9.81
+    print("body_weight:{}".format(body_weight))
     a_mss = []
     v_mps = []
     p_watt = []
@@ -164,24 +165,25 @@ def get_SJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stabl
             p_watt_max = p_watt[i]
             p_watt_max_tick = i
 
-    find_start_tick = co_pf_tick
+    find_start_tick = pf_tick
     for i in range(len(time_sec_tick)):
         if find_start_tick < i < air_start_tick:
             #print("a_mss[i]:{}".format(a_mss[i]))
             if -0.5 <= a_mss[i] <= 0.5:
                 co_end_tick = i
                 co_end = time_sec_tick[i]
-    print("co_pf_tick:{}, air_start_tick:{}, co_end_tick:{}".format(co_pf_tick, air_start_tick, co_end_tick))
+    print("pf_tick:{}, air_start_tick:{}, co_end_tick:{}".format(pf_tick, air_start_tick, co_end_tick))
 
         #print("time_sec_tick:{}, force_N_join:{}, a_mss:{}, v_mps:{}, p_watt:{}".format(time_sec_tick[i], force_N_join[i], a_mss[i], v_mps[i], p_watt[i]))
 
     return a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick, co_end, co_end_tick
 
-def get_CMJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_acc_end, ec_acc_end_tick, ec_low, ec_deacc_start, ec_deacc_start_tick, co_pf, co_pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick):
+def get_CMJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_acc_end, ec_acc_end_tick, ec_low, ec_deacc_start, ec_deacc_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick):
 
     # calculate a / v / p # using stable start
     #body_weight = force_N_join[stable_start_tick] / 9.81
     body_weight = np.mean(force_N_join[stable_start_tick:stable_end_tick]) / 9.81
+    print("body_weight:{}".format(body_weight))
     a_mss = []
     v_mps = []
     p_watt = []
@@ -218,7 +220,7 @@ def get_CMJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stab
     find_start_tick = ec_acc_end_tick
     for i in range(len(time_sec_tick)):
         if find_start_tick < i < co_end_tick:
-            print("time_sec_tick:{}, force_N_join:{}, a_mss:{}, v_mps:{}, p_watt:{}".format(time_sec_tick[i], force_N_join[i], a_mss[i], v_mps[i], p_watt[i]))
+            #print("time_sec_tick:{}, force_N_join:{}, a_mss:{}, v_mps:{}, p_watt:{}".format(time_sec_tick[i], force_N_join[i], a_mss[i], v_mps[i], p_watt[i]))
             if v_mps[i] < v_low:
                 v_low = v_mps[i]
                 ec_acc_end_tick = i
@@ -231,7 +233,7 @@ def get_CMJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stab
                 co_start_tick = i
                 co_start = time_sec_tick[i]
     
-    find_start_tick = co_pf_tick
+    find_start_tick = pf_tick
     for i in range(len(time_sec_tick)):
         if find_start_tick < i < air_start_tick:
             if -0.05 <= a_mss[i] <= 0.05:
@@ -268,8 +270,8 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
 
     co_start = -1
     co_start_tick = -1
-    co_pf = -1
-    co_pf_tick = -1
+    pf = -1
+    pf_tick = -1
     co_height = -1
     goback_condition_count = 0
 
@@ -324,8 +326,8 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
                     co_start = stable_end
                     co_start_tick = stable_end_tick
                     co_height = force_N_join[co_start_tick]
-                    co_pf = time_sec_tick[i]
-                    co_pf_tick = i
+                    pf = time_sec_tick[i]
+                    pf_tick = i
 
                 else:
 
@@ -373,10 +375,10 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
             else:
                 goback_condition_count = 0
             # go back to stg_num 0 ? condition 2 should not have ec on SJ
-            #print("force_N_join[i]:{}, mean:{}, i:{}, co_pf_tick:{}".format(force_N_join[i], mean, i, co_pf_tick))
+            #print("force_N_join[i]:{}, mean:{}, i:{}, pf_tick:{}".format(force_N_join[i], mean, i, pf_tick))
             if (
                 (force_N_join[i] - mean) < -50 and # detect ec  
-                i <= co_pf_tick): # make sure force drop happens before co_pf or co_height point
+                i <= pf_tick): # make sure force drop happens before pf or co_height point
                 
                 stg_num = 0
                 mean = force_N_join[i]
@@ -394,8 +396,8 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
             #print("time_sec_tick[i]:{}, force_N_join[i]:{}".format(time_sec_tick[i], force_N_join[i]))
             if force_N_join[i] >= co_height:
                 co_height = force_N_join[i]
-                co_pf = time_sec_tick[i]
-                co_pf_tick = i
+                pf = time_sec_tick[i]
+                pf_tick = i
             #elif force_N_join[i] <= force_N_join[ec_deacc_start_tick]: # keep searching
             #    co_height = force_N_join[ec_deacc_start_tick]
             elif force_N_join[i] <= 20: # condition of leaving ec_deacc_and_concetric_stage
@@ -419,7 +421,7 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
     print("stable_start:{}, stable_end:{}".format(stable_start, stable_end))
     print("stable_end_fix:{}, stable_end_fix_tick:{}".format(stable_end_fix, stable_end_fix_tick))
     #print("ec_start_tick:{}, ec_acc_end_tick:{}".format(ec_start_tick, ec_acc_end_tick))
-    print("co_start_tick:{}, co_pf_tick:{}".format(co_start_tick, co_pf_tick))
+    print("co_start_tick:{}, pf_tick:{}".format(co_start_tick, pf_tick))
     print("air_start_tick:{}, air_end_tick:{}".format(air_start_tick, air_end_tick))
 
     # fix stable end position
@@ -428,7 +430,7 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
     co_start = stable_end
     co_start_tick = stable_end_tick
 
-    return stg_num, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, co_pf, co_pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, co_end, co_end_tick
+    return stg_num, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, co_end, co_end_tick
 
 
 def get_CMJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
@@ -464,8 +466,8 @@ def get_CMJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
     co_start = -1
     co_start_tick = -1
 
-    co_pf = -1
-    co_pf_tick = -1
+    pf = -1
+    pf_tick = -1
     co_height = -1
 
     co_end = -1
@@ -573,14 +575,14 @@ def get_CMJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
 
         # find the end point of ec_deacc_and_concetric_stage
         if stg_num == 2:
-            #print("time_sec_tick[i]:{}, force_N_join[i]:{}, mean:{}, co_pf_tick:{}".format(time_sec_tick[i], force_N_join[i], mean, co_pf_tick))
+            #print("time_sec_tick[i]:{}, force_N_join[i]:{}, mean:{}, pf_tick:{}".format(time_sec_tick[i], force_N_join[i], mean, pf_tick))
 
             if force_N_join[i] >= co_height:
                 co_height = force_N_join[i]
-                co_pf = time_sec_tick[i]
-                co_pf_tick = i
+                pf = time_sec_tick[i]
+                pf_tick = i
 
-            if mean-15 <= force_N_join[i] <= mean+15 and i <= co_pf_tick:
+            if mean-15 <= force_N_join[i] <= mean+15 and i <= pf_tick:
                 ec_deacc_end = time_sec_tick[i]
                 ec_deacc_end_tick = i
                 co_start = ec_deacc_end
@@ -612,14 +614,14 @@ def get_CMJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
     print("stable_start_tick:{}, stable_end_tick:{}".format(stable_start_tick, stable_end_tick))
     print("ec_start_tick:{}, ec_acc_end_tick:{}".format(ec_start_tick, ec_acc_end_tick))
     print("ec_deacc_start_tick:{}, ec_deacc_end_tick:{}".format(ec_deacc_start_tick, ec_deacc_end_tick))
-    print("co_start_tick:{}, co_pf_tick:{}".format(co_start_tick, co_pf_tick))
+    print("co_start_tick:{}, pf_tick:{}".format(co_start_tick, pf_tick))
 
-    print("co_pf_tick:{}, co_end_tick:{}".format(co_pf_tick, co_end_tick))
+    print("pf_tick:{}, co_end_tick:{}".format(pf_tick, co_end_tick))
 
     print("air_start_tick:{}, air_end_tick:{}".format(air_start_tick, air_end_tick))
     
 
-    return stg_num, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_acc_end, ec_acc_end_tick, ec_low, ec_deacc_start, ec_deacc_start_tick, co_pf, co_pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick
+    return stg_num, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_acc_end, ec_acc_end_tick, ec_low, ec_deacc_start, ec_deacc_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick
 
 
 def get_analysis_list(file_list):
