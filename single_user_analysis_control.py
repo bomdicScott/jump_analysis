@@ -10,6 +10,7 @@ import dateutil
 import datetime
 import matplotlib.pyplot as plt
 from shutil import copyfile
+import copy as cp
 
 import data_parsing_modules as DPM
 import data_plot as DP
@@ -632,6 +633,7 @@ def single_user_analysis(data_dir):
     #    analysis_list = ['scott_20170525_ULSJ_t1'] # uneven floor ?
     #if 'scott' in data_dir:
         #analysis_list = ['scott_20170525_LCMJ_t1']
+    #    analysis_list = ['scott_20170525_LCMJ_t1', 'scott_20170525_LCMJ_t2']
         #analysis_list = ['scott_20170525_ULSJ_t1'] # one air force error
 
     if analysis_list == []:
@@ -655,7 +657,7 @@ def single_user_analysis(data_dir):
                 fig = DP.get_fig_no_data_with_err_msg(error_code,err_msg)
                 fig.savefig( data_dir + '{}_error_message.png'.format(data_name))
                 list_new_error_fig_path += [data_dir + '{}_error_message.png'.format(data_name)]
-                plt.close(fig)
+                #plt.close(fig)
 
                 #sys.exit()
             elif not('CMJ' in data_name or 'SJ' in data_name):
@@ -667,7 +669,7 @@ def single_user_analysis(data_dir):
                 fig = DP.get_fig_no_data_with_err_msg(error_code,err_msg)
                 fig.savefig( data_dir + '{}_error_message.png'.format(data_name))
                 list_new_error_fig_path += [data_dir + '{}_error_message.png'.format(data_name)]
-                plt.close(fig)
+                #plt.close(fig)
 
             elif 'CMJ' in data_name:
 
@@ -700,7 +702,7 @@ def single_user_analysis(data_dir):
                     fig = DP.get_fig_time_force_with_err_msg(time_sec_tick, force_N_join, err_msg)
                     fig.savefig( data_dir + '{}_error_message.png'.format(data_name))
                     list_new_error_fig_path += [data_dir + '{}_error_message.png'.format(data_name)]
-                    plt.close(fig)
+                    #plt.close(fig)
 
                 else:    
 
@@ -721,8 +723,7 @@ def single_user_analysis(data_dir):
                     #plt.pause(0.001)
 
                     list_new_fig_time_force_notiation_path += [data_dir + '{}_time_force_notation.png'.format(data_name)]
-
-                    plt.close(fig)
+                    #plt.close(fig)
 
                     fig = DP.get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, p_watt_max_tick, stable_start_tick, stable_end_tick, ec_start_tick, ec_acc_end_tick, ec_deacc_start_tick, pf_tick, air_start_tick, air_end_tick, ec_deacc_end_tick, co_start_tick, co_end_tick)
                     fig.savefig( data_dir + '{}_time_f_a_v_p.png'.format(data_name))
@@ -778,7 +779,7 @@ def single_user_analysis(data_dir):
                     fig = DP.get_fig_time_force_with_err_msg(time_sec_tick, force_N_join, err_msg)
                     fig.savefig( data_dir + '{}_error_message.png'.format(data_name))
                     list_new_error_fig_path += [data_dir + '{}_error_message.png'.format(data_name)]
-                    plt.close(fig)
+                    #plt.close(fig)
 
                 else:    
 
@@ -795,7 +796,7 @@ def single_user_analysis(data_dir):
 
                     list_new_fig_time_force_notiation_path += [data_dir + '{}_time_force_notation.png'.format(data_name)]
 
-                    plt.close(fig)
+                    #plt.close(fig)
 
                     fig = DP.get_fig_SJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, p_watt_max_tick, stable_start_tick, stable_end_tick, co_start_tick, pf_tick, co_end_tick, air_start_tick, air_end_tick)
                     fig.savefig( data_dir + '{}_time_f_a_v_p.png'.format(data_name))

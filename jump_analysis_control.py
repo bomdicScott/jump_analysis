@@ -8,46 +8,42 @@ import os, sys
 import itertools
 import dateutil
 import datetime
+
+#import tk_plot_modules as TPM
+
 import matplotlib.pyplot as plt
 from shutil import copyfile
-
 import data_parsing_modules as DPM
 import data_plot as DP
 import jump_analysis_modules as JAM
 import single_user_analysis_control as SUAC
 from subprocess import check_output
-
+import copy
 #########################################
 workspace_dir = "{}/".format(os.getcwd())
 
 # for develop enviroment in mac 
 #users_dir = workspace_dir + "test_data/"
 #simualte formal user folder
-#users_dir = workspace_dir.replace('jump_analysis','jump_analysis_data')
-#print("users_dir:{}".format(users_dir))
-#dual_input_dir = users_dir + "_dual_input/"
-#sys_show_fig_cmd = 'open -a Preview' # for mac preview
+users_dir = workspace_dir.replace('jump_analysis','jump_analysis_data')
+print("users_dir:{}".format(users_dir))
+dual_input_dir = users_dir + "_dual_input/"
 
 
 # for app enviroment in windows
-users_dir = workspace_dir # for windows
-print("users_dir:{}".format(users_dir))
-dual_input_dir = workspace_dir + '_dual_input/'
-#sys_show_fig_cmd = ' start "" /I "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" '
+#users_dir = workspace_dir # for windows
+#print("users_dir:{}".format(users_dir))
+#dual_input_dir = workspace_dir + '_dual_input/'
 
 print("users_dir:{}".format(users_dir))
 
 
-enable_sys_fig_show = 0
+enable_sys_fig_show = 1
 
 #########################################
 
 # dispatch files in dual input folder
 list_new_error_fig_path = DPM.dispatch_daul_input(dual_input_dir, users_dir)
-if enable_sys_fig_show == 1:
-    for fig_path in list_new_error_fig_path:
-        os.system('{} {}'.format(sys_show_fig_cmd, fig_path))
-
 
 file_list = os.listdir(users_dir)
 user_list = []
@@ -69,20 +65,13 @@ for user_name in user_list:
     print("list_new_fig_time_force_notiation_path:{}".format(list_new_fig_time_force_notiation_path))
     print("analysis_list:{}".format(analysis_list))
     
-    if enable_sys_fig_show == 1:
-        for fig_path in list_new_fig_time_force_notiation_path:
-            #os.system('{} {}'.format(sys_show_fig_cmd, fig_path))
-            check_output('{} {}'.format(sys_show_fig_cmd, fig_path), shell=True).decode()
-        for fig_path in list_new_error_fig_path:
-            os.system('{} {}'.format(sys_show_fig_cmd, fig_path))
-
     #[TODO] add user statistics
     if analysis_list != []:
         SUAC.update_user_CMJ_statistics(data_dir)
         SUAC.update_user_SJ_statistics(data_dir)
 
-
-
+if enable_sys_fig_show == 1:
+    plt.show()
 
 
 

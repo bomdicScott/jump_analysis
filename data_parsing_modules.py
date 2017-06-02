@@ -57,7 +57,7 @@ def dispatch_daul_input(dual_input_dir, users_dir):
             fig = DP.get_fig_no_data_with_err_msg(error_code,err_msg)
             fig.savefig( dual_input_dir+'{}_ERROR_{}.png'.format(f,err_msg))
             list_new_error_fig_path += [dual_input_dir+'{}_ERROR_{}.png'.format(f,err_msg)]
-            plt.close(fig)
+            #plt.close(fig)
 
             '''
             with open(dual_input_dir+'{}_ERROR_{}'.format(f,err_msg), 'w') as csvfile:
@@ -145,7 +145,7 @@ def dispatch_daul_input(dual_input_dir, users_dir):
             fig = DP.get_fig_no_data_with_err_msg(error_code,err_msg)
             fig.savefig( dual_input_dir+'{}_ERROR_{}.png'.format(f_name,err_msg))
             list_new_error_fig_path += [dual_input_dir+'{}_ERROR_{}.png'.format(f_name,err_msg)]
-            plt.close(fig)
+            #plt.close(fig)
 
 
     return list_new_error_fig_path
