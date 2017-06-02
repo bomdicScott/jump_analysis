@@ -9,8 +9,6 @@ import itertools
 import dateutil
 import datetime
 
-#import tk_plot_modules as TPM
-
 import matplotlib.pyplot as plt
 from shutil import copyfile
 import data_parsing_modules as DPM
