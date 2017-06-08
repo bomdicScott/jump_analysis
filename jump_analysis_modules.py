@@ -49,6 +49,8 @@ def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stab
     #print("pf_tick:{}".format(pf_tick))
 
     time_ecc_sec = ec_deacc_end - ec_start
+    time_ecc_acc_sec = ec_acc_end - ec_start
+    time_ecc_deacc_sec = ec_deacc_end - ec_deacc_start
     time_con_sec = co_end - co_start
     total_time_sec = time_ecc_sec + time_con_sec
     fly_contact_ratio = fly_time_sec / contact_time_sec
@@ -57,6 +59,8 @@ def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stab
     else:
         RSI_mod = contact_time_sec / fly_time_sec
     mean_co_force = np.mean(force_N_join[co_start_tick:co_end_tick])
+    velocity_pp = v_mps[p_watt_max_tick]
+    force_pp = force_N_join[p_watt_max_tick]
     velocity_pf = v_mps[pf_tick]
     force_pf = force_N_join[pf_tick]
     pVelocity = v_mps[co_end_tick]
@@ -89,12 +93,16 @@ def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stab
         #print("i:{}, area_force_velocity:{}, delta_v:{}, f_delta_mean:{}".format(i, area_force_velocity, delta_v, f_delta_mean))
 
     # stiffness calculation
+    #for i in range(len(a_mss)):
+    #    print("{},{}".format(a_mss[i],v_mps[i]))
+
     pos_cm = [0]
     for i in range(1,len(v_mps)):
         delta_pos_cm = ( v_mps[i-1]*T + 0.5*a_mss[i-1]*T**2 ) * 100
         pos_cm += [pos_cm[-1] + delta_pos_cm]
-        #print("i:{}, pos_cm[i]:{}".format(i,pos_cm[i]))
+        #print("i:{}, pos_cm[i]:{}, delta_pos_cm:{}, v_mps[i-1]:{}, a_mss[i-1]:{}".format(i,pos_cm[i], delta_pos_cm, v_mps[i-1], a_mss[i-1]))
     ec_displacement_cm = pos_cm[ec_start_tick] - pos_cm[ec_deacc_end_tick]
+    #print("ec_start_tick:{}, ec_deacc_end_tick:{}".format(ec_start_tick, ec_deacc_end_tick))
     vertical_stiffness = force_pf / ec_displacement_cm
     
 
@@ -108,13 +116,15 @@ def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stab
     print("jump_power:{}".format(jump_power))
 
     print("time_ecc_sec:{}".format(time_ecc_sec))
+    print("time_ecc_acc_sec:{}".format(time_ecc_acc_sec))
+    print("time_ecc_deacc_sec:{}".format(time_ecc_deacc_sec))
     print("time_con_sec:{}".format(time_con_sec))
     print("total_time_sec:{}".format(total_time_sec))
     print("fly_contact_ratio:{}".format(fly_contact_ratio))
     print("RSI_mod:{}".format(RSI_mod))
     print("mean_co_force:{}".format(mean_co_force))
-    print("velocity_pf:{}".format(velocity_pf))
-    print("force_pf:{}".format(force_pf))
+    print("velocity_pp:{}".format(velocity_pp))
+    print("force_pp:{}".format(force_pp))
     print("pVelocity:{}".format(pVelocity))
     print("mean_power_con:{}".format(mean_power_con))
     print("time_to_pp_sec:{}".format(time_to_pp_sec))
@@ -164,7 +174,10 @@ def get_SJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stabl
             v_mps += [0]
             p_watt += [0]
 
-        if p_watt[i] > p_watt_max:
+        if (
+            p_watt[i] > p_watt_max and
+            co_start_tick <=i<= co_end_tick
+           ):
             p_watt_max = p_watt[i]
             p_watt_max_tick = i
 
@@ -214,7 +227,10 @@ def get_CMJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stab
             v_mps += [0]
             p_watt += [0]
 
-        if p_watt[i] > p_watt_max:
+        if (
+            p_watt[i] > p_watt_max and
+            co_start_tick <=i<= co_end_tick
+           ):
             p_watt_max = p_watt[i]
             p_watt_max_tick = i
 

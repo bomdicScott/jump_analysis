@@ -624,6 +624,7 @@ def single_user_analysis(data_dir):
     #    analysis_list = ['user1_20170530_ULCMJ_t1']
     #    analysis_list = ['user1_20170530_ULCMJ_t8']
     #    analysis_list = ['user1_20170530_ULCMJ_t44']
+    #    analysis_list = ['user1_20170530_ULCMJ_t28']
     #if 'user2' in data_dir:
     #    analysis_list = ['user2_20170428_LSJ_t1']
     #if 'user12' in data_dir:
@@ -632,7 +633,7 @@ def single_user_analysis(data_dir):
     #if 'scott' in data_dir:
     #    analysis_list = ['scott_20170525_ULSJ_t1'] # uneven floor ?
     #if 'scott' in data_dir:
-        #analysis_list = ['scott_20170525_LCMJ_t1']
+    #    analysis_list = ['scott_20170525_LCMJ_t1']
     #    analysis_list = ['scott_20170525_LCMJ_t1', 'scott_20170525_LCMJ_t2']
         #analysis_list = ['scott_20170525_ULSJ_t1'] # one air force error
 
