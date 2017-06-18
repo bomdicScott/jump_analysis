@@ -15,6 +15,8 @@ import copy as cp
 import data_parsing_modules as DPM
 import data_plot as DP
 import jump_analysis_modules as JAM
+import CMJ_analysis_control as CMJAC
+import CMJ_statistics_control as CMJSC
 
 def t_sorted(to_be_sorted_list, time_sec_list):
 
@@ -29,14 +31,6 @@ def get_SJ_analysis_result_list(file_list):
 
     return result_list
 
-def get_CMJ_analysis_result_list(file_list):
-    result_list = []
-    for f_name in file_list:
-        if 'analysis_results.csv' in f_name and 'CMJ' in f_name:
-            result_list += [f_name]
-    #print("result_list:{}".format(result_list))
-
-    return result_list
 
 def read_analysis_result(result_path):
     
@@ -159,99 +153,6 @@ def get_sorted_LSJ_ULSJ_list(s_contact_time_sec,
 
     return s_LSJ_contact_time_sec,s_LSJ_TtPF_sec,s_LSJ_RFD,s_LSJ_jump_height_m,s_LSJ_jump_power,s_LSJ_date,s_LSJ_jump_type,s_LSJ_try_num,s_LSJ_epoch_time_sec,s_ULSJ_contact_time_sec,s_ULSJ_TtPF_sec,s_ULSJ_RFD,s_ULSJ_jump_height_m,s_ULSJ_jump_power,s_ULSJ_date,s_ULSJ_jump_type,s_ULSJ_try_num,s_ULSJ_epoch_time_sec
 
-def get_sorted_LCMJ_ULCMJ_list(s_contact_time_sec,
-                               s_TtPF_sec,
-                               s_RFD,
-                               s_jump_height_m,
-                               s_jump_power,
-                               s_date,
-                               s_jump_type,
-                               s_try_num):
-    #print("s_date:{}".format(s_date))
-    #print("s_jump_type:{}".format(s_jump_type))
-    s_LCMJ_contact_time_sec = []
-    s_LCMJ_TtPF_sec = []
-    s_LCMJ_RFD = []
-    s_LCMJ_jump_height_m = []
-    s_LCMJ_jump_power = []
-    s_LCMJ_date = []
-    s_LCMJ_jump_type = []
-    s_LCMJ_try_num = []
-    s_LCMJ_epoch_time_sec = []
-
-    s_ULCMJ_contact_time_sec = []
-    s_ULCMJ_TtPF_sec = []
-    s_ULCMJ_RFD = []
-    s_ULCMJ_jump_height_m = []
-    s_ULCMJ_jump_power = []
-    s_ULCMJ_date = []
-    s_ULCMJ_jump_type = []
-    s_ULCMJ_try_num = []
-    s_ULCMJ_epoch_time_sec = []
-
-    for i in range(len(s_date)):
-        #print("s_jump_type[i]:{}".format(s_jump_type[i]))
-        if s_jump_type[i] == 'LCMJ':
-            s_LCMJ_contact_time_sec += [s_contact_time_sec[i]]
-            s_LCMJ_TtPF_sec += [s_TtPF_sec[i]]
-            s_LCMJ_RFD += [s_RFD[i]]
-            s_LCMJ_jump_height_m += [s_jump_height_m[i]]
-            s_LCMJ_jump_power += [s_jump_power[i]]
-            s_LCMJ_date += [s_date[i]]
-            s_LCMJ_jump_type += [s_jump_type[i]]
-            s_LCMJ_try_num += [s_try_num[i]]
-            s_LCMJ_epoch_time_sec += [get_epoch_sec(s_date[i])]
-
-        elif s_jump_type[i] == 'ULCMJ':
-            #print("s_ULCMJ_epoch_time_sec:{}".format(s_ULCMJ_epoch_time_sec))
-            s_ULCMJ_contact_time_sec += [s_contact_time_sec[i]]
-            s_ULCMJ_TtPF_sec += [s_TtPF_sec[i]]
-            s_ULCMJ_RFD += [s_RFD[i]]
-            s_ULCMJ_jump_height_m += [s_jump_height_m[i]]
-            s_ULCMJ_jump_power += [s_jump_power[i]]
-            s_ULCMJ_date += [s_date[i]]
-            s_ULCMJ_jump_type += [s_jump_type[i]]
-            s_ULCMJ_try_num += [s_try_num[i]]
-            #print("get_epoch_sec(s_date[i]):{}".format(get_epoch_sec(s_date[i])))
-            s_ULCMJ_epoch_time_sec += [get_epoch_sec(s_date[i])]
-
-    #print("LCMJ_date:{}".format(LCMJ_date))
-    #print("LCMJ_epoch_time_sec:{}".format(LCMJ_epoch_time_sec))
-    #print("ULCMJ_date:{}".format(ULCMJ_date))
-    #print("ULCMJ_epoch_time_sec:{}".format(ULCMJ_epoch_time_sec))
-    #print("s_LCMJ_date:{}".format(s_LCMJ_date))
-    #print("[c1]s_LCMJ_epoch_time_sec:{}".format(s_LCMJ_epoch_time_sec))
-    #print("s_ULCMJ_date:{}".format(s_ULCMJ_date))
-    #print("[c1]s_ULCMJ_epoch_time_sec:{}".format(s_ULCMJ_epoch_time_sec))
-
-    # sort data
-    # t_sorted(to_be_sorted_list, time_sec_list)
-    s_LCMJ_contact_time_sec = t_sorted(s_LCMJ_contact_time_sec, s_LCMJ_epoch_time_sec)
-    s_LCMJ_TtPF_sec = t_sorted(s_LCMJ_TtPF_sec, s_LCMJ_epoch_time_sec)
-    s_LCMJ_RFD = t_sorted(s_LCMJ_RFD, s_LCMJ_epoch_time_sec)
-    s_LCMJ_jump_height_m = t_sorted(s_LCMJ_jump_height_m, s_LCMJ_epoch_time_sec)
-    s_LCMJ_jump_power = t_sorted(s_LCMJ_jump_power, s_LCMJ_epoch_time_sec)
-    s_LCMJ_date = t_sorted(s_LCMJ_date, s_LCMJ_epoch_time_sec)
-    s_LCMJ_jump_type = t_sorted(s_LCMJ_jump_type, s_LCMJ_epoch_time_sec)
-    s_LCMJ_try_num = t_sorted(s_LCMJ_try_num, s_LCMJ_epoch_time_sec)
-    s_LCMJ_epoch_time_sec = t_sorted(s_LCMJ_epoch_time_sec, s_LCMJ_epoch_time_sec)
-
-    s_ULCMJ_contact_time_sec = t_sorted(s_ULCMJ_contact_time_sec, s_ULCMJ_epoch_time_sec)
-    s_ULCMJ_TtPF_sec = t_sorted(s_ULCMJ_TtPF_sec, s_ULCMJ_epoch_time_sec)
-    s_ULCMJ_RFD = t_sorted(s_ULCMJ_RFD, s_ULCMJ_epoch_time_sec)
-    s_ULCMJ_jump_height_m = t_sorted(s_ULCMJ_jump_height_m, s_ULCMJ_epoch_time_sec)
-    s_ULCMJ_jump_power = t_sorted(s_ULCMJ_jump_power, s_ULCMJ_epoch_time_sec)
-    s_ULCMJ_date = t_sorted(s_ULCMJ_date, s_ULCMJ_epoch_time_sec)
-    s_ULCMJ_jump_type = t_sorted(s_ULCMJ_jump_type, s_ULCMJ_epoch_time_sec)
-    s_ULCMJ_try_num = t_sorted(s_ULCMJ_try_num, s_ULCMJ_epoch_time_sec)
-    s_ULCMJ_epoch_time_sec = t_sorted(s_ULCMJ_epoch_time_sec, s_ULCMJ_epoch_time_sec)
-
-    #print("s_LCMJ_contact_time_sec:{}".format(s_LCMJ_contact_time_sec))
-    #print("s_LCMJ_date:{}".format(s_LCMJ_date))
-    #print("s_LCMJ_epoch_time_sec:{}".format(s_LCMJ_epoch_time_sec))
-    #print("s_ULCMJ_epoch_time_sec:{}".format(s_ULCMJ_epoch_time_sec))
-
-    return s_LCMJ_contact_time_sec,s_LCMJ_TtPF_sec,s_LCMJ_RFD,s_LCMJ_jump_height_m,s_LCMJ_jump_power,s_LCMJ_date,s_LCMJ_jump_type,s_LCMJ_try_num,s_LCMJ_epoch_time_sec,s_ULCMJ_contact_time_sec,s_ULCMJ_TtPF_sec,s_ULCMJ_RFD,s_ULCMJ_jump_height_m,s_ULCMJ_jump_power,s_ULCMJ_date,s_ULCMJ_jump_type,s_ULCMJ_try_num,s_ULCMJ_epoch_time_sec
 
 def get_avg_list(data_list, time_list):
     avg_data_list = []
@@ -308,29 +209,6 @@ def get_avg_LSJ_ULSJ_list(s_LSJ_contact_time_sec,s_LSJ_TtPF_sec,s_LSJ_RFD,s_LSJ_
 
     return s_avg_LSJ_contact_time_sec,s_avg_LSJ_TtPF_sec,s_avg_LSJ_RFD,s_avg_LSJ_jump_height_m,s_avg_LSJ_jump_power,s_avg_LSJ_date,s_avg_LSJ_epoch_time_sec,s_avg_ULSJ_contact_time_sec,s_avg_ULSJ_TtPF_sec,s_avg_ULSJ_RFD,s_avg_ULSJ_jump_height_m,s_avg_ULSJ_jump_power,s_avg_ULSJ_date,s_avg_ULSJ_epoch_time_sec
 
-def get_avg_LCMJ_ULCMJ_list(s_LCMJ_contact_time_sec,s_LCMJ_TtPF_sec,s_LCMJ_RFD,s_LCMJ_jump_height_m,s_LCMJ_jump_power,s_LCMJ_date,s_LCMJ_jump_type,s_LCMJ_try_num,s_LCMJ_epoch_time_sec,s_ULCMJ_contact_time_sec,s_ULCMJ_TtPF_sec,s_ULCMJ_RFD,s_ULCMJ_jump_height_m,s_ULCMJ_jump_power,s_ULCMJ_date,s_ULCMJ_jump_type,s_ULCMJ_try_num,s_ULCMJ_epoch_time_sec):
-
-    s_avg_LCMJ_contact_time_sec = get_avg_list(s_LCMJ_contact_time_sec, s_LCMJ_date)
-    s_avg_LCMJ_TtPF_sec = get_avg_list(s_LCMJ_TtPF_sec, s_LCMJ_date)
-    s_avg_LCMJ_RFD = get_avg_list(s_LCMJ_RFD, s_LCMJ_date)
-    s_avg_LCMJ_jump_height_m = get_avg_list(s_LCMJ_jump_height_m, s_LCMJ_date)
-    s_avg_LCMJ_jump_power = get_avg_list(s_LCMJ_jump_power, s_LCMJ_date)
-    s_avg_LCMJ_date = get_avg_list(s_LCMJ_date, s_LCMJ_date)
-    s_avg_LCMJ_epoch_time_sec = get_avg_list(s_LCMJ_epoch_time_sec, s_LCMJ_date)
-
-    s_avg_ULCMJ_contact_time_sec = get_avg_list(s_ULCMJ_contact_time_sec, s_ULCMJ_date)
-    s_avg_ULCMJ_TtPF_sec = get_avg_list(s_ULCMJ_TtPF_sec, s_ULCMJ_date)
-    s_avg_ULCMJ_RFD = get_avg_list(s_ULCMJ_RFD, s_ULCMJ_date)
-    s_avg_ULCMJ_jump_height_m = get_avg_list(s_ULCMJ_jump_height_m, s_ULCMJ_date)
-    s_avg_ULCMJ_jump_power = get_avg_list(s_ULCMJ_jump_power, s_ULCMJ_date)
-    s_avg_ULCMJ_date = get_avg_list(s_ULCMJ_date, s_ULCMJ_date)
-    s_avg_ULCMJ_epoch_time_sec = get_avg_list(s_ULCMJ_epoch_time_sec, s_ULCMJ_date)
-    
-    #print("s_avg_LCMJ_date:{}".format(s_avg_LCMJ_date))
-    #print("s_avg_LCMJ_epoch_time_sec:{}".format(s_avg_LCMJ_epoch_time_sec))
-    #print("s_avg_LCMJ_jump_height_m:{}".format(s_avg_LCMJ_jump_height_m))
-
-    return s_avg_LCMJ_contact_time_sec,s_avg_LCMJ_TtPF_sec,s_avg_LCMJ_RFD,s_avg_LCMJ_jump_height_m,s_avg_LCMJ_jump_power,s_avg_LCMJ_date,s_avg_LCMJ_epoch_time_sec,s_avg_ULCMJ_contact_time_sec,s_avg_ULCMJ_TtPF_sec,s_avg_ULCMJ_RFD,s_avg_ULCMJ_jump_height_m,s_avg_ULCMJ_jump_power,s_avg_ULCMJ_date,s_avg_ULCMJ_epoch_time_sec
 
 def update_user_SJ_statistics(data_dir):
     
@@ -469,135 +347,7 @@ def update_user_SJ_statistics(data_dir):
 
 def update_user_CMJ_statistics(data_dir):
     
-    file_list = os.listdir(data_dir)
-    result_list = get_CMJ_analysis_result_list(file_list)
-    user_statistics_path = data_dir + '____user_CMJ_statistics.csv'
-
-    s_data_name = []
-    s_contact_time_sec = []
-    s_TtPF_sec = []
-    s_RFD = []
-    s_jump_height_m = []
-    s_jump_power = []
-    s_date = []
-    s_jump_type = []
-    s_try_num = []
-    s_fly_time_sec = []
-    s_PF = []
-
-    for result_name in result_list:
-        result_path = data_dir + result_name
-
-        if os.path.exists(result_path):
-            data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power, fly_time_sec, PF = read_analysis_result(result_path)
-
-            s_data_name += [data_name]
-            s_contact_time_sec += [contact_time_sec]
-            s_TtPF_sec += [TtPF_sec]
-            s_RFD += [RFD]
-            s_jump_height_m += [jump_height_m]
-            s_jump_power += [jump_power]
-            s_fly_time_sec += [fly_time_sec]
-            s_PF += [PF]
-
-            # if data_name uses standard format
-            data_name_split = data_name.split('_')
-            #print("data_name_split:{}".format(data_name_split))
-
-            if len(data_name_split) == 4 and len(data_name_split[1]) == 8 and data_name_split[1][0:2] == '20' and 't' in data_name_split[3]:
-                s_date += [data_name_split[1]]
-                s_jump_type += [data_name_split[2]]
-                s_try_num += [data_name_split[3]]
-            else:
-                s_date += ['NA']
-                s_jump_type += ['NA']
-                s_try_num += ['NA']
-
-    csv_header = []
-    csv_header += ["s_data_name"]
-    csv_header += ["s_contact_time_sec"]
-    csv_header += ["s_fly_time_sec"]
-    csv_header += ["s_TtPF_sec"]
-    csv_header += ["s_PF"]
-    csv_header += ["s_RFD"]
-    csv_header += ["s_jump_height_m"]
-    csv_header += ["s_jump_power"]
-    csv_header += ["s_date"]
-    csv_header += ["s_jump_type"]
-    csv_header += ["s_try_num"]
-            
-    with open(user_statistics_path, 'w') as csvfile:
-        writer = csv.writer(csvfile)
-        for row in range(len(s_data_name)+1):
-            data = []
-            if row == 0:
-                data = csv_header
-            else:
-                for col in range(len(csv_header)):
-                    #print("csv_header[col]:{}".format((csv_header[col])))
-                    #print("len:{}".format(len(eval(csv_header[col]))))
-                    data += [eval(csv_header[col])[row-1]]
-            writer.writerow(data)
-        csvfile.close()
-
-    # LCMJ / ULCMJ list
-    s_LCMJ_contact_time_sec,s_LCMJ_TtPF_sec,s_LCMJ_RFD,s_LCMJ_jump_height_m,s_LCMJ_jump_power,s_LCMJ_date,s_LCMJ_jump_type,s_LCMJ_try_num,s_LCMJ_epoch_time_sec,s_ULCMJ_contact_time_sec,s_ULCMJ_TtPF_sec,s_ULCMJ_RFD,s_ULCMJ_jump_height_m,s_ULCMJ_jump_power,s_ULCMJ_date,s_ULCMJ_jump_type,s_ULCMJ_try_num,s_ULCMJ_epoch_time_sec = get_sorted_LCMJ_ULCMJ_list(s_contact_time_sec,
-                               s_TtPF_sec,
-                               s_RFD,
-                               s_jump_height_m,
-                               s_jump_power,
-                               s_date,
-                               s_jump_type,
-                               s_try_num)
-
-    #print("s_date:{}".format(s_date))
-    #print("s_ULCMJ_epoch_time_sec:{}".format(s_ULCMJ_epoch_time_sec))
-
-    # get avg LCMJ / ULCMJ list
-    s_avg_LCMJ_contact_time_sec,s_avg_LCMJ_TtPF_sec,s_avg_LCMJ_RFD,s_avg_LCMJ_jump_height_m,s_avg_LCMJ_jump_power,s_avg_LCMJ_date,s_avg_LCMJ_epoch_time_sec,s_avg_ULCMJ_contact_time_sec,s_avg_ULCMJ_TtPF_sec,s_avg_ULCMJ_RFD,s_avg_ULCMJ_jump_height_m,s_avg_ULCMJ_jump_power,s_avg_ULCMJ_date,s_avg_ULCMJ_epoch_time_sec = get_avg_LCMJ_ULCMJ_list(s_LCMJ_contact_time_sec,s_LCMJ_TtPF_sec,s_LCMJ_RFD,s_LCMJ_jump_height_m,s_LCMJ_jump_power,s_LCMJ_date,s_LCMJ_jump_type,s_LCMJ_try_num,s_LCMJ_epoch_time_sec,s_ULCMJ_contact_time_sec,s_ULCMJ_TtPF_sec,s_ULCMJ_RFD,s_ULCMJ_jump_height_m,s_ULCMJ_jump_power,s_ULCMJ_date,s_ULCMJ_jump_type,s_ULCMJ_try_num,s_ULCMJ_epoch_time_sec)
-
-    # plot fig
-    if s_LCMJ_epoch_time_sec != []:
-        fig = DP.get_fig_LCMJ_analysis(s_LCMJ_contact_time_sec,
-                              s_LCMJ_TtPF_sec,
-                              s_LCMJ_RFD,
-                              s_LCMJ_jump_height_m,
-                              s_LCMJ_jump_power,
-                              s_LCMJ_date,
-                              s_LCMJ_epoch_time_sec,
-                              s_avg_LCMJ_contact_time_sec,
-                              s_avg_LCMJ_TtPF_sec,
-                              s_avg_LCMJ_RFD,
-                              s_avg_LCMJ_jump_height_m,
-                              s_avg_LCMJ_jump_power,
-                              s_avg_LCMJ_date,
-                              s_avg_LCMJ_epoch_time_sec)
-        fig.savefig( data_dir + '____LCMJ_analysis.png'.format(data_name))
-        plt.close(fig)
-    #print("s_ULCMJ_epoch_time_sec:{}".format(s_ULCMJ_epoch_time_sec))
-    if s_ULCMJ_epoch_time_sec != []:
-        fig = DP.get_fig_ULCMJ_analysis(s_ULCMJ_contact_time_sec,
-                           s_ULCMJ_TtPF_sec,
-                           s_ULCMJ_RFD,
-                           s_ULCMJ_jump_height_m,
-                           s_ULCMJ_jump_power,
-                           s_ULCMJ_date,
-                           s_ULCMJ_epoch_time_sec,
-                           s_avg_ULCMJ_contact_time_sec,
-                           s_avg_ULCMJ_TtPF_sec,
-                           s_avg_ULCMJ_RFD,
-                           s_avg_ULCMJ_jump_height_m,
-                           s_avg_ULCMJ_jump_power,
-                           s_avg_ULCMJ_date,
-                           s_avg_ULCMJ_epoch_time_sec)
-        fig.savefig( data_dir + '____ULCMJ_analysis.png'.format(data_name))
-        plt.close(fig)
-    if s_avg_ULCMJ_epoch_time_sec != [] and s_avg_LCMJ_epoch_time_sec != []:
-        fig = DP.get_fig_CMJ_compare(s_avg_ULCMJ_date, s_avg_ULCMJ_epoch_time_sec, s_avg_ULCMJ_jump_height_m, s_avg_LCMJ_date, s_avg_LCMJ_epoch_time_sec, s_avg_LCMJ_jump_height_m)
-        fig.savefig( data_dir + '____CMJ_compare.png'.format(data_name))
-        plt.close(fig)
-
-
+    CMJSC.update_user_CMJ_statistics(data_dir)
 
 
 def single_user_analysis(data_dir):
@@ -632,10 +382,10 @@ def single_user_analysis(data_dir):
     # test only section end
     #if 'scott' in data_dir:
     #    analysis_list = ['scott_20170525_ULSJ_t1'] # uneven floor ?
-    #if 'scott' in data_dir:
-    #    analysis_list = ['scott_20170525_LCMJ_t1']
+    if 'scott' in data_dir:
+        analysis_list = ['scott_20170525_LCMJ_t1']
     #    analysis_list = ['scott_20170525_LCMJ_t1', 'scott_20170525_LCMJ_t2']
-        #analysis_list = ['scott_20170525_ULSJ_t1'] # one air force error
+        analysis_list += ['scott_20170525_ULSJ_t1'] # one air force error
 
     if analysis_list == []:
         print("[No new data waited for analysis] Please copy new force plate csv file into data folder:[{}]".format(data_dir))
@@ -673,85 +423,14 @@ def single_user_analysis(data_dir):
                 #plt.close(fig)
 
             elif 'CMJ' in data_name:
+                new_error_fig_path, new_fig_time_force_notiation_path = CMJAC.CMJ_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2, force_N_join)
 
-                stg_num, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_acc_end, ec_acc_end_tick, ec_low, ec_deacc_start, ec_deacc_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick = JAM.get_CMJ_features_of_join_force(data_name, time_sec_tick, force_N_join)
+                if new_fig_time_force_notiation_path != '':
+                    list_new_fig_time_force_notiation_path += [new_fig_time_force_notiation_path]
+                if new_error_fig_path != '':
+                    list_new_error_fig_path += [new_error_fig_path]
 
-                a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick, ec_acc_end, ec_acc_end_tick, ec_deacc_start, ec_deacc_start_tick, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick = JAM.get_CMJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_acc_end, ec_acc_end_tick, ec_low, ec_deacc_start, ec_deacc_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick)
-
-
-                if stg_num != 4: # not finish test correctly. should return error message.
-                    print("stg_num:{}".format(stg_num))
-                    err_msg = ''
-                    if stg_num == 0:
-                        err_msg = "[Analysis Error] Initial stable time should be larger than 3sec"
-                        #print("[Analysis Error] Stable time should be larger than 3sec")  
-
-                    if stg_num == 1 or stg_num == 2:
-                        err_msg = "[Analysis Error] Not a correct CMJ. No eccentric signal detected."
-                        #print("[Analysis Error] Not a correct CMJ. No eccentric signal detected.")
-
-                    if stg_num == 3:
-                        err_msg = "[Analysis Error] Not a correct CMJ. No jump signal detected."
-                        #print("[Analysis Error] Not a correct CMJ. No jump signal detected.")
-
-                    if stg_num == 4:
-                        err_msg = "[Analysis Error] Might land outside of force plate. No landing signal detected."
-                        #print("[Analysis Error] Might land outside of force plate. No landing signal detected.")
-
-                    print(err_msg)
-                    # plot err msg
-                    fig = DP.get_fig_time_force_with_err_msg(time_sec_tick, force_N_join, err_msg)
-                    fig.savefig( data_dir + '{}_error_message.png'.format(data_name))
-                    list_new_error_fig_path += [data_dir + '{}_error_message.png'.format(data_name)]
-                    #plt.close(fig)
-
-                else:    
-
-                    fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power, time_ecc_sec, time_con_sec, total_time_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pf, force_pf, pVelocity, mean_power_con, time_to_pp_sec, min_velocity, force_at_zero_velocity, mean_ec_con_power, velocity_take_off, imp_ec_deacc_con, RNI, imp_ec_acc, area_force_velocity, ec_displacement_cm, vertical_stiffness = JAM.get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_acc_end, ec_acc_end_tick, ec_low, ec_deacc_start, ec_deacc_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick)
-
-                    # plot
-                    fig = DP.get_fig_time_force(data_name, time_sec_tick, force_N_1, force_N_2, force_N_join)
-                    fig.savefig( data_dir + '{}_time_force_raw.png'.format(data_name))
-                    plt.close(fig)
-
-
-                    fig = DP.get_fig_CMJ_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start_tick, stable_end_tick, ec_start_tick, ec_acc_end_tick, ec_deacc_start_tick, pf_tick, air_start_tick, air_end_tick,
-                        fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power, PF, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick)
-                    fig.savefig( data_dir + '{}_time_force_notation.png'.format(data_name))
-                    #plt.show(block=False)
-                    #plt.ion()
-                    #plt.show()
-                    #plt.pause(0.001)
-
-                    list_new_fig_time_force_notiation_path += [data_dir + '{}_time_force_notation.png'.format(data_name)]
-                    #plt.close(fig)
-
-                    fig = DP.get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, p_watt_max_tick, stable_start_tick, stable_end_tick, ec_start_tick, ec_acc_end_tick, ec_deacc_start_tick, pf_tick, air_start_tick, air_end_tick, ec_deacc_end_tick, co_start_tick, co_end_tick)
-                    fig.savefig( data_dir + '{}_time_f_a_v_p.png'.format(data_name))
-                    plt.close(fig)
-
-                    # dump analysis_results
-                    data_analysis_results_path = data_dir + data_name +"_analysis_results.csv"
-
-                    csv_header = []
-                    csv_header += ["data_name"]
-                    csv_header += ["fly_time_sec"]
-                    csv_header += ["contact_time_sec"]
-                    csv_header += ["TtPF_sec"]
-                    csv_header += ["RFD"]
-                    csv_header += ["PF"]
-                    csv_header += ["jump_height_m"]
-                    csv_header += ["jump_power"]
-                            
-                    with open(data_analysis_results_path, 'w') as csvfile:
-                        writer = csv.writer(csvfile)
-                        writer.writerow(csv_header)
-                        anlysis_result = []
-                        for col in range(len(csv_header)):
-                            anlysis_result += [eval(csv_header[col])]
-                        writer.writerow(anlysis_result)
-                        csvfile.close()
-
+                
             elif 'SJ' in data_name:
                 #print("get_SJ_features_of_join_force")
                 stg_num, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, co_end, co_end_tick = JAM.get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join)
