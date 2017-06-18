@@ -14,6 +14,7 @@ import copy as cp
 
 import data_parsing_modules as DPM
 import data_plot as DP
+import CMJ_plot as CMJP
 import jump_analysis_modules as JAM
 
 def t_sorted(to_be_sorted_list, time_sec_list):
@@ -296,7 +297,7 @@ def update_user_CMJ_statistics(data_dir):
 
     # plot fig
     if s_LCMJ_epoch_time_sec != []:
-        fig = DP.get_fig_LCMJ_analysis(s_LCMJ_contact_time_sec,
+        fig = CMJP.get_fig_LCMJ_analysis(s_LCMJ_contact_time_sec,
                               s_LCMJ_TtPF_sec,
                               s_LCMJ_RFD,
                               s_LCMJ_jump_height_m,
@@ -314,7 +315,7 @@ def update_user_CMJ_statistics(data_dir):
         plt.close(fig)
     #print("s_ULCMJ_epoch_time_sec:{}".format(s_ULCMJ_epoch_time_sec))
     if s_ULCMJ_epoch_time_sec != []:
-        fig = DP.get_fig_ULCMJ_analysis(s_ULCMJ_contact_time_sec,
+        fig = CMJP.get_fig_ULCMJ_analysis(s_ULCMJ_contact_time_sec,
                            s_ULCMJ_TtPF_sec,
                            s_ULCMJ_RFD,
                            s_ULCMJ_jump_height_m,
@@ -331,7 +332,7 @@ def update_user_CMJ_statistics(data_dir):
         fig.savefig( data_dir + '____ULCMJ_analysis.png'.format(data_name))
         plt.close(fig)
     if s_avg_ULCMJ_epoch_time_sec != [] and s_avg_LCMJ_epoch_time_sec != []:
-        fig = DP.get_fig_CMJ_compare(s_avg_ULCMJ_date, s_avg_ULCMJ_epoch_time_sec, s_avg_ULCMJ_jump_height_m, s_avg_LCMJ_date, s_avg_LCMJ_epoch_time_sec, s_avg_LCMJ_jump_height_m)
+        fig = CMJP.get_fig_CMJ_compare(s_avg_ULCMJ_date, s_avg_ULCMJ_epoch_time_sec, s_avg_ULCMJ_jump_height_m, s_avg_LCMJ_date, s_avg_LCMJ_epoch_time_sec, s_avg_LCMJ_jump_height_m)
         fig.savefig( data_dir + '____CMJ_compare.png'.format(data_name))
         plt.close(fig)
 

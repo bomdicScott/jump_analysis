@@ -14,6 +14,7 @@ import copy as cp
 
 import data_parsing_modules as DPM
 import data_plot as DP
+import SJ_plot as SJP
 import jump_analysis_modules as JAM
 
 def t_sorted(to_be_sorted_list, time_sec_list):
@@ -303,7 +304,7 @@ def update_user_SJ_statistics(data_dir):
 
     # plot fig
     if s_LSJ_epoch_time_sec != []:
-        fig = DP.get_fig_LSJ_analysis(s_LSJ_contact_time_sec,
+        fig = SJP.get_fig_LSJ_analysis(s_LSJ_contact_time_sec,
                               s_LSJ_TtPF_sec,
                               s_LSJ_RFD,
                               s_LSJ_jump_height_m,
@@ -321,7 +322,7 @@ def update_user_SJ_statistics(data_dir):
         plt.close(fig)
     #print("s_ULSJ_epoch_time_sec:{}".format(s_ULSJ_epoch_time_sec))
     if s_ULSJ_epoch_time_sec != []:
-        fig = DP.get_fig_ULSJ_analysis(s_ULSJ_contact_time_sec,
+        fig = SJP.get_fig_ULSJ_analysis(s_ULSJ_contact_time_sec,
                            s_ULSJ_TtPF_sec,
                            s_ULSJ_RFD,
                            s_ULSJ_jump_height_m,
@@ -338,7 +339,7 @@ def update_user_SJ_statistics(data_dir):
         fig.savefig( data_dir + '____ULSJ_analysis.png'.format(data_name))
         plt.close(fig)
     if s_avg_ULSJ_epoch_time_sec != [] and s_avg_LSJ_epoch_time_sec != []:
-        fig = DP.get_fig_SJ_compare(s_avg_ULSJ_date, s_avg_ULSJ_epoch_time_sec, s_avg_ULSJ_jump_height_m, s_avg_LSJ_date, s_avg_LSJ_epoch_time_sec, s_avg_LSJ_jump_height_m)
+        fig = SJP.get_fig_SJ_compare(s_avg_ULSJ_date, s_avg_ULSJ_epoch_time_sec, s_avg_ULSJ_jump_height_m, s_avg_LSJ_date, s_avg_LSJ_epoch_time_sec, s_avg_LSJ_jump_height_m)
         fig.savefig( data_dir + '____SJ_compare.png'.format(data_name))
         plt.close(fig)
 

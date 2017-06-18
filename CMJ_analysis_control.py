@@ -14,6 +14,7 @@ import copy as cp
 
 import data_parsing_modules as DPM
 import data_plot as DP
+import CMJ_plot as CMJP
 import jump_analysis_modules as JAM
 
 def CMJ_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2, force_N_join):
@@ -63,7 +64,7 @@ def CMJ_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2, 
         plt.close(fig)
 
 
-        fig = DP.get_fig_CMJ_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start_tick, stable_end_tick, ec_start_tick, ec_acc_end_tick, ec_deacc_start_tick, pf_tick, air_start_tick, air_end_tick,
+        fig = CMJP.get_fig_CMJ_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start_tick, stable_end_tick, ec_start_tick, ec_acc_end_tick, ec_deacc_start_tick, pf_tick, air_start_tick, air_end_tick,
             fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power, PF, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick)
         fig.savefig( data_dir + '{}_time_force_notation.png'.format(data_name))
         #plt.show(block=False)
@@ -75,7 +76,7 @@ def CMJ_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2, 
         new_fig_time_force_notiation_path = data_dir + '{}_time_force_notation.png'.format(data_name)
         #plt.close(fig)
 
-        fig = DP.get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, p_watt_max_tick, stable_start_tick, stable_end_tick, ec_start_tick, ec_acc_end_tick, ec_deacc_start_tick, pf_tick, air_start_tick, air_end_tick, ec_deacc_end_tick, co_start_tick, co_end_tick)
+        fig = CMJP.get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, p_watt_max_tick, stable_start_tick, stable_end_tick, ec_start_tick, ec_acc_end_tick, ec_deacc_start_tick, pf_tick, air_start_tick, air_end_tick, ec_deacc_end_tick, co_start_tick, co_end_tick)
         fig.savefig( data_dir + '{}_time_f_a_v_p.png'.format(data_name))
         plt.close(fig)
 
