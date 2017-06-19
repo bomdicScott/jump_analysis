@@ -63,10 +63,10 @@ def single_user_analysis(data_dir):
     # test only section end
     #if 'scott' in data_dir:
     #    analysis_list = ['scott_20170525_ULSJ_t1'] # uneven floor ?
-    if 'scott' in data_dir:
-        analysis_list = ['scott_20170525_LCMJ_t1']
+    #if 'scott' in data_dir:
+    #    analysis_list = ['scott_20170525_LCMJ_t1']
     #    analysis_list = ['scott_20170525_LCMJ_t1', 'scott_20170525_LCMJ_t2']
-        analysis_list += ['scott_20170525_ULSJ_t1'] # one air force error
+    #    analysis_list += ['scott_20170525_ULSJ_t1'] # one air force error
 
     if analysis_list == []:
         print("[No new data waited for analysis] Please copy new force plate csv file into data folder:[{}]".format(data_dir))

@@ -256,7 +256,41 @@ def get_fig_CMJ_time_force_notiation(data_name, time_sec_tick, force_N_join, sta
 
     return fig
 
-def get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, p_watt_max_tick, stable_start_tick, stable_end_tick, ec_start_tick, ec_acc_end_tick, ec_deacc_start_tick, pf_tick, air_start_tick, air_end_tick, ec_deacc_end_tick, co_start_tick, co_end_tick):
+def get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, p_watt_max_tick, stable_start_tick, stable_end_tick, ec_start_tick, ec_acc_end_tick, ec_deacc_start_tick, pf_tick, air_start_tick, air_end_tick, ec_deacc_end_tick, co_start_tick, co_end_tick, time_ecc_sec, time_con_sec, total_time_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pf, force_pf, pVelocity, mean_power_con, time_to_pp_sec, min_velocity, force_at_zero_velocity, mean_ec_con_power, velocity_take_off, imp_ec_deacc_con, RNI, imp_ec_acc, area_force_velocity, ec_displacement_cm, vertical_stiffness, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms):
+
+    # round
+    
+    time_ecc_sec = round(time_ecc_sec,3)
+    time_con_sec = round(time_con_sec,3)
+    total_time_sec = round(total_time_sec,3)
+    fly_contact_ratio = round(fly_contact_ratio,3)
+    RSI_mod = round(RSI_mod,3)
+    mean_co_force = round(mean_co_force,3)
+    velocity_pf = round(velocity_pf,3)
+    force_pf = round(force_pf,3)
+    pVelocity = round(pVelocity,3)
+    mean_power_con = round(mean_power_con,3)
+    time_to_pp_sec = round(time_to_pp_sec,3)
+    min_velocity = round(min_velocity,3)
+    force_at_zero_velocity = round(force_at_zero_velocity,3)
+    mean_ec_con_power = round(mean_ec_con_power,3)
+    velocity_take_off = round(velocity_take_off,3)
+    imp_ec_deacc_con = round(imp_ec_deacc_con,3)
+    RNI = round(RNI,3)
+    imp_ec_acc = round(imp_ec_acc,3)
+    area_force_velocity = round(area_force_velocity,3)
+    ec_displacement_cm = round(ec_displacement_cm,3)
+    vertical_stiffness = round(vertical_stiffness,3)
+
+    RFD_20ms = round(RFD_20ms,3)
+    RFD_30ms = round(RFD_30ms,3)
+    RFD_50ms = round(RFD_50ms,3)
+    RFD_90ms = round(RFD_90ms,3)
+    RFD_100ms = round(RFD_100ms,3)
+    RFD_150ms = round(RFD_150ms,3)
+    RFD_200ms = round(RFD_200ms,3)
+    RFD_250ms = round(RFD_250ms,3)
+    
 
     fig = plt.figure(figsize=(15,10))
 
@@ -292,6 +326,32 @@ def get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mp
     ax.set_xlim(0, Xlim)
     ax.set_ylim(0, Ylim)
     ax.grid(True)
+
+    ax.text(Xlim*0.6,Ylim * 0.9,'mean_co_force:{} N'.format(mean_co_force), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.05),'force_pf:{} N'.format(force_pf), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.10),'force_at_zero_velocity:{} N'.format(force_at_zero_velocity), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.15),'imp_ec_deacc_con:{} N.s'.format(imp_ec_deacc_con), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.20),'RNI:{} N.s/kg'.format(RNI), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.25),'imp_ec_acc:{} N.s'.format(imp_ec_acc), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+
+    if RFD_20ms > 0:
+        ax.text(Xlim*0.6,Ylim * (0.9 - 0.30),'RFD_20ms:{} N/s'.format(RFD_20ms), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    if RFD_30ms > 0:
+        ax.text(Xlim*0.6,Ylim * (0.9 - 0.35),'RFD_30ms:{} N/s'.format(RFD_30ms), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    if RFD_50ms > 0:
+        ax.text(Xlim*0.6,Ylim * (0.9 - 0.40),'RFD_50ms:{} N/s'.format(RFD_50ms), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    if RFD_90ms > 0:
+        ax.text(Xlim*0.6,Ylim * (0.9 - 0.45),'RFD_90ms:{} N/s'.format(RFD_90ms), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    if RFD_100ms > 0:
+        ax.text(Xlim*0.6,Ylim * (0.9 - 0.50),'RFD_100ms:{} N/s'.format(RFD_100ms), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    if RFD_150ms > 0:
+        ax.text(Xlim*0.6,Ylim * (0.9 - 0.55),'RFD_150ms:{} N/s'.format(RFD_150ms), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    if RFD_200ms > 0:
+        ax.text(Xlim*0.6,Ylim * (0.9 - 0.60),'RFD_200ms:{} N/s'.format(RFD_200ms), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    if RFD_250ms > 0:
+        ax.text(Xlim*0.6,Ylim * (0.9 - 0.65),'RFD_250ms:{} N/s'.format(RFD_250ms), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+
+
     #ax.set_xlabel('time (sec)')
 
     ax = fig.add_subplot(222)
@@ -318,8 +378,21 @@ def get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mp
     ax.set_ylabel('Acc (m/s^2)')
     #ax.legend(loc='upper left')
 
+    Xlim = max(time_sec_tick)
+    Ylim = max(data_line) * 1.3
+
+    ax.set_xlim(0, Xlim)
+    ax.set_ylim(ymax=Ylim)
     ax.grid(True)
     #ax.set_xlabel('time (sec)')
+    Ylim = Ylim - min(data_line)
+    ax.text(Xlim*0.6,Ylim * 0.9 + min(data_line),'time_ecc_sec:{} sec'.format(time_ecc_sec), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.05) + min(data_line),'time_con_sec:{} sec'.format(time_con_sec), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.10) + min(data_line),'total_time_sec:{} sec'.format(total_time_sec), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.15) + min(data_line),'fly_contact_ratio:{}'.format(fly_contact_ratio), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.20) + min(data_line),'RSI_mod:{}'.format(RSI_mod), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.25) + min(data_line),'ec_displacement_cm:{} cm'.format(ec_displacement_cm), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.30) + min(data_line),'vertical_stiffness:{} N/cm'.format(vertical_stiffness), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
 
     ax = fig.add_subplot(223)
     ax.plot(time_sec_tick, v_mps, 'b', label='Speed')
@@ -345,7 +418,20 @@ def get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mp
     ax.set_ylabel('V (m/s)')
     #ax.legend(loc='upper left')
 
+    Xlim = max(time_sec_tick)
+    Ylim = max(data_line) * 1.3
+
+    ax.set_xlim(0, Xlim)
+    ax.set_ylim(ymax=Ylim)
     ax.grid(True)
+
+    Ylim = Ylim - min(data_line)
+    ax.text(Xlim*0.6,Ylim * 0.9 + min(data_line),'velocity_pf:{} m/s'.format(velocity_pf), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.05) + min(data_line),'pVelocity:{} m/s'.format(pVelocity), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.10) + min(data_line),'min_velocity:{} m/s'.format(min_velocity), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.15) + min(data_line),'velocity_take_off:{} m/s'.format(velocity_take_off), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.20) + min(data_line),'area_force_velocity:{} N.m/s'.format(area_force_velocity), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    
     ax.set_xlabel('time (sec)')
 
     ax = fig.add_subplot(224)
@@ -372,7 +458,17 @@ def get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mp
     ax.set_ylabel('watts')
     #ax.legend(loc='upper left')
 
+    Xlim = max(time_sec_tick)
+    Ylim = max(data_line) * 1.3
+
+    ax.set_xlim(0, Xlim)
+    ax.set_ylim(ymax=Ylim)
     ax.grid(True)
+    Ylim = Ylim - min(data_line)
+    ax.text(Xlim*0.6,Ylim * 0.9 + min(data_line),'mean_power_con:{} J/s'.format(mean_power_con), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.05) + min(data_line),'time_to_pp_sec:{} sec'.format(time_to_pp_sec), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.10) + min(data_line),'mean_ec_con_power:{} J/s'.format(mean_ec_con_power), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    
     ax.set_xlabel('time (sec)')
 
     return fig
