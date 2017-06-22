@@ -18,20 +18,105 @@ def get_SJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stabl
     contact_time_sec = air_start - co_start
     TtPF_sec = pf - co_start     # time to peak force
     RFD = force_N_join[pf_tick] / TtPF_sec
+
+    # extended RFD calculation
+    RFD_20ms = -1
+    RFD_30ms = -1
+    RFD_50ms = -1
+    RFD_90ms = -1
+    RFD_100ms = -1
+    RFD_150ms = -1
+    RFD_200ms = -1
+    RFD_250ms = -1
+    if (pf_tick - co_start_tick) >= 20: # 20ms
+        RFD_20ms = force_N_join[co_start_tick+20] / (20.0 * 0.001)
+    if (pf_tick - co_start_tick) >= 30: # 30ms
+        RFD_30ms = force_N_join[co_start_tick+30] / (30.0 * 0.001)
+    if (pf_tick - co_start_tick) >= 50: # 50ms
+        RFD_50ms = force_N_join[co_start_tick+50] / (50.0 * 0.001)
+    if (pf_tick - co_start_tick) >= 90: # 90ms
+        RFD_90ms = force_N_join[co_start_tick+90] / (90.0 * 0.001)
+    if (pf_tick - co_start_tick) >= 100: # 100ms
+        RFD_100ms = force_N_join[co_start_tick+100] / (100.0 * 0.001)
+    if (pf_tick - co_start_tick) >= 150: # 150ms
+        RFD_150ms = force_N_join[co_start_tick+150] / (150.0 * 0.001)
+    if (pf_tick - co_start_tick) >= 200: # 200ms
+        RFD_200ms = force_N_join[co_start_tick+200] / (200.0 * 0.001)
+    if (pf_tick - co_start_tick) >= 250: # 250ms
+        RFD_250ms = force_N_join[co_start_tick+250] / (250.0 * 0.001)
+
     #jump_height = 9.8 * (0.5 * fly_time)**2 + -9.8 * 0.5 * (0.5 * fly_time)**2
     PF = force_N_join[pf_tick]
     jump_height_m = 0.5 * 9.8 * (0.5 * fly_time_sec)**2
     jump_power = p_watt_max
     #print("pf_tick:{}".format(pf_tick))
 
+    time_con_sec = co_end - co_start
+    fly_contact_ratio = fly_time_sec / contact_time_sec
+    if fly_time_sec == 0:
+        RSI_mod = 0
+    else:
+        RSI_mod = contact_time_sec / fly_time_sec
+    mean_co_force = np.mean(force_N_join[co_start_tick:co_end_tick])
+    velocity_pp = v_mps[p_watt_max_tick]
+    force_pp = force_N_join[p_watt_max_tick]
+    velocity_pf = v_mps[pf_tick]
+    force_pf = force_N_join[pf_tick]
+    pVelocity = v_mps[co_end_tick]
+    mean_power_con = np.mean(p_watt[co_start_tick:co_end_tick])
+    time_to_pp_sec = time_sec_tick[p_watt_max_tick] - co_start
+    mean_con_power = np.mean(p_watt[co_start_tick:co_end_tick])
+    velocity_take_off = v_mps[air_start_tick]
+
+    # impulse calculation
+    imp_con = 0
+    body_weight_N = np.mean(force_N_join[stable_start_tick:stable_end_tick])
+    print("T:{}, body_weight_N:{}".format(T, body_weight_N))
+    for i in range(co_start_tick, co_end_tick, 1):
+        #print("i:{}, force_N_join[i]:{}".format(i, force_N_join[i]))
+        imp_con += (force_N_join[i] - body_weight_N) * T
+    RNI = imp_con / body_weight_N # check definition ??
+
 
     print("fly_time_sec:{}".format(fly_time_sec))
     print("contact_time_sec:{}".format(contact_time_sec))
     print("TtPF_sec:{}".format(TtPF_sec))
     print("RFD:{}".format(RFD))
+    print("RFD_20ms:{}".format(RFD_20ms))
+    print("RFD_30ms:{}".format(RFD_30ms))
+    print("RFD_50ms:{}".format(RFD_50ms))
+    print("RFD_90ms:{}".format(RFD_90ms))
+    print("RFD_100ms:{}".format(RFD_100ms))
+    print("RFD_150ms:{}".format(RFD_150ms))
+    print("RFD_200ms:{}".format(RFD_200ms))
+    print("RFD_250ms:{}".format(RFD_250ms))
     print("PF:{}".format(PF))
     print("jump_height_m:{}".format(jump_height_m))
     print("jump_power:{}".format(jump_power))
+
+    #print("time_ecc_sec:{}".format(time_ecc_sec))
+    #print("time_ecc_acc_sec:{}".format(time_ecc_acc_sec))
+    #print("time_ecc_deacc_sec:{}".format(time_ecc_deacc_sec))
+    print("time_con_sec:{}".format(time_con_sec))
+    #print("total_time_sec:{}".format(total_time_sec))
+    print("fly_contact_ratio:{}".format(fly_contact_ratio))
+    print("RSI_mod:{}".format(RSI_mod))
+    print("mean_co_force:{}".format(mean_co_force))
+    print("velocity_pp:{}".format(velocity_pp))
+    print("force_pp:{}".format(force_pp))
+    print("pVelocity:{}".format(pVelocity))
+    print("mean_power_con:{}".format(mean_power_con))
+    print("time_to_pp_sec:{}".format(time_to_pp_sec))
+    #print("min_velocity:{}".format(min_velocity))
+    #print("force_at_zero_velocity:{}".format(force_at_zero_velocity))
+    print("mean_con_power:{}".format(mean_con_power))
+    print("velocity_take_off:{}".format(velocity_take_off))  
+    print("imp_con:{}".format(imp_con))  
+    print("RNI:{}".format(RNI))
+    #print("imp_ec_acc:{}".format(imp_ec_acc))
+    #print("area_force_velocity:{}".format(area_force_velocity))
+    #print("ec_displacement_cm:{}".format(ec_displacement_cm))
+    #print("vertical_stiffness:{}".format(vertical_stiffness))
 
     return fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power
 

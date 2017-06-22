@@ -175,16 +175,18 @@ def parsing_force_plate_raw_data(force_plate_raw_data_path):
     #is_KISLER_type_no_row_1 = 0 # no row [1]
     idx = 0
     for row in csv.reader(f):
-        #print("row:{}".format(row))
+        #print("row:{}, idx:{}".format(row, idx))
         #print('row[0]:{}'.format(row[0]))
         
         if row != []:
             if (idx <=1):
                 if 'Device:' in row[0]:
                     is_KISLER_file = 1
+                    print("[is_KISLER_file = 1]")
 
             if is_KISLER_file != 1:
                 if (
+                    len(row) >= 4 and
                     idx >=2 and 
                     row[0] != '' and 
                     row[1] != '' and 
@@ -207,7 +209,9 @@ def parsing_force_plate_raw_data(force_plate_raw_data_path):
                         try:
                             assert float(row[0]) == 0.001
                         except:
-                            error_code = 10003   
+                            error_code = 10003
+                elif idx >=2:
+                    error_code = 10006   
             elif is_KISLER_file == 1:
                 #print("is_KISLER_file")
                 # serach abs key word
@@ -253,7 +257,7 @@ def parsing_force_plate_raw_data(force_plate_raw_data_path):
             idx += 1
 
     #print("idx:{}".format(idx))
-    if time_sec_tick[0] != 0:
+    if len(time_sec_tick) > 0 and time_sec_tick[0] != 0:
         error_code = 10002
 
     return time_sec_tick, force_N_1, force_N_2, force_N_join, error_code

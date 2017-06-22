@@ -19,7 +19,12 @@ import CMJ_analysis_control as CMJAC
 import CMJ_statistics_control as CMJSC
 import SJ_analysis_control as SJAC
 import SJ_statistics_control as SJSC
+import DJ_analysis_control as DJAC
+import DJ_statistics_control as DJSC
 
+def update_user_DJ_statistics(data_dir):
+
+    DJSC.update_user_DJ_statistics(data_dir)
 
 def update_user_SJ_statistics(data_dir):
 
@@ -63,11 +68,17 @@ def single_user_analysis(data_dir):
     # test only section end
     #if 'scott' in data_dir:
     #    analysis_list = ['scott_20170525_ULSJ_t1'] # uneven floor ?
-    #if 'scott' in data_dir:
+    if 'scott' in data_dir:
     #    analysis_list = ['scott_20170525_LCMJ_t1']
     #    analysis_list = ['scott_20170525_LCMJ_t1', 'scott_20170525_LCMJ_t2']
-    #    analysis_list += ['scott_20170525_ULSJ_t1'] # one air force error
-
+        analysis_list += ['scott_20170525_ULSJ_t1'] # one air force error
+    '''
+    if 'userA' in data_dir:
+        analysis_list = ['userA_20170621_ULDJ_t1']
+        analysis_list += ['userA_20170621_ULDJ_t2']
+        analysis_list += ['userA_20170621_LDJ_t1']
+        analysis_list += ['userA_20170621_LDJ_t2']
+    '''
     if analysis_list == []:
         print("[No new data waited for analysis] Please copy new force plate csv file into data folder:[{}]".format(data_dir))
     else:
@@ -92,7 +103,7 @@ def single_user_analysis(data_dir):
                 #plt.close(fig)
 
                 #sys.exit()
-            elif not('CMJ' in data_name or 'SJ' in data_name):
+            elif not('CMJ' in data_name or 'SJ' in data_name or 'DJ' in data_name):
                 err_msg = "[Input Name Error] Unrecognized Jump Type. Valid types: CMJ / SJ"
                 error_code = 10201
                 print("error_code:{}".format(error_code))
@@ -114,6 +125,14 @@ def single_user_analysis(data_dir):
                 
             elif 'SJ' in data_name:
                 new_error_fig_path, new_fig_time_force_notiation_path = SJAC.SJ_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2, force_N_join)
+
+                if new_fig_time_force_notiation_path != '':
+                    list_new_fig_time_force_notiation_path += [new_fig_time_force_notiation_path]
+                if new_error_fig_path != '':
+                    list_new_error_fig_path += [new_error_fig_path]
+
+            elif 'DJ' in data_name:
+                new_error_fig_path, new_fig_time_force_notiation_path = DJAC.DJ_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2, force_N_join)
 
                 if new_fig_time_force_notiation_path != '':
                     list_new_fig_time_force_notiation_path += [new_fig_time_force_notiation_path]
