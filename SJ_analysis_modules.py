@@ -17,7 +17,7 @@ def get_SJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stabl
     fly_time_sec = air_end - air_start
     contact_time_sec = air_start - co_start
     TtPF_sec = pf - co_start     # time to peak force
-    RFD = force_N_join[pf_tick] / TtPF_sec
+    RFD = (force_N_join[pf_tick] - force_N_join[co_start_tick]) / TtPF_sec
 
     # extended RFD calculation
     RFD_20ms = -1
@@ -29,21 +29,21 @@ def get_SJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stabl
     RFD_200ms = -1
     RFD_250ms = -1
     if (pf_tick - co_start_tick) >= 20: # 20ms
-        RFD_20ms = force_N_join[co_start_tick+20] / (20.0 * 0.001)
+        RFD_20ms = (force_N_join[co_start_tick+20] - force_N_join[co_start_tick]) / (20.0 * 0.001)
     if (pf_tick - co_start_tick) >= 30: # 30ms
-        RFD_30ms = force_N_join[co_start_tick+30] / (30.0 * 0.001)
+        RFD_30ms = (force_N_join[co_start_tick+30] - force_N_join[co_start_tick]) / (30.0 * 0.001)
     if (pf_tick - co_start_tick) >= 50: # 50ms
-        RFD_50ms = force_N_join[co_start_tick+50] / (50.0 * 0.001)
+        RFD_50ms = (force_N_join[co_start_tick+50] - force_N_join[co_start_tick]) / (50.0 * 0.001)
     if (pf_tick - co_start_tick) >= 90: # 90ms
-        RFD_90ms = force_N_join[co_start_tick+90] / (90.0 * 0.001)
+        RFD_90ms = (force_N_join[co_start_tick+90] - force_N_join[co_start_tick]) / (90.0 * 0.001)
     if (pf_tick - co_start_tick) >= 100: # 100ms
-        RFD_100ms = force_N_join[co_start_tick+100] / (100.0 * 0.001)
+        RFD_100ms = (force_N_join[co_start_tick+100] - force_N_join[co_start_tick]) / (100.0 * 0.001)
     if (pf_tick - co_start_tick) >= 150: # 150ms
-        RFD_150ms = force_N_join[co_start_tick+150] / (150.0 * 0.001)
+        RFD_150ms = (force_N_join[co_start_tick+150] - force_N_join[co_start_tick]) / (150.0 * 0.001)
     if (pf_tick - co_start_tick) >= 200: # 200ms
-        RFD_200ms = force_N_join[co_start_tick+200] / (200.0 * 0.001)
+        RFD_200ms = (force_N_join[co_start_tick+200] - force_N_join[co_start_tick]) / (200.0 * 0.001)
     if (pf_tick - co_start_tick) >= 250: # 250ms
-        RFD_250ms = force_N_join[co_start_tick+250] / (250.0 * 0.001)
+        RFD_250ms = (force_N_join[co_start_tick+250] - force_N_join[co_start_tick]) / (250.0 * 0.001)
 
     #jump_height = 9.8 * (0.5 * fly_time)**2 + -9.8 * 0.5 * (0.5 * fly_time)**2
     PF = force_N_join[pf_tick]
@@ -118,31 +118,6 @@ def get_SJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stabl
     #print("ec_displacement_cm:{}".format(ec_displacement_cm))
     #print("vertical_stiffness:{}".format(vertical_stiffness))
 
-    '''
-    RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, time_con_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pp, force_pf, pVelocity, mean_power_con, time_to_pp_sec, mean_con_power, velocity_take_off, imp_con, RNI
-
-    RFD_20ms, 
-    RFD_30ms, 
-    RFD_50ms, 
-    RFD_90ms, 
-    RFD_100ms, 
-    RFD_150ms, 
-    RFD_200ms, 
-    RFD_250ms, 
-    time_con_sec, 
-    fly_contact_ratio, 
-    RSI_mod, 
-    mean_co_force, 
-    velocity_pp, 
-    force_pf, 
-    pVelocity, 
-    mean_power_con, 
-    time_to_pp_sec, 
-    mean_con_power, 
-    velocity_take_off, 
-    imp_con, 
-    RNI
-    '''
 
     return fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, time_con_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pp, force_pf, pVelocity, mean_power_con, time_to_pp_sec, mean_con_power, velocity_take_off, imp_con, RNI
 

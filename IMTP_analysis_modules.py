@@ -15,7 +15,7 @@ def get_IMTP_record_statistics(T, time_sec_tick, force_N_join, stable_start, sta
 
     # statistics
     TtPF_sec = pf - pull_start     # time to peak force
-    RFD = force_N_join[pf_tick] / TtPF_sec
+    RFD = (force_N_join[pf_tick] - force_N_join[pull_start_tick]) / TtPF_sec
 
     # extended RFD calculation
     RFD_20ms = -1
@@ -27,21 +27,21 @@ def get_IMTP_record_statistics(T, time_sec_tick, force_N_join, stable_start, sta
     RFD_200ms = -1
     RFD_250ms = -1
     if (pf_tick - pull_start_tick) >= 20: # 20ms
-        RFD_20ms = force_N_join[pull_start_tick+20] / (20.0 * 0.001)
+        RFD_20ms = (force_N_join[pull_start_tick+20] - force_N_join[pull_start_tick]) / (20.0 * 0.001)
     if (pf_tick - pull_start_tick) >= 30: # 30ms
-        RFD_30ms = force_N_join[pull_start_tick+30] / (30.0 * 0.001)
+        RFD_30ms = (force_N_join[pull_start_tick+30] - force_N_join[pull_start_tick]) / (30.0 * 0.001)
     if (pf_tick - pull_start_tick) >= 50: # 50ms
-        RFD_50ms = force_N_join[pull_start_tick+50] / (50.0 * 0.001)
+        RFD_50ms = (force_N_join[pull_start_tick+50] - force_N_join[pull_start_tick]) / (50.0 * 0.001)
     if (pf_tick - pull_start_tick) >= 90: # 90ms
-        RFD_90ms = force_N_join[pull_start_tick+90] / (90.0 * 0.001)
+        RFD_90ms = (force_N_join[pull_start_tick+90] - force_N_join[pull_start_tick]) / (90.0 * 0.001)
     if (pf_tick - pull_start_tick) >= 100: # 100ms
-        RFD_100ms = force_N_join[pull_start_tick+100] / (100.0 * 0.001)
+        RFD_100ms = (force_N_join[pull_start_tick+100] - force_N_join[pull_start_tick]) / (100.0 * 0.001)
     if (pf_tick - pull_start_tick) >= 150: # 150ms
-        RFD_150ms = force_N_join[pull_start_tick+150] / (150.0 * 0.001)
+        RFD_150ms = (force_N_join[pull_start_tick+150] - force_N_join[pull_start_tick]) / (150.0 * 0.001)
     if (pf_tick - pull_start_tick) >= 200: # 200ms
-        RFD_200ms = force_N_join[pull_start_tick+200] / (200.0 * 0.001)
+        RFD_200ms = (force_N_join[pull_start_tick+200] - force_N_join[pull_start_tick]) / (200.0 * 0.001)
     if (pf_tick - pull_start_tick) >= 250: # 250ms
-        RFD_250ms = force_N_join[pull_start_tick+250] / (250.0 * 0.001)
+        RFD_250ms = (force_N_join[pull_start_tick+250] - force_N_join[pull_start_tick]) / (250.0 * 0.001)
 
     PF = force_N_join[pf_tick]
 
