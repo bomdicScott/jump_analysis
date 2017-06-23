@@ -364,3 +364,6 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
     co_start_tick = stable_end_tick
 
     return stg_num, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, co_end, co_end_tick
+
+
+    

@@ -68,6 +68,7 @@ for user_name in user_list:
         SUAC.update_user_CMJ_statistics(data_dir)
         SUAC.update_user_SJ_statistics(data_dir)
         SUAC.update_user_DJ_statistics(data_dir)
+        SUAC.update_user_IMTP_statistics(data_dir)
 
 if enable_sys_fig_show == 1:
     plt.show()

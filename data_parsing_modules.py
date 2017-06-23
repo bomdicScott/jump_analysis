@@ -186,7 +186,7 @@ def parsing_force_plate_raw_data(force_plate_raw_data_path):
 
             if is_KISLER_file != 1:
                 if (
-                    len(row) >= 4 and
+                    len(row) == 4 and
                     idx >=2 and 
                     row[0] != '' and 
                     row[1] != '' and 
@@ -210,8 +210,9 @@ def parsing_force_plate_raw_data(force_plate_raw_data_path):
                             assert float(row[0]) == 0.001
                         except:
                             error_code = 10003
-                elif idx >=2:
+                elif idx >=2 and len(row) != 4:
                     error_code = 10006   
+                    print("[error_code = 10006] row:{}, idx:{}".format(row, idx))
             elif is_KISLER_file == 1:
                 #print("is_KISLER_file")
                 # serach abs key word
