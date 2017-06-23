@@ -46,7 +46,29 @@ def read_analysis_result(result_path):
         fly_time_sec = row['fly_time_sec']
         PF = row['PF']
 
-    return data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power, fly_time_sec, PF
+        RFD_20ms = row['RFD_20ms']
+        RFD_30ms = row['RFD_30ms']
+        RFD_50ms = row['RFD_50ms']
+        RFD_90ms = row['RFD_90ms']
+        RFD_100ms = row['RFD_100ms']
+        RFD_150ms = row['RFD_150ms']
+        RFD_200ms = row['RFD_200ms']
+        RFD_250ms = row['RFD_250ms']
+        time_con_sec = row['time_con_sec']
+        fly_contact_ratio = row['fly_contact_ratio']
+        RSI_mod = row['RSI_mod']
+        mean_co_force = row['mean_co_force']
+        velocity_pp = row['velocity_pp']
+        force_pf = row['force_pf']
+        pVelocity = row['pVelocity']
+        mean_power_con = row['mean_power_con']
+        time_to_pp_sec = row['time_to_pp_sec']
+        mean_con_power = row['mean_con_power']
+        velocity_take_off = row['velocity_take_off']
+        imp_con = row['imp_con']
+        RNI = row['RNI']
+
+    return data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power, fly_time_sec, PF, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, time_con_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pp, force_pf, pVelocity, mean_power_con, time_to_pp_sec, mean_con_power, velocity_take_off, imp_con, RNI
 
 def get_epoch_sec(YMD_string):
     epoch_time = dateutil.parser.parse("1970-01-01T00:00:00Z")
@@ -226,11 +248,33 @@ def update_user_SJ_statistics(data_dir):
     s_fly_time_sec = []
     s_PF = []
 
+    s_RFD_20ms = []
+    s_RFD_30ms = []
+    s_RFD_50ms = []
+    s_RFD_90ms = []
+    s_RFD_100ms = []
+    s_RFD_150ms = []
+    s_RFD_200ms = []
+    s_RFD_250ms = []
+    s_time_con_sec = []
+    s_fly_contact_ratio = []
+    s_RSI_mod = []
+    s_mean_co_force = []
+    s_velocity_pp = []
+    s_force_pf = []
+    s_pVelocity = []
+    s_mean_power_con = []
+    s_time_to_pp_sec = []
+    s_mean_con_power = []
+    s_velocity_take_off = []
+    s_imp_con = []
+    s_RNI = []
+
     for result_name in result_list:
         result_path = data_dir + result_name
 
         if os.path.exists(result_path):
-            data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power, fly_time_sec, PF = read_analysis_result(result_path)
+            data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power, fly_time_sec, PF, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, time_con_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pp, force_pf, pVelocity, mean_power_con, time_to_pp_sec, mean_con_power, velocity_take_off, imp_con, RNI = read_analysis_result(result_path)
 
             s_data_name += [data_name]
             s_contact_time_sec += [contact_time_sec]
@@ -240,6 +284,28 @@ def update_user_SJ_statistics(data_dir):
             s_jump_power += [jump_power]
             s_fly_time_sec += [fly_time_sec]
             s_PF += [PF]
+
+            s_RFD_20ms += [RFD_20ms]
+            s_RFD_30ms += [RFD_30ms]
+            s_RFD_50ms += [RFD_50ms]
+            s_RFD_90ms += [RFD_90ms]
+            s_RFD_100ms += [RFD_100ms]
+            s_RFD_150ms += [RFD_150ms]
+            s_RFD_200ms += [RFD_200ms]
+            s_RFD_250ms += [RFD_250ms]
+            s_time_con_sec += [time_con_sec]
+            s_fly_contact_ratio += [fly_contact_ratio]
+            s_RSI_mod += [RSI_mod]
+            s_mean_co_force += [mean_co_force]
+            s_velocity_pp += [velocity_pp]
+            s_force_pf += [force_pf]
+            s_pVelocity += [pVelocity]
+            s_mean_power_con += [mean_power_con]
+            s_time_to_pp_sec += [time_to_pp_sec]
+            s_mean_con_power += [mean_con_power]
+            s_velocity_take_off += [velocity_take_off]
+            s_imp_con += [imp_con]
+            s_RNI += [RNI]
 
             # if data_name uses standard format
             data_name_split = data_name.split('_')
@@ -266,6 +332,28 @@ def update_user_SJ_statistics(data_dir):
     csv_header += ["s_date"]
     csv_header += ["s_jump_type"]
     csv_header += ["s_try_num"]
+
+    csv_header += ["s_RFD_20ms"]
+    csv_header += ["s_RFD_30ms"]
+    csv_header += ["s_RFD_50ms"]
+    csv_header += ["s_RFD_90ms"]
+    csv_header += ["s_RFD_100ms"]
+    csv_header += ["s_RFD_150ms"]
+    csv_header += ["s_RFD_200ms"]
+    csv_header += ["s_RFD_250ms"]
+    csv_header += ["s_time_con_sec"]
+    csv_header += ["s_fly_contact_ratio"]
+    csv_header += ["s_RSI_mod"]
+    csv_header += ["s_mean_co_force"]
+    csv_header += ["s_velocity_pp"]
+    csv_header += ["s_force_pf"]
+    csv_header += ["s_pVelocity"]
+    csv_header += ["s_mean_power_con"]
+    csv_header += ["s_time_to_pp_sec"]
+    csv_header += ["s_mean_con_power"]
+    csv_header += ["s_velocity_take_off"]
+    csv_header += ["s_imp_con"]
+    csv_header += ["s_RNI"]
 
     with open(user_statistics_path, 'w') as csvfile:
         writer = csv.writer(csvfile)

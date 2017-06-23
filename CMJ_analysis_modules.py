@@ -64,7 +64,6 @@ def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stab
         RSI_mod = contact_time_sec / fly_time_sec
     mean_co_force = np.mean(force_N_join[co_start_tick:co_end_tick])
     velocity_pp = v_mps[p_watt_max_tick]
-    force_pp = force_N_join[p_watt_max_tick]
     velocity_pf = v_mps[pf_tick]
     force_pf = force_N_join[pf_tick]
     pVelocity = v_mps[co_end_tick]
@@ -136,7 +135,7 @@ def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stab
     print("RSI_mod:{}".format(RSI_mod))
     print("mean_co_force:{}".format(mean_co_force))
     print("velocity_pp:{}".format(velocity_pp))
-    print("force_pp:{}".format(force_pp))
+    print("force_pf:{}".format(force_pf))
     print("pVelocity:{}".format(pVelocity))
     print("mean_power_con:{}".format(mean_power_con))
     print("time_to_pp_sec:{}".format(time_to_pp_sec))
