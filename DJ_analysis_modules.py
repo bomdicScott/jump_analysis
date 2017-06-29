@@ -82,7 +82,7 @@ def get_DJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
 
         if stg_num == 2:
             # on_air stage
-            if force_N_join[i] > 100.0:
+            if force_N_join[i] > 100.0 and (i-air_start_tick)>=100:
                 # landing again
                 stg_num = 3
                 print("[Stage:{}]".format(stages[stg_num]))

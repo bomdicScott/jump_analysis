@@ -59,6 +59,7 @@ def single_user_analysis(data_dir):
     #    analysis_list = ['Lt1']
     #if 'user1' in data_dir:
     #    analysis_list = ['benson']
+    #    analysis_list = ['user1_20170629_ULCMJ_t1-1']
     #if 'user1' in data_dir:
     #    analysis_list = ['user1_20170329_ULSJ_t1','user1_20170329_ULSJ_t2']
     #    analysis_list = ['user1_20170329_ULSJ_t2']

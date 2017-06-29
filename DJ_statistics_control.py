@@ -147,19 +147,19 @@ def get_avg_list(data_list, time_list):
             avg_time_list += [time_list[i]] # add time
             avg_temp = data_list[i]
             avg_count = 1
-            #if len(time_list) == 1: # has only one element
-            avg_data_list += [avg_temp] # add avg and quit for
+            if len(time_list) == 1: # has only one element
+                avg_data_list += [avg_temp] # add avg and quit for
         else:
             if time_list[i] == avg_time_list[-1]:
                 avg_count += 1
                 avg_temp = (avg_temp * (avg_count-1) + data_list[i])/avg_count
-                if i == len(time_list)-1:
-                    avg_data_list += [avg_temp] # add avg
             else:
                 avg_time_list += [time_list[i]] # add time
                 avg_data_list += [avg_temp] # add avg
                 avg_temp = data_list[i]
                 avg_count = 1
+            if i == len(time_list)-1:
+                    avg_data_list += [avg_temp] # add avg
 
     #print("avg_data_list:{}".format(avg_data_list))
     #print("avg_time_list:{}".format(avg_time_list))

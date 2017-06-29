@@ -22,6 +22,7 @@ workspace_dir = "{}/".format(os.getcwd())
 
 # for develop enviroment in mac 
 #users_dir = workspace_dir + "test_data/"
+
 #simualte formal user folder
 #users_dir = workspace_dir.replace('jump_analysis','jump_analysis_data')
 #print("users_dir:{}".format(users_dir))
