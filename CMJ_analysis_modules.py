@@ -389,7 +389,7 @@ def get_CMJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
         # find the end point of on air stage
         if stg_num == 3:
             #print("time_sec_tick[i]:{}, force_N_join[i]:{}".format(time_sec_tick[i], force_N_join[i]))
-            if force_N_join[i] <= 100:
+            if force_N_join[i] <= 100 or (i-air_start_tick)<100:
                 air_end = time_sec_tick[i]
                 air_end_tick = i
             else: # condition of leaving air stage

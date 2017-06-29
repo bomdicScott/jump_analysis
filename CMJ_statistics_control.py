@@ -194,8 +194,8 @@ def get_avg_list(data_list, time_list):
             avg_time_list += [time_list[i]] # add time
             avg_temp = data_list[i]
             avg_count = 1
-            if len(time_list) == 1: # has only one element
-                avg_data_list += [avg_temp] # add avg and quit for
+            #if len(time_list) == 1: # has only one element
+            avg_data_list += [avg_temp] # add avg and quit for
         else:
             if time_list[i] == avg_time_list[-1]:
                 avg_count += 1

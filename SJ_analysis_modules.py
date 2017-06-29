@@ -220,7 +220,7 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
     print("data_name:{}".format(data_name))
     print("[Stage:{}]".format(stages[stg_num]))
     for i in range(len(time_sec_tick)):
-        #print("i:{}, time_sec_tick[i]:{}, force_N_join[i]:{}, [Stage:{}], stg_num:{}".format(i,time_sec_tick[i], force_N_join[i], stages[stg_num], stg_num))
+        print("i:{}, time_sec_tick[i]:{}, force_N_join[i]:{}, [Stage:{}], stg_num:{}".format(i,time_sec_tick[i], force_N_join[i], stages[stg_num], stg_num))
         # find the starting point of stabd_by stage
         # conditions:
         # 1. force > 100N
@@ -309,7 +309,7 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
             else:
                 goback_condition_count = 0
             # go back to stg_num 0 ? condition 2 should not have ec on SJ
-            #print("force_N_join[i]:{}, mean:{}, i:{}, pf_tick:{}".format(force_N_join[i], mean, i, pf_tick))
+            print("force_N_join[i]:{}, mean:{}, i:{}, pf_tick:{}, (force_N_join[i] - mean):{}".format(force_N_join[i], mean, i, pf_tick, (force_N_join[i] - mean)))
             if (
                 (force_N_join[i] - mean) < -50 and # detect ec  
                 i <= pf_tick): # make sure force drop happens before pf or co_height point
@@ -344,7 +344,7 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
         # find the end point of on air stage
         if stg_num == 2:
             #print("time_sec_tick[i]:{}, force_N_join[i]:{}".format(time_sec_tick[i], force_N_join[i]))
-            if force_N_join[i] <= 100:
+            if force_N_join[i] <= 100 or (i-air_start_tick)<100:
                 air_end = time_sec_tick[i]
                 air_end_tick = i
             else: # condition of leaving air stage

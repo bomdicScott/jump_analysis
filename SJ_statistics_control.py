@@ -178,17 +178,21 @@ def get_sorted_LSJ_ULSJ_list(s_contact_time_sec,
 def get_avg_list(data_list, time_list):
     avg_data_list = []
     avg_time_list = []
-    #print("data_list:{}".format(data_list))
-    #print("time_list:{}".format(time_list))
+    print("data_list:{}".format(data_list))
+    print("time_list:{}".format(time_list))
     for i in range(len(time_list)):
         data_list[i] = float(data_list[i])
         if avg_time_list == []:
+            print("[f]avg_data_list:{}".format(avg_data_list))
+            print("[f]avg_time_list:{}".format(avg_time_list))
             avg_time_list += [time_list[i]] # add time
             avg_temp = data_list[i]
             avg_count = 1
-            if len(time_list) == 1: # has only one element
-                avg_data_list += [avg_temp] # add avg and quit for
+            #if len(time_list) == 1: # has only one element
+            avg_data_list += [avg_temp] # add avg and quit for
         else:
+            print("[p]avg_data_list:{}".format(avg_data_list))
+            print("[p]avg_time_list:{}".format(avg_time_list))
             if time_list[i] == avg_time_list[-1]:
                 avg_count += 1
                 avg_temp = (avg_temp * (avg_count-1) + data_list[i])/avg_count
@@ -200,8 +204,8 @@ def get_avg_list(data_list, time_list):
                 avg_temp = data_list[i]
                 avg_count = 1
 
-    #print("avg_data_list:{}".format(avg_data_list))
-    #print("avg_time_list:{}".format(avg_time_list))
+    print("avg_data_list:{}".format(avg_data_list))
+    print("avg_time_list:{}".format(avg_time_list))
     assert len(avg_time_list) == len(avg_data_list)
 
     return avg_data_list

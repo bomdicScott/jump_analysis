@@ -89,6 +89,9 @@ def single_user_analysis(data_dir):
     #if 'userM' in data_dir:
     #    analysis_list = ['userM_20170622_IMTP_t1']
 
+    #if 'userProblem' in data_dir:
+    #    analysis_list = ['userProblem_20170626_ULSJ_t64-3']
+    #    analysis_list = ['userProblem_20170623_ULSJ_t2']
 
     if analysis_list == []:
         print("[No new data waited for analysis] Please copy new force plate csv file into data folder:[{}]".format(data_dir))
