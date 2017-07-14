@@ -48,14 +48,14 @@ def DJ_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2, f
 
     else:  
 
-    	fly_time_sec, contact_time_sec, fly_contact_ratio, RSI_mod = DJAM.get_DJ_record_statistics(T, time_sec_tick, force_N_join, landing_start, landing_start_tick, landing_end, landing_end_tick, air_start, air_start_tick, air_end, air_end_tick)
+    	fly_time_sec, contact_time_sec, fly_contact_ratio, RSI_mod, jump_height_m = DJAM.get_DJ_record_statistics(T, time_sec_tick, force_N_join, landing_start, landing_start_tick, landing_end, landing_end_tick, air_start, air_start_tick, air_end, air_end_tick)
 
 	    # plot
         fig = DP.get_fig_time_force(data_name, time_sec_tick, force_N_1, force_N_2, force_N_join)
         fig.savefig( data_dir + '{}_time_force_raw.png'.format(data_name))
         plt.close(fig)
 
-        fig = DJP.get_fig_DJ_time_force_notiation(data_name, time_sec_tick, force_N_join, landing_start, landing_start_tick, landing_end, landing_end_tick, air_start, air_start_tick, air_end, air_end_tick, fly_time_sec, contact_time_sec, fly_contact_ratio, RSI_mod)
+        fig = DJP.get_fig_DJ_time_force_notiation(data_name, time_sec_tick, force_N_join, landing_start, landing_start_tick, landing_end, landing_end_tick, air_start, air_start_tick, air_end, air_end_tick, fly_time_sec, contact_time_sec, fly_contact_ratio, RSI_mod, jump_height_m)
         fig.savefig( data_dir + '{}_time_force_notation.png'.format(data_name))
 
         #list_new_fig_time_force_notiation_path += [data_dir + '{}_time_force_notation.png'.format(data_name)]
@@ -71,6 +71,7 @@ def DJ_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2, f
         csv_header += ["contact_time_sec"]
         csv_header += ["fly_contact_ratio"]
         csv_header += ["RSI_mod"]
+        csv_header += ["jump_height_m"]
                 
         with open(data_analysis_results_path, 'w') as csvfile:
             writer = csv.writer(csvfile)

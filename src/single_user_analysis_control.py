@@ -93,6 +93,17 @@ def single_user_analysis(data_dir):
     #if 'userProblem' in data_dir:
     #    analysis_list = ['userProblem_20170626_ULSJ_t64-3']
     #    analysis_list = ['userProblem_20170623_ULSJ_t2']
+    
+    #if 'userGroupULSJ' in data_dir:
+    #    analysis_list = ['ULSJ_20170622_user3_t5-3']
+
+    #if 'userGroupDJ' in data_dir:
+    #    analysis_list = ['ULDJ_20170622_user5_t6-1']
+    #if 'userGroupIMTP' in data_dir:
+    #    analysis_list = ['IMTP_20170713_user6_t1-1']
+    #    analysis_list += ['IMTP_20170713_user6_t1-2']
+    #if 'userGroupLSJ' in data_dir:
+    #    analysis_list = ['LSJ_20170622_user4_t1-2']
 
     if analysis_list == []:
         print("[No new data waited for analysis] Please copy new force plate csv file into data folder:[{}]".format(data_dir))

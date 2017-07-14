@@ -42,8 +42,9 @@ def read_analysis_result(result_path):
         fly_contact_ratio = row['fly_contact_ratio']
         RSI_mod = row['RSI_mod']
         fly_time_sec = row['fly_time_sec']
+        jump_height_m = row['jump_height_m']
 
-    return data_name,contact_time_sec,fly_contact_ratio,RSI_mod, fly_time_sec
+    return data_name,contact_time_sec,fly_contact_ratio,RSI_mod, fly_time_sec, jump_height_m
 
 def get_epoch_sec(YMD_string):
     epoch_time = dateutil.parser.parse("1970-01-01T00:00:00Z")
@@ -200,18 +201,20 @@ def update_user_DJ_statistics(data_dir):
     s_jump_type = []
     s_try_num = []
     s_fly_time_sec = []
+    s_jump_height_m = []
 
     for result_name in result_list:
         result_path = data_dir + result_name
 
         if os.path.exists(result_path):
-            data_name,contact_time_sec,fly_contact_ratio,RSI_mod, fly_time_sec = read_analysis_result(result_path)
+            data_name,contact_time_sec,fly_contact_ratio,RSI_mod, fly_time_sec, jump_height_m = read_analysis_result(result_path)
 
             s_data_name += [data_name]
             s_contact_time_sec += [contact_time_sec]
             s_fly_contact_ratio += [fly_contact_ratio]
             s_RSI_mod += [RSI_mod]
             s_fly_time_sec += [fly_time_sec]
+            s_jump_height_m += [jump_height_m]
 
             # if data_name uses standard format
             data_name_split = data_name.split('_')
@@ -232,6 +235,7 @@ def update_user_DJ_statistics(data_dir):
     csv_header += ["s_fly_time_sec"]
     csv_header += ["s_fly_contact_ratio"]
     csv_header += ["s_RSI_mod"]
+    csv_header += ["s_jump_height_m"]
     csv_header += ["s_date"]
     csv_header += ["s_jump_type"]
     csv_header += ["s_try_num"]

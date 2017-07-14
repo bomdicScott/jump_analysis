@@ -129,7 +129,7 @@ def get_fig_LDJ_analysis(s_LDJ_contact_time_sec,
 
     return fig
 
-def get_fig_DJ_time_force_notiation(data_name, time_sec_tick, force_N_join, landing_start, landing_start_tick, landing_end, landing_end_tick, air_start, air_start_tick, air_end, air_end_tick, fly_time_sec, contact_time_sec, fly_contact_ratio, RSI_mod):
+def get_fig_DJ_time_force_notiation(data_name, time_sec_tick, force_N_join, landing_start, landing_start_tick, landing_end, landing_end_tick, air_start, air_start_tick, air_end, air_end_tick, fly_time_sec, contact_time_sec, fly_contact_ratio, RSI_mod, jump_height_m):
     fig = plt.figure()
     ax = fig.add_subplot(111)
 
@@ -163,11 +163,13 @@ def get_fig_DJ_time_force_notiation(data_name, time_sec_tick, force_N_join, land
     contact_time_sec = round(contact_time_sec,3)
     fly_contact_ratio = round(fly_contact_ratio,3)
     RSI_mod = round(RSI_mod,3)
+    jump_height_cm = round(jump_height_m*100.0,3)
 
     ax.text(Xlim*0.4,Ylim * 0.9,'FT:{} sec'.format(fly_time_sec), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.4,Ylim * (0.9 - 0.05),'CT:{} sec'.format(contact_time_sec), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.4,Ylim * (0.9 - 0.10),'fly_contact_ratio:{} '.format(fly_contact_ratio), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.4,Ylim * (0.9 - 0.15),'RSI_mod:{}'.format(RSI_mod), bbox=dict(facecolor='white', edgecolor='none'))
+    ax.text(Xlim*0.4,Ylim * (0.9 - 0.20),'jump_height:{} cm'.format(jump_height_cm), bbox=dict(facecolor='white', edgecolor='none'))
     
 
     return fig
