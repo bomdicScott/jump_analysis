@@ -331,7 +331,7 @@ def get_CMJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
         if stg_num == 1:
 
             # go back to stg_num 0 ?
-            if abs(force_N_join[i] - mean) < 10:
+            if abs(force_N_join[i] - mean) < 30:
 
                 goback_condition_count += 1
 

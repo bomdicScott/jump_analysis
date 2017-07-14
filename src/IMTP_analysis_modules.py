@@ -165,7 +165,7 @@ def get_IMTP_features_of_join_force(data_name, time_sec_tick, force_N_join):
     print("data_name:{}".format(data_name))
     print("[Stage:{}]".format(stages[stg_num]))
     for i in range(len(time_sec_tick)):
-        #print("i:{}, time_sec_tick[i]:{}, force_N_join[i]:{}, [Stage:{}], stg_num:{}".format(i,time_sec_tick[i], force_N_join[i], stages[stg_num], stg_num))
+        #print("i:{}, time_sec_tick[i]:{}, force_N_join[i]:{}, [Stage:{}], stg_num:{}, std:{}, stable_start:{}, stable_end:{}, mean:{}, stable_length:{}, pf_tick:{}".format(i,time_sec_tick[i], force_N_join[i], stages[stg_num], stg_num, std, stable_start, stable_end, mean, stable_length, pf_tick))
         # find the starting point of stabd_by stage
         # conditions:
         # 1. force > 100N
@@ -174,7 +174,7 @@ def get_IMTP_features_of_join_force(data_name, time_sec_tick, force_N_join):
             
             #print("stable_start_tick:{}, stable_end_tick:{}, std:{}, stable_length:{}, mean:{}, stable_start:{}, stable_end:{}".format(stable_start_tick, stable_end_tick, std, stable_length, mean, stable_start, stable_end))
 
-            if std < 20.0:
+            if std < 30.0:
                 mean = (force_N_join[i] + mean*(stable_length-1))/stable_length
                 diff_pow2_mean = (math.pow(abs(force_N_join[i] - mean), 2) + diff_pow2_mean*(stable_length-1))/stable_length
                 if diff_pow2_mean > 0:
@@ -197,7 +197,7 @@ def get_IMTP_features_of_join_force(data_name, time_sec_tick, force_N_join):
             else:
                 
                 stable_time = stable_end - stable_start
-                if stable_time > 0.25 and stable_start >= time_sec_tick[0]:
+                if stable_time > 0.5 and stable_start >= time_sec_tick[0]:
                     #print("stable_start:{}, stable_end:{}, stable_start_tick:{}, stable_end_tick:{}".format(stable_start, stable_end, stable_start_tick, stable_end_tick))
                     # stage change
                     stg_num = 1
@@ -257,8 +257,9 @@ def get_IMTP_features_of_join_force(data_name, time_sec_tick, force_N_join):
             # go back to stg_num 0 ? condition 2 should not have ec on SJ
             #print("force_N_join[i]:{}, mean:{}, i:{}, pf_tick:{}".format(force_N_join[i], mean, i, pf_tick))
             if (
-                (force_N_join[i] - mean) < -50 and # detect ec  
-                i <= pf_tick): # make sure force drop happens before pf or pull_height point
+                (force_N_join[i] - mean) < -50 # detect ec  
+                #and i <= pf_tick
+               ): # make sure force drop happens before pf or pull_height point
                 
                 stg_num = 0
                 mean = force_N_join[i]

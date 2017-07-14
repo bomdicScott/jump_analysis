@@ -21,13 +21,15 @@ def get_DJ_record_statistics(T, time_sec_tick, force_N_join, landing_start, land
         RSI_mod = 0
     else:
         RSI_mod = contact_time_sec / fly_time_sec
+    jump_height_m = 0.5 * 9.8 * (0.5 * fly_time_sec)**2
 
     print("fly_time_sec:{}".format(fly_time_sec))
     print("contact_time_sec:{}".format(contact_time_sec))
     print("fly_contact_ratio:{}".format(fly_contact_ratio))
     print("RSI_mod:{}".format(RSI_mod))
+    print("jump_height_m:{}".format(jump_height_m))
 
-    return fly_time_sec, contact_time_sec, fly_contact_ratio, RSI_mod
+    return fly_time_sec, contact_time_sec, fly_contact_ratio, RSI_mod, jump_height_m
 
 def get_DJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
     print("get_DJ_features_of_join_force")
@@ -69,7 +71,7 @@ def get_DJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
                     before_jump_length = 0
 
         if stg_num == 1:
-            if force_N_join[i] < 100.0:
+            if force_N_join[i] < 100.0 and (i-landing_start_tick) > 50:
                 # on_air
                 stg_num = 2
                 print("[Stage:{}]".format(stages[stg_num]))

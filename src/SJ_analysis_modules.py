@@ -220,7 +220,9 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
     print("data_name:{}".format(data_name))
     print("[Stage:{}]".format(stages[stg_num]))
     for i in range(len(time_sec_tick)):
-        print("i:{}, time_sec_tick[i]:{}, force_N_join[i]:{}, [Stage:{}], stg_num:{}".format(i,time_sec_tick[i], force_N_join[i], stages[stg_num], stg_num))
+        #print("i:{}, time_sec_tick[i]:{}, force_N_join[i]:{}, [Stage:{}], stg_num:{}".format(i,time_sec_tick[i], force_N_join[i], stages[stg_num], stg_num))
+        #print("i:{}, time_sec_tick[i]:{}, force_N_join[i]:{}, [Stage:{}], stg_num:{}, std:{}, stable_start:{}, stable_end:{}, mean:{}, stable_length:{}, pf_tick:{}".format(i,time_sec_tick[i], force_N_join[i], stages[stg_num], stg_num, std, stable_start, stable_end, mean, stable_length, pf_tick))
+
         # find the starting point of stabd_by stage
         # conditions:
         # 1. force > 100N
@@ -289,7 +291,7 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
         if stg_num == 1:
 
             # go back to stg_num 0 ?
-            if abs(force_N_join[i] - mean) < 10:
+            if abs(force_N_join[i] - mean) < 30:
 
                 goback_condition_count += 1
 
