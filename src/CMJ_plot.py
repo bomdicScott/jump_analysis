@@ -389,7 +389,7 @@ def get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mp
     ax.text(Xlim*0.6,Ylim * 0.9 + min(data_line),'time_ecc_sec:{} sec'.format(time_ecc_sec), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.05) + min(data_line),'time_con_sec:{} sec'.format(time_con_sec), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.10) + min(data_line),'total_time_sec:{} sec'.format(total_time_sec), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
-    ax.text(Xlim*0.6,Ylim * (0.9 - 0.15) + min(data_line),'fly_contact_ratio:{}'.format(fly_contact_ratio), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.15) + min(data_line),'RSI(fly_contact_ratio):{}'.format(fly_contact_ratio), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.20) + min(data_line),'RSI_mod:{}'.format(RSI_mod), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.25) + min(data_line),'ec_displacement_cm:{} cm'.format(ec_displacement_cm), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.30) + min(data_line),'vertical_stiffness:{} N/cm'.format(vertical_stiffness), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)

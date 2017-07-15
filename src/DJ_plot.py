@@ -167,7 +167,7 @@ def get_fig_DJ_time_force_notiation(data_name, time_sec_tick, force_N_join, land
 
     ax.text(Xlim*0.4,Ylim * 0.9,'FT:{} sec'.format(fly_time_sec), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.4,Ylim * (0.9 - 0.05),'CT:{} sec'.format(contact_time_sec), bbox=dict(facecolor='white', edgecolor='none'))
-    ax.text(Xlim*0.4,Ylim * (0.9 - 0.10),'fly_contact_ratio:{} '.format(fly_contact_ratio), bbox=dict(facecolor='white', edgecolor='none'))
+    ax.text(Xlim*0.4,Ylim * (0.9 - 0.10),'RSI(fly_contact_ratio):{} '.format(fly_contact_ratio), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.4,Ylim * (0.9 - 0.15),'RSI_mod:{}'.format(RSI_mod), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.4,Ylim * (0.9 - 0.20),'jump_height:{} cm'.format(jump_height_cm), bbox=dict(facecolor='white', edgecolor='none'))
     
