@@ -349,7 +349,7 @@ def get_fig_SJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps
     #ax.set_xlabel('time (sec)')
     Ylim = Ylim - min(data_line)
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.05) + min(data_line),'time_con_sec:{} sec'.format(time_con_sec), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
-    ax.text(Xlim*0.6,Ylim * (0.9 - 0.15) + min(data_line),'fly_contact_ratio:{}'.format(fly_contact_ratio), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.15) + min(data_line),'RSI(fly_contact_ratio):{}'.format(fly_contact_ratio), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.20) + min(data_line),'RSI_mod:{}'.format(RSI_mod), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
 
     #ax.set_xlabel('time (sec)')
