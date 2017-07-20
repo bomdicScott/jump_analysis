@@ -17,11 +17,18 @@ def get_DJ_record_statistics(T, time_sec_tick, force_N_join, landing_start, land
     fly_time_sec = air_end - air_start
     contact_time_sec = landing_end - landing_start
     fly_contact_ratio = fly_time_sec / contact_time_sec
+    jump_height_m = 0.5 * 9.8 * (0.5 * fly_time_sec)**2
+    '''
     if fly_time_sec == 0:
         RSI_mod = 0
     else:
         RSI_mod = contact_time_sec / fly_time_sec
-    jump_height_m = 0.5 * 9.8 * (0.5 * fly_time_sec)**2
+    '''
+    if contact_time_sec == 0:
+        RSI_mod = 0
+    else:
+        RSI_mod = jump_height_m / contact_time_sec
+    
 
     print("fly_time_sec:{}".format(fly_time_sec))
     print("contact_time_sec:{}".format(contact_time_sec))
