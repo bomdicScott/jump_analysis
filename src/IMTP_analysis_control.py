@@ -44,14 +44,14 @@ def IMTP_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2,
 
     else:
 
-        TtPF_sec, RFD, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, imp_20ms, imp_30ms, imp_50ms, imp_90ms, imp_100ms, imp_150ms, imp_200ms, imp_250ms, imp_total, PF = IMTPAM.get_IMTP_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_start_tick, stable_end, stable_end_tick, pull_start, pull_start_tick, pf, pf_tick, pull_end, pull_end_tick)
+        TtPF_sec, RFD, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, imp_20ms, imp_30ms, imp_50ms, imp_90ms, imp_100ms, imp_150ms, imp_200ms, imp_250ms, imp_total, PF, pRFD, pRFD_sec = IMTPAM.get_IMTP_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_start_tick, stable_end, stable_end_tick, pull_start, pull_start_tick, pf, pf_tick, pull_end, pull_end_tick)
 
         # plot
         fig = DP.get_fig_time_force(data_name, time_sec_tick, force_N_1, force_N_2, force_N_join)
         fig.savefig( data_dir + '{}_time_force_raw.png'.format(data_name))
         plt.close(fig)
 
-        fig = IMTPP.get_fig_IMTP_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start, stable_start_tick, stable_end, stable_end_tick, pull_start, pull_start_tick, pf, pf_tick, pull_end, pull_end_tick, TtPF_sec, RFD, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, imp_20ms, imp_30ms, imp_50ms, imp_90ms, imp_100ms, imp_150ms, imp_200ms, imp_250ms, imp_total, PF)
+        fig = IMTPP.get_fig_IMTP_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start, stable_start_tick, stable_end, stable_end_tick, pull_start, pull_start_tick, pf, pf_tick, pull_end, pull_end_tick, TtPF_sec, RFD, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, imp_20ms, imp_30ms, imp_50ms, imp_90ms, imp_100ms, imp_150ms, imp_200ms, imp_250ms, imp_total, PF, pRFD, pRFD_sec)
         fig.savefig( data_dir + '{}_time_force_notation.png'.format(data_name))
 
         new_fig_time_force_notiation_path = data_dir + '{}_time_force_notation.png'.format(data_name)
@@ -82,6 +82,8 @@ def IMTP_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2,
         csv_header += ["imp_250ms"]
         csv_header += ["imp_total"]
         csv_header += ["PF"]
+        csv_header += ["pRFD"]
+        csv_header += ["pRFD_sec"]
         
                 
         with open(data_analysis_results_path, 'w') as csvfile:

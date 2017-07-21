@@ -45,6 +45,20 @@ def get_IMTP_record_statistics(T, time_sec_tick, force_N_join, stable_start, sta
 
     PF = force_N_join[pf_tick]
 
+    # peak RFD
+    pRFD = -1
+    pRFD_sec = -1
+    avg_ticks = 20 # ms
+
+    for i in range(pull_start_tick, pf_tick - avg_ticks, 1):
+        instant_RFD = (force_N_join[i+avg_ticks] - force_N_join[i])/float(avg_ticks)*1000.0
+        if instant_RFD > pRFD:
+            pRFD = instant_RFD
+            pRFD_sec = time_sec_tick[i]
+    print("pRFD:{}".format(pRFD))
+    print("pRFD_sec:{}".format(pRFD_sec))
+    print("pull_start_tick:{}".format(pull_start_tick))
+
     # impulse calculation
     imp_20ms = -1
     imp_30ms = -1
@@ -57,6 +71,8 @@ def get_IMTP_record_statistics(T, time_sec_tick, force_N_join, stable_start, sta
 
     body_weight_N = np.mean(force_N_join[stable_start_tick:stable_end_tick])
     print("T:{}, body_weight_N:{}".format(T, body_weight_N))
+
+    #force_per_kg = (PF - body_weight_N) / (body_weight_N/9.8)
 
     if (pull_end_tick - pull_start_tick) >= 20: # 20ms
         imp_20ms = 0
@@ -113,6 +129,7 @@ def get_IMTP_record_statistics(T, time_sec_tick, force_N_join, stable_start, sta
     print("RFD_200ms:{}".format(RFD_200ms))
     print("RFD_250ms:{}".format(RFD_250ms))
     print("PF:{}".format(PF))
+    #print("force_per_kg:{}".format(force_per_kg))
 
 
     print("imp_20ms:{}".format(imp_20ms))
@@ -125,7 +142,7 @@ def get_IMTP_record_statistics(T, time_sec_tick, force_N_join, stable_start, sta
     print("imp_250ms:{}".format(imp_250ms)) 
     print("imp_total:{}".format(imp_total))    
 
-    return TtPF_sec, RFD, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, imp_20ms, imp_30ms, imp_50ms, imp_90ms, imp_100ms, imp_150ms, imp_200ms, imp_250ms, imp_total, PF
+    return TtPF_sec, RFD, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, imp_20ms, imp_30ms, imp_50ms, imp_90ms, imp_100ms, imp_150ms, imp_200ms, imp_250ms, imp_total, PF, pRFD, pRFD_sec
 
 
 def get_IMTP_features_of_join_force(data_name, time_sec_tick, force_N_join):

@@ -53,8 +53,11 @@ def read_analysis_result(result_path):
         imp_250ms = row['imp_250ms']
         imp_total = row['imp_total']
         PF = row['PF']
+
+        pRFD = row['pRFD']
+        pRFD_sec = row['pRFD_sec']
         
-    return data_name,TtPF_sec, RFD, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, imp_20ms, imp_30ms, imp_50ms, imp_90ms, imp_100ms, imp_150ms, imp_200ms, imp_250ms, imp_total, PF
+    return data_name,TtPF_sec, RFD, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, imp_20ms, imp_30ms, imp_50ms, imp_90ms, imp_100ms, imp_150ms, imp_200ms, imp_250ms, imp_total, PF, pRFD, pRFD_sec
 
 
 def update_user_IMTP_statistics(data_dir):
@@ -88,11 +91,14 @@ def update_user_IMTP_statistics(data_dir):
     s_jump_type = []
     s_try_num = []
 
+    s_pRFD = []
+    s_pRFD_sec = []
+
     for result_name in result_list:
         result_path = data_dir + result_name
 
         if os.path.exists(result_path):
-            data_name,TtPF_sec, RFD, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, imp_20ms, imp_30ms, imp_50ms, imp_90ms, imp_100ms, imp_150ms, imp_200ms, imp_250ms, imp_total, PF = read_analysis_result(result_path)
+            data_name,TtPF_sec, RFD, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, imp_20ms, imp_30ms, imp_50ms, imp_90ms, imp_100ms, imp_150ms, imp_200ms, imp_250ms, imp_total, PF, pRFD, pRFD_sec = read_analysis_result(result_path)
 
 
             s_data_name += [data_name]
@@ -116,6 +122,10 @@ def update_user_IMTP_statistics(data_dir):
             s_imp_250ms += [imp_250ms]
             s_imp_total += [imp_total]
             s_PF += [PF]
+            s_pRFD += [pRFD]
+            s_pRFD_sec += [pRFD_sec]
+
+
 
             # if data_name uses standard format
             data_name_split = data_name.split('_')
@@ -155,6 +165,9 @@ def update_user_IMTP_statistics(data_dir):
     csv_header += ["s_date"]
     csv_header += ["s_jump_type"]
     csv_header += ["s_try_num"]
+
+    csv_header += ["s_pRFD"]
+    csv_header += ["s_pRFD_sec"]
 
     with open(user_statistics_path, 'w') as csvfile:
         writer = csv.writer(csvfile)
