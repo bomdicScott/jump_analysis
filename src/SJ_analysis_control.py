@@ -55,7 +55,7 @@ def SJ_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2, f
 
     else:    
 
-        fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, time_con_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pp, force_pf, pVelocity, mean_power_con, time_to_pp_sec, mean_con_power, velocity_take_off, imp_con, RNI = SJAM.get_SJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick, co_end, co_end_tick)
+        fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, time_con_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pp, force_pf, pVelocity, mean_power_con, time_to_pp_sec, mean_con_power, velocity_take_off, imp_con, RNI, pRFD, pRFD_sec = SJAM.get_SJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick, co_end, co_end_tick)
 
         # plot
         fig = DP.get_fig_time_force(data_name, time_sec_tick, force_N_1, force_N_2, force_N_join)
@@ -63,7 +63,7 @@ def SJ_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2, f
         plt.close(fig)
 
         fig = SJP.get_fig_SJ_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start_tick, stable_end_tick, co_start_tick, pf_tick, air_start_tick, air_end_tick,
-            fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power, PF, co_end_tick)
+            fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power, PF, co_end_tick, pRFD, pRFD_sec)
         fig.savefig( data_dir + '{}_time_force_notation.png'.format(data_name))
 
         #list_new_fig_time_force_notiation_path += [data_dir + '{}_time_force_notation.png'.format(data_name)]
@@ -108,6 +108,8 @@ def SJ_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2, f
         csv_header += ["velocity_take_off"]
         csv_header += ["imp_con"]
         csv_header += ["RNI"]
+        csv_header += ["pRFD"]
+        csv_header += ["pRFD_sec"]
 
 
         with open(data_analysis_results_path, 'w') as csvfile:

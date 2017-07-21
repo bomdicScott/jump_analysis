@@ -45,6 +45,19 @@ def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stab
     if (pf_tick - ec_deacc_start_tick) >= 250: # 250ms
         RFD_250ms = (force_N_join[ec_deacc_start_tick+250] - force_N_join[ec_deacc_start_tick]) / (250.0 * 0.001)
 
+    # peak RFD
+    pRFD = -1
+    pRFD_sec = -1
+    avg_ticks = 20 # ms
+
+    for i in range(ec_deacc_start_tick, pf_tick - avg_ticks, 1):
+        instant_RFD = (force_N_join[i+avg_ticks] - force_N_join[i])/float(avg_ticks)*1000.0
+        if instant_RFD > pRFD:
+            pRFD = instant_RFD
+            pRFD_sec = time_sec_tick[i]
+    print("pRFD:{}".format(pRFD))
+    print("pRFD_sec:{}".format(pRFD_sec))
+    print("pull_start_tick:{}".format(ec_deacc_start_tick))
 
     #jump_height = 9.8 * (0.5 * fly_time)**2 + -9.8 * 0.5 * (0.5 * fly_time)**2
     PF = force_N_join[pf_tick]
@@ -156,7 +169,7 @@ def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stab
     print("ec_displacement_cm:{}".format(ec_displacement_cm))
     print("vertical_stiffness:{}".format(vertical_stiffness))
 
-    return fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power, time_ecc_sec, time_con_sec, total_time_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pf, force_pf, pVelocity, mean_power_con, time_to_pp_sec, min_velocity, force_at_zero_velocity, mean_ec_con_power, velocity_take_off, imp_ec_deacc_con, RNI, imp_ec_acc, area_force_velocity, ec_displacement_cm, vertical_stiffness, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms
+    return fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power, time_ecc_sec, time_con_sec, total_time_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pf, force_pf, pVelocity, mean_power_con, time_to_pp_sec, min_velocity, force_at_zero_velocity, mean_ec_con_power, velocity_take_off, imp_ec_deacc_con, RNI, imp_ec_acc, area_force_velocity, ec_displacement_cm, vertical_stiffness, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, pRFD, pRFD_sec
 
 
 def get_CMJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_acc_end, ec_acc_end_tick, ec_low, ec_deacc_start, ec_deacc_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick):

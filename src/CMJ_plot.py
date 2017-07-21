@@ -197,7 +197,7 @@ def get_fig_LCMJ_analysis(s_LCMJ_contact_time_sec,
 
     return fig
 
-def get_fig_CMJ_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start_tick, stable_end_tick, ec_start_tick, ec_acc_end_tick, ec_deacc_start_tick, pf_tick, air_start_tick, air_end_tick, fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power, PF, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick):
+def get_fig_CMJ_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start_tick, stable_end_tick, ec_start_tick, ec_acc_end_tick, ec_deacc_start_tick, pf_tick, air_start_tick, air_end_tick, fly_time_sec, contact_time_sec, TtPF_sec, RFD, jump_height_m, jump_power, PF, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick, pRFD, pRFD_sec):
     fig = plt.figure()
     ax = fig.add_subplot(111)
 
@@ -216,6 +216,7 @@ def get_fig_CMJ_time_force_notiation(data_name, time_sec_tick, force_N_join, sta
     ax.plot(time_sec_tick[co_end_tick], force_N_join[co_end_tick], 'mo', label='co_end', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
 
     ax.plot(time_sec_tick[pf_tick], force_N_join[pf_tick], 'r^', label='pf', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
+    ax.plot(pRFD_sec, force_N_join[int(pRFD_sec*1000)], 'rv', label='pRFD', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
 
     ax.plot(time_sec_tick[air_start_tick], force_N_join[air_start_tick], 'yo', label='air_start', markersize= 8, markeredgewidth = 0)
     ax.plot(time_sec_tick[air_end_tick], force_N_join[air_end_tick], 'yo', label='air_end', fillstyle = 'none', markeredgecolor = 'y', markersize = 10, markeredgewidth = 2)
@@ -226,7 +227,7 @@ def get_fig_CMJ_time_force_notiation(data_name, time_sec_tick, force_N_join, sta
     ax.legend(loc='upper left')
 
     Xlim = max(time_sec_tick)
-    Ylim = max(force_N_join) * 3.0
+    Ylim = PF * 4.5
 
     ax.set_xlim(0, Xlim)
     ax.set_ylim(0, Ylim)
@@ -242,6 +243,8 @@ def get_fig_CMJ_time_force_notiation(data_name, time_sec_tick, force_N_join, sta
     jump_height_cm = round(jump_height_m*100.0,3)
     jump_power = round(jump_power,3)
     PF = round(PF,3)
+    pRFD = round(pRFD,3)
+    pRFD_sec = round(pRFD_sec,3)
 
     ax.text(Xlim*0.4,Ylim * 0.9,'FT:{} sec'.format(fly_time_sec), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.4,Ylim * (0.9 - 0.05),'CT:{} sec'.format(contact_time_sec), bbox=dict(facecolor='white', edgecolor='none'))
@@ -250,6 +253,8 @@ def get_fig_CMJ_time_force_notiation(data_name, time_sec_tick, force_N_join, sta
     ax.text(Xlim*0.4,Ylim * (0.9 - 0.20),'jump_height:{} cm'.format(jump_height_cm), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.4,Ylim * (0.9 - 0.25),'jump_power:{} W'.format(jump_power), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.4,Ylim * (0.9 - 0.30),'PF:{} N'.format(PF), bbox=dict(facecolor='white', edgecolor='none'))
+    ax.text(Xlim*0.4,Ylim * (0.9 - 0.35),'pRFD:{} N/sec'.format(pRFD), bbox=dict(facecolor='white', edgecolor='none'))
+    ax.text(Xlim*0.4,Ylim * (0.9 - 0.40),'pRFD_sec:{} sec'.format(pRFD_sec), bbox=dict(facecolor='white', edgecolor='none'))
 
     #fig.show()
     #plt.show()

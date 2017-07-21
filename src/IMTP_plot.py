@@ -14,7 +14,7 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 from math import radians, cos, sin, asin, sqrt
 
-def get_fig_IMTP_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start, stable_start_tick, stable_end, stable_end_tick, pull_start, pull_start_tick, pf, pf_tick, pull_end, pull_end_tick, TtPF_sec, RFD, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, imp_20ms, imp_30ms, imp_50ms, imp_90ms, imp_100ms, imp_150ms, imp_200ms, imp_250ms, imp_total, PF):
+def get_fig_IMTP_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start, stable_start_tick, stable_end, stable_end_tick, pull_start, pull_start_tick, pf, pf_tick, pull_end, pull_end_tick, TtPF_sec, RFD, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, imp_20ms, imp_30ms, imp_50ms, imp_90ms, imp_100ms, imp_150ms, imp_200ms, imp_250ms, imp_total, PF, pRFD, pRFD_sec):
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
@@ -26,6 +26,8 @@ def get_fig_IMTP_time_force_notiation(data_name, time_sec_tick, force_N_join, st
 
     ax.plot(time_sec_tick[pull_start_tick], force_N_join[pull_start_tick], 'ro', label='pull_start', markersize= 8, markeredgewidth = 0)
     ax.plot(time_sec_tick[pf_tick], force_N_join[pf_tick], 'r^', label='pf', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
+    ax.plot(pRFD_sec, force_N_join[int(pRFD_sec*1000)], 'rv', label='pRFD', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
+    
     ax.plot(time_sec_tick[pull_end_tick], force_N_join[pull_end_tick], 'ro', label='pull_end', fillstyle = 'none', markeredgecolor = 'r', markersize = 10, markeredgewidth = 2)
 
     ax.set_title(data_name)
@@ -34,7 +36,7 @@ def get_fig_IMTP_time_force_notiation(data_name, time_sec_tick, force_N_join, st
     ax.legend(loc='upper left')
 
     Xlim = max(time_sec_tick)
-    Ylim = max(force_N_join) * 3.0
+    Ylim = max(force_N_join) * 3.5
 
     ax.set_xlim(0, Xlim)
     ax.set_ylim(0, Ylim)
@@ -62,6 +64,8 @@ def get_fig_IMTP_time_force_notiation(data_name, time_sec_tick, force_N_join, st
     imp_200ms = round(imp_200ms, 3)
     imp_250ms = round(imp_250ms, 3)
     imp_total = round(imp_total, 3)
+    pRFD = round(pRFD,3)
+    pRFD_sec = round(pRFD_sec,3)
 
     ax.text(Xlim*0.35,Ylim * 0.9,'TtPF_sec:{} sec'.format(TtPF_sec), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.35,Ylim * (0.9 - 0.05),'RFD:{} N/sec'.format(RFD), bbox=dict(facecolor='white', edgecolor='none'))
@@ -73,6 +77,8 @@ def get_fig_IMTP_time_force_notiation(data_name, time_sec_tick, force_N_join, st
     ax.text(Xlim*0.35,Ylim * (0.9 - 0.35),'RFD_150ms:{} N/sec'.format(RFD_150ms), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.35,Ylim * (0.9 - 0.40),'RFD_200ms:{} N/sec'.format(RFD_200ms), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.35,Ylim * (0.9 - 0.45),'RFD_250ms:{} N/sec'.format(RFD_250ms), bbox=dict(facecolor='white', edgecolor='none'))
+    ax.text(Xlim*0.35,Ylim * (0.9 - 0.50),'pRFD:{} N/sec'.format(pRFD), bbox=dict(facecolor='white', edgecolor='none'))
+    ax.text(Xlim*0.35,Ylim * (0.9 - 0.55),'pRFD_sec:{} sec'.format(pRFD_sec), bbox=dict(facecolor='white', edgecolor='none'))
 
     ax.text(Xlim*0.75,Ylim * 0.9,'PF:{} N'.format(PF), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.75,Ylim * (0.9 - 0.05),'imp_total:{} N.sec'.format(imp_total), bbox=dict(facecolor='white', edgecolor='none'))
