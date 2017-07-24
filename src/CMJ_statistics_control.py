@@ -79,8 +79,12 @@ def read_analysis_result(result_path):
         pRFD = row['pRFD']
         pRFD_sec = row['pRFD_sec']
         
+        force_pp = row['force_pp']
+        velocity_pp = row['velocity_pp']
+        time_ecc_acc_sec = row['time_ecc_acc_sec']
+        time_ecc_deacc_sec = row['time_ecc_deacc_sec']
 
-    return data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power, fly_time_sec, PF, time_ecc_sec, time_con_sec, total_time_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pf, force_pf, pVelocity, mean_power_con, time_to_pp_sec, min_velocity, force_at_zero_velocity, mean_ec_con_power, velocity_take_off, imp_ec_deacc_con, RNI, imp_ec_acc, area_force_velocity, ec_displacement_cm, vertical_stiffness, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, pRFD, pRFD_sec
+    return data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power, fly_time_sec, PF, time_ecc_sec, time_con_sec, total_time_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pf, force_pf, pVelocity, mean_power_con, time_to_pp_sec, min_velocity, force_at_zero_velocity, mean_ec_con_power, velocity_take_off, imp_ec_deacc_con, RNI, imp_ec_acc, area_force_velocity, ec_displacement_cm, vertical_stiffness, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, pRFD, pRFD_sec, force_pp, velocity_pp, time_ecc_acc_sec, time_ecc_deacc_sec
 
 def get_epoch_sec(YMD_string):
     epoch_time = dateutil.parser.parse("1970-01-01T00:00:00Z")
@@ -298,11 +302,16 @@ def update_user_CMJ_statistics(data_dir):
     s_pRFD_sec = []
 
 
+    s_force_pp = []
+    s_velocity_pp = []
+    s_time_ecc_acc_sec = []
+    s_time_ecc_deacc_sec = []
+
     for result_name in result_list:
         result_path = data_dir + result_name
 
         if os.path.exists(result_path):
-            data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power, fly_time_sec, PF, time_ecc_sec, time_con_sec, total_time_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pf, force_pf, pVelocity, mean_power_con, time_to_pp_sec, min_velocity, force_at_zero_velocity, mean_ec_con_power, velocity_take_off, imp_ec_deacc_con, RNI, imp_ec_acc, area_force_velocity, ec_displacement_cm, vertical_stiffness, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, pRFD, pRFD_sec = read_analysis_result(result_path)
+            data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power, fly_time_sec, PF, time_ecc_sec, time_con_sec, total_time_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pf, force_pf, pVelocity, mean_power_con, time_to_pp_sec, min_velocity, force_at_zero_velocity, mean_ec_con_power, velocity_take_off, imp_ec_deacc_con, RNI, imp_ec_acc, area_force_velocity, ec_displacement_cm, vertical_stiffness, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, pRFD, pRFD_sec, force_pp, velocity_pp, time_ecc_acc_sec, time_ecc_deacc_sec = read_analysis_result(result_path)
 
             s_data_name += [data_name]
             s_contact_time_sec += [contact_time_sec]
@@ -346,6 +355,11 @@ def update_user_CMJ_statistics(data_dir):
 
             s_pRFD += [pRFD]
             s_pRFD_sec += [pRFD_sec]
+
+            s_force_pp += [force_pp]
+            s_velocity_pp += [velocity_pp]
+            s_time_ecc_acc_sec += [time_ecc_acc_sec]
+            s_time_ecc_deacc_sec += [time_ecc_deacc_sec]
 
             # if data_name uses standard format
             data_name_split = data_name.split('_')
@@ -406,8 +420,12 @@ def update_user_CMJ_statistics(data_dir):
     csv_header += ["s_pRFD"]
     csv_header += ["s_pRFD_sec"]
 
+    csv_header += ["s_force_pp"]
+    csv_header += ["s_velocity_pp"]
+    csv_header += ["s_time_ecc_acc_sec"]
+    csv_header += ["s_time_ecc_deacc_sec"]
 
-            
+        
     with open(user_statistics_path, 'w') as csvfile:
         writer = csv.writer(csvfile)
         for row in range(len(s_data_name)+1):

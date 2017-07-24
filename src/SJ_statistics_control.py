@@ -60,6 +60,7 @@ def read_analysis_result(result_path):
         mean_co_force = row['mean_co_force']
         velocity_pp = row['velocity_pp']
         force_pf = row['force_pf']
+        force_pp = row['force_pp']
         pVelocity = row['pVelocity']
         mean_power_con = row['mean_power_con']
         time_to_pp_sec = row['time_to_pp_sec']
@@ -71,7 +72,7 @@ def read_analysis_result(result_path):
         pRFD = row['pRFD']
         pRFD_sec = row['pRFD_sec']
 
-    return data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power, fly_time_sec, PF, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, time_con_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pp, force_pf, pVelocity, mean_power_con, time_to_pp_sec, mean_con_power, velocity_take_off, imp_con, RNI, pRFD, pRFD_sec
+    return data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power, fly_time_sec, PF, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, time_con_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pp, force_pf, pVelocity, mean_power_con, time_to_pp_sec, mean_con_power, velocity_take_off, imp_con, RNI, pRFD, pRFD_sec, force_pp
 
 def get_epoch_sec(YMD_string):
     epoch_time = dateutil.parser.parse("1970-01-01T00:00:00Z")
@@ -269,6 +270,7 @@ def update_user_SJ_statistics(data_dir):
     s_mean_co_force = []
     s_velocity_pp = []
     s_force_pf = []
+    s_force_pp = []
     s_pVelocity = []
     s_mean_power_con = []
     s_time_to_pp_sec = []
@@ -284,7 +286,7 @@ def update_user_SJ_statistics(data_dir):
         result_path = data_dir + result_name
 
         if os.path.exists(result_path):
-            data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power, fly_time_sec, PF, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, time_con_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pp, force_pf, pVelocity, mean_power_con, time_to_pp_sec, mean_con_power, velocity_take_off, imp_con, RNI, pRFD, pRFD_sec = read_analysis_result(result_path)
+            data_name,contact_time_sec,TtPF_sec,RFD,jump_height_m,jump_power, fly_time_sec, PF, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, time_con_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pp, force_pf, pVelocity, mean_power_con, time_to_pp_sec, mean_con_power, velocity_take_off, imp_con, RNI, pRFD, pRFD_sec, force_pp = read_analysis_result(result_path)
 
             s_data_name += [data_name]
             s_contact_time_sec += [contact_time_sec]
@@ -309,6 +311,7 @@ def update_user_SJ_statistics(data_dir):
             s_mean_co_force += [mean_co_force]
             s_velocity_pp += [velocity_pp]
             s_force_pf += [force_pf]
+            s_force_pp += [force_pp]
             s_pVelocity += [pVelocity]
             s_mean_power_con += [mean_power_con]
             s_time_to_pp_sec += [time_to_pp_sec]
@@ -360,6 +363,7 @@ def update_user_SJ_statistics(data_dir):
     csv_header += ["s_mean_co_force"]
     csv_header += ["s_velocity_pp"]
     csv_header += ["s_force_pf"]
+    csv_header += ["s_force_pp"]
     csv_header += ["s_pVelocity"]
     csv_header += ["s_mean_power_con"]
     csv_header += ["s_time_to_pp_sec"]

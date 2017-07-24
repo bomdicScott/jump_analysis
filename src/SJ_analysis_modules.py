@@ -80,6 +80,7 @@ def get_SJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stabl
     mean_co_force = np.mean(force_N_join[co_start_tick:co_end_tick])
     velocity_pp = v_mps[p_watt_max_tick]
     force_pf = force_N_join[pf_tick]
+    force_pp = force_N_join[p_watt_max_tick]
     velocity_pf = v_mps[pf_tick]
     force_pf = force_N_join[pf_tick]
     pVelocity = v_mps[co_end_tick]
@@ -124,6 +125,7 @@ def get_SJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stabl
     print("mean_co_force:{}".format(mean_co_force))
     print("velocity_pp:{}".format(velocity_pp))
     print("force_pf:{}".format(force_pf))
+    print("force_pp:{}".format(force_pp))
     print("pVelocity:{}".format(pVelocity))
     print("mean_power_con:{}".format(mean_power_con))
     print("time_to_pp_sec:{}".format(time_to_pp_sec))
@@ -139,7 +141,7 @@ def get_SJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stabl
     #print("vertical_stiffness:{}".format(vertical_stiffness))
 
 
-    return fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, time_con_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pp, force_pf, pVelocity, mean_power_con, time_to_pp_sec, mean_con_power, velocity_take_off, imp_con, RNI, pRFD, pRFD_sec
+    return fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, time_con_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pp, force_pf, pVelocity, mean_power_con, time_to_pp_sec, mean_con_power, velocity_take_off, imp_con, RNI, pRFD, pRFD_sec, force_pp
 
 
 
