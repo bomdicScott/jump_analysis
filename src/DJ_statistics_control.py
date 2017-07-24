@@ -11,6 +11,7 @@ import datetime
 import matplotlib.pyplot as plt
 from shutil import copyfile
 import copy as cp
+from collections import defaultdict
 
 import data_parsing_modules as DPM
 import data_plot as DP
@@ -30,21 +31,30 @@ def get_DJ_analysis_result_list(file_list):
 
     return result_list
 
+def read_analysis_result_d(result_path, feature_list):
 
-def read_analysis_result(result_path):
-    
-    #print("result_path:{}".format(result_path))
-
+    feature_d = {}
     f = open(result_path, 'rU')
     for row in csv.DictReader(f): 
-        data_name = row['data_name']
-        contact_time_sec = row['contact_time_sec']
-        fly_contact_ratio = row['fly_contact_ratio']
-        RSI_mod = row['RSI_mod']
-        fly_time_sec = row['fly_time_sec']
-        jump_height_m = row['jump_height_m']
+        for feature in feature_list:
+            if (
+                feature != 'date' and 
+                feature != 'jump_type' and 
+                feature != 'try_num'
+               ):
+                feature_d[feature] = row[feature]
+    
+    data_name_split = feature_d['data_name'].split('_')
+    if len(data_name_split) == 4 and len(data_name_split[1]) == 8 and data_name_split[1][0:2] == '20' and 't' in data_name_split[3]:
+        feature_d['date'] = data_name_split[1]
+        feature_d['jump_type'] = data_name_split[2]
+        feature_d['try_num'] = data_name_split[3]
+    else:
+        feature_d['date'] = ['NA']
+        feature_d['jump_type'] = ['NA']
+        feature_d['try_num'] = ['NA']
 
-    return data_name,contact_time_sec,fly_contact_ratio,RSI_mod, fly_time_sec, jump_height_m
+    return feature_d
 
 def get_epoch_sec(YMD_string):
     epoch_time = dateutil.parser.parse("1970-01-01T00:00:00Z")
@@ -193,56 +203,33 @@ def update_user_DJ_statistics(data_dir):
     result_list = get_DJ_analysis_result_list(file_list)
     user_statistics_path = data_dir + '____user_DJ_statistics.csv'
 
-    s_data_name = []
-    s_contact_time_sec = []
-    s_fly_contact_ratio = []
-    s_RSI_mod = []
-    s_date = []
-    s_jump_type = []
-    s_try_num = []
-    s_fly_time_sec = []
-    s_jump_height_m = []
+    feature_list = ['data_name', 'contact_time_sec', 'fly_contact_ratio', 'RSI_mod', 'date', 'jump_type', 'try_num', 'fly_time_sec', 'jump_height_m']
+
+    s_feature_d = defaultdict(list)
+    for feature in feature_list:
+        s_feature_d['s_'+feature] = []
+    print("s_feature_d:{}".format(s_feature_d))
 
     for result_name in result_list:
         result_path = data_dir + result_name
 
         if os.path.exists(result_path):
-            data_name,contact_time_sec,fly_contact_ratio,RSI_mod, fly_time_sec, jump_height_m = read_analysis_result(result_path)
+            feature_d = read_analysis_result_d(result_path, feature_list)
+            print("feature_d:{}".format(feature_d))
 
-            s_data_name += [data_name]
-            s_contact_time_sec += [contact_time_sec]
-            s_fly_contact_ratio += [fly_contact_ratio]
-            s_RSI_mod += [RSI_mod]
-            s_fly_time_sec += [fly_time_sec]
-            s_jump_height_m += [jump_height_m]
+            for feature in feature_list:
+                #print("s_feature_d['s_'+feature]:{}".format(s_feature_d['s_'+feature]))
+                s_feature_d['s_'+feature] += [feature_d[feature]]
 
-            # if data_name uses standard format
-            data_name_split = data_name.split('_')
-            #print("data_name_split:{}".format(data_name_split))
-
-            if len(data_name_split) == 4 and len(data_name_split[1]) == 8 and data_name_split[1][0:2] == '20' and 't' in data_name_split[3]:
-                s_date += [data_name_split[1]]
-                s_jump_type += [data_name_split[2]]
-                s_try_num += [data_name_split[3]]
-            else:
-                s_date += ['NA']
-                s_jump_type += ['NA']
-                s_try_num += ['NA']
+    print("s_feature_d:{}".format(s_feature_d))
 
     csv_header = []
-    csv_header += ["s_data_name"]
-    csv_header += ["s_contact_time_sec"]
-    csv_header += ["s_fly_time_sec"]
-    csv_header += ["s_fly_contact_ratio"]
-    csv_header += ["s_RSI_mod"]
-    csv_header += ["s_jump_height_m"]
-    csv_header += ["s_date"]
-    csv_header += ["s_jump_type"]
-    csv_header += ["s_try_num"]
+    for feature in feature_list:
+        csv_header += ['s_'+feature]
 
     with open(user_statistics_path, 'w') as csvfile:
         writer = csv.writer(csvfile)
-        for row in range(len(s_data_name)+1):
+        for row in range(len(s_feature_d['s_data_name'])+1):
             data = []
             if row == 0:
                 data = csv_header
@@ -250,57 +237,10 @@ def update_user_DJ_statistics(data_dir):
                 for col in range(len(csv_header)):
                     #print("csv_header[col]:{}".format((csv_header[col])))
                     #print("len:{}".format(len(eval(csv_header[col]))))
-                    data += [eval(csv_header[col])[row-1]]
+                    data += [s_feature_d[csv_header[col]][row-1]]
             writer.writerow(data)
         csvfile.close()
 
-
-    # LDJ / ULDJ list
-    s_LDJ_contact_time_sec,s_LDJ_fly_contact_ratio,s_LDJ_RSI_mod,s_LDJ_date,s_LDJ_jump_type,s_LDJ_try_num,s_LDJ_epoch_time_sec,s_ULDJ_contact_time_sec,s_ULDJ_fly_contact_ratio,s_ULDJ_RSI_mod,s_ULDJ_date,s_ULDJ_jump_type,s_ULDJ_try_num,s_ULDJ_epoch_time_sec = get_sorted_LDJ_ULDJ_list(s_contact_time_sec,
-                               s_fly_contact_ratio,
-                               s_RSI_mod,
-                               s_date,
-                               s_jump_type,
-                               s_try_num)
-
-    #print("s_date:{}".format(s_date))
-    #print("s_ULDJ_epoch_time_sec:{}".format(s_ULDJ_epoch_time_sec))
-
-    # get avg LDJ / ULDJ list
-    s_avg_LDJ_contact_time_sec,s_avg_LDJ_fly_contact_ratio,s_avg_LDJ_RSI_mod,s_avg_LDJ_date,s_avg_LDJ_epoch_time_sec,s_avg_ULDJ_contact_time_sec,s_avg_ULDJ_fly_contact_ratio,s_avg_ULDJ_RSI_mod,s_avg_ULDJ_date,s_avg_ULDJ_epoch_time_sec = get_avg_LDJ_ULDJ_list(s_LDJ_contact_time_sec,s_LDJ_fly_contact_ratio,s_LDJ_RSI_mod,s_LDJ_date,s_LDJ_jump_type,s_LDJ_try_num,s_LDJ_epoch_time_sec,s_ULDJ_contact_time_sec,s_ULDJ_fly_contact_ratio,s_ULDJ_RSI_mod,s_ULDJ_date,s_ULDJ_jump_type,s_ULDJ_try_num,s_ULDJ_epoch_time_sec)
-    
-
-
-
-
-    # plot fig
-    if s_LDJ_epoch_time_sec != []:
-        fig = DJP.get_fig_LDJ_analysis(s_LDJ_contact_time_sec,
-                              s_LDJ_fly_contact_ratio,
-                              s_LDJ_RSI_mod,
-                              s_LDJ_date,
-                              s_LDJ_epoch_time_sec,
-                              s_avg_LDJ_contact_time_sec,
-                              s_avg_LDJ_fly_contact_ratio,
-                              s_avg_LDJ_RSI_mod,
-                              s_avg_LDJ_date,
-                              s_avg_LDJ_epoch_time_sec)
-        fig.savefig( data_dir + '____LDJ_analysis.png'.format(data_name))
-        plt.close(fig)
-    #print("s_ULDJ_epoch_time_sec:{}".format(s_ULDJ_epoch_time_sec))
-    if s_ULDJ_epoch_time_sec != []:
-        fig = DJP.get_fig_ULDJ_analysis(s_ULDJ_contact_time_sec,
-                           s_ULDJ_fly_contact_ratio,
-                           s_ULDJ_RSI_mod,
-                           s_ULDJ_date,
-                           s_ULDJ_epoch_time_sec,
-                           s_avg_ULDJ_contact_time_sec,
-                           s_avg_ULDJ_fly_contact_ratio,
-                           s_avg_ULDJ_RSI_mod,
-                           s_avg_ULDJ_date,
-                           s_avg_ULDJ_epoch_time_sec)
-        fig.savefig( data_dir + '____ULDJ_analysis.png'.format(data_name))
-        plt.close(fig)
 
 
 
