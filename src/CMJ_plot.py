@@ -261,7 +261,7 @@ def get_fig_CMJ_time_force_notiation(data_name, time_sec_tick, force_N_join, sta
 
     return fig
 
-def get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, p_watt_max_tick, stable_start_tick, stable_end_tick, ec_start_tick, ec_acc_end_tick, ec_deacc_start_tick, pf_tick, air_start_tick, air_end_tick, ec_deacc_end_tick, co_start_tick, co_end_tick, time_ecc_sec, time_con_sec, total_time_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pf, force_pf, pVelocity, mean_power_con, time_to_pp_sec, min_velocity, force_at_zero_velocity, mean_ec_con_power, velocity_take_off, imp_ec_deacc_con, RNI, imp_ec_acc, area_force_velocity, ec_displacement_cm, vertical_stiffness, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms):
+def get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, p_watt_max_tick, stable_start_tick, stable_end_tick, ec_start_tick, ec_acc_end_tick, ec_deacc_start_tick, pf_tick, air_start_tick, air_end_tick, ec_deacc_end_tick, co_start_tick, co_end_tick, time_ecc_sec, time_con_sec, total_time_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pf, force_pf, pVelocity, mean_power_con, time_to_pp_sec, min_velocity, force_at_zero_velocity, mean_ec_con_power, velocity_take_off, imp_ec_deacc_con, RNI, imp_ec_acc, area_force_velocity, ec_displacement_cm, vertical_stiffness, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, force_pp, velocity_pp, time_ecc_acc_sec, time_ecc_deacc_sec):
 
     # round
     
@@ -356,6 +356,8 @@ def get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mp
     if RFD_250ms > 0:
         ax.text(Xlim*0.6,Ylim * (0.9 - 0.65),'RFD_250ms:{} N/s'.format(RFD_250ms), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
 
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.70),'force_pp:{} N'.format(force_pp), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+
 
     #ax.set_xlabel('time (sec)')
 
@@ -398,6 +400,9 @@ def get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mp
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.20) + min(data_line),'RSI_mod:{} m/s'.format(RSI_mod), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.25) + min(data_line),'ec_displacement_cm:{} cm'.format(ec_displacement_cm), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.30) + min(data_line),'vertical_stiffness:{} N/cm'.format(vertical_stiffness), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    # time_ecc_acc_sec, time_ecc_deacc_sec
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.35) + min(data_line),'time_ecc_acc_sec:{} sec'.format(time_ecc_acc_sec), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.40) + min(data_line),'time_ecc_deacc_sec:{} sec'.format(time_ecc_deacc_sec), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
 
     ax = fig.add_subplot(223)
     ax.plot(time_sec_tick, v_mps, 'b', label='Speed')
@@ -436,6 +441,7 @@ def get_fig_CMJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mp
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.10) + min(data_line),'min_velocity:{} m/s'.format(min_velocity), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.15) + min(data_line),'velocity_take_off:{} m/s'.format(velocity_take_off), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.20) + min(data_line),'area_force_velocity:{} N.m/s'.format(area_force_velocity), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.25) + min(data_line),'velocity_pp:{} m/s'.format(velocity_pp), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
     
     ax.set_xlabel('time (sec)')
 

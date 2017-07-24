@@ -254,7 +254,7 @@ def get_fig_SJ_time_force_notiation(data_name, time_sec_tick, force_N_join, stab
 
     return fig
 
-def get_fig_SJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, p_watt_max_tick, stable_start_tick, stable_end_tick, co_start_tick, pf_tick, co_end_tick, air_start_tick, air_end_tick, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, time_con_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pp, force_pf, pVelocity, mean_power_con, time_to_pp_sec, mean_con_power, velocity_take_off, imp_con, RNI):
+def get_fig_SJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps, p_watt, p_watt_max_tick, stable_start_tick, stable_end_tick, co_start_tick, pf_tick, co_end_tick, air_start_tick, air_end_tick, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, time_con_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pp, force_pf, pVelocity, mean_power_con, time_to_pp_sec, mean_con_power, velocity_take_off, imp_con, RNI, force_pp):
 
     # round
 
@@ -272,6 +272,7 @@ def get_fig_SJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps
     mean_co_force = round(mean_co_force, 3)
     velocity_pp = round(velocity_pp, 3)
     force_pf = round(force_pf, 3)
+    force_pp = round(force_pp, 3)
     pVelocity = round(pVelocity, 3)
     mean_power_con = round(mean_power_con, 3)
     time_to_pp_sec = round(time_to_pp_sec, 3)
@@ -309,6 +310,7 @@ def get_fig_SJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps
     #ax.set_xlabel('time (sec)')
 
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.05),'force_pf:{} N'.format(force_pf), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.10),'force_pp:{} N'.format(force_pp), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.15),'imp_con:{} N.s'.format(imp_con), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.20),'RNI:{} N.s/kg'.format(RNI), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
 
@@ -385,6 +387,7 @@ def get_fig_SJ_time_f_a_v_p(data_name, time_sec_tick, force_N_join, a_mss, v_mps
     Ylim = Ylim - min(data_line)
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.05) + min(data_line),'pVelocity:{} m/s'.format(pVelocity), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
     ax.text(Xlim*0.6,Ylim * (0.9 - 0.15) + min(data_line),'velocity_take_off:{} m/s'.format(velocity_take_off), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
+    ax.text(Xlim*0.6,Ylim * (0.9 - 0.20) + min(data_line),'velocity_pp:{} m/s'.format(velocity_pp), bbox=dict(facecolor='white', edgecolor='none'), fontsize=9)
     
     ax.set_xlabel('time (sec)')
 
