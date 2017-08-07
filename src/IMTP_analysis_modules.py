@@ -214,7 +214,7 @@ def get_IMTP_features_of_join_force(data_name, time_sec_tick, force_N_join):
             else:
                 
                 stable_time = stable_end - stable_start
-                if stable_time > 0.5 and stable_start >= time_sec_tick[0]:
+                if stable_time > 1.0 and stable_start >= time_sec_tick[0]:
                     #print("stable_start:{}, stable_end:{}, stable_start_tick:{}, stable_end_tick:{}".format(stable_start, stable_end, stable_start_tick, stable_end_tick))
                     # stage change
                     stg_num = 1
@@ -254,7 +254,7 @@ def get_IMTP_features_of_join_force(data_name, time_sec_tick, force_N_join):
             if abs(force_N_join[i] - mean) < 50:
 
                 goback_condition_count += 1
-                print("goback_condition_count:{}".format(goback_condition_count))
+                #print("goback_condition_count:{}".format(goback_condition_count))
                 if goback_condition_count >= 100:
                     stg_num = 0
                     mean = force_N_join[i]
@@ -290,6 +290,23 @@ def get_IMTP_features_of_join_force(data_name, time_sec_tick, force_N_join):
                 stable_end_fix_tick = stable_start_tick
                 print("[go back to stg_num 0][EC detected] stable_start:{}, stable_start_tick:{}".format(stable_start, stable_start_tick))
 
+            
+            if (
+                (force_N_join[i] - mean) < 500 and
+                (i - stable_end_fix_tick) == 1000 # 1sec check point
+               ):
+                stg_num = 0
+                mean = force_N_join[i]
+                stable_length = 1
+                stable_time = 0
+                diff_pow2_mean = 0
+                std = 0
+                stable_start = time_sec_tick[i]
+                stable_start_tick = i
+                stable_end_fix = stable_start
+                stable_end_fix_tick = stable_start_tick
+                print("[go back to stg_num 0][Wrong pull detected] stable_start:{}, stable_start_tick:{}".format(stable_start, stable_start_tick))
+            
 
             #print("time_sec_tick[i]:{}, force_N_join[i]:{}".format(time_sec_tick[i], force_N_join[i]))
             if force_N_join[i] >= pull_height:
