@@ -81,7 +81,7 @@ def get_fig_IMTP_time_force_notiation(data_name, time_sec_tick, force_N_join, st
     ax.text(Xlim*0.35,Ylim * (0.9 - 0.55),'pRFD_sec:{} sec'.format(pRFD_sec), bbox=dict(facecolor='white', edgecolor='none'))
 
     ax.text(Xlim*0.75,Ylim * 0.9,'PF:{} N'.format(PF), bbox=dict(facecolor='white', edgecolor='none'))
-    ax.text(Xlim*0.75,Ylim * (0.9 - 0.05),'imp_total:{} N.sec'.format(imp_total), bbox=dict(facecolor='white', edgecolor='none'))
+    #ax.text(Xlim*0.75,Ylim * (0.9 - 0.05),'imp_total:{} N.sec'.format(imp_total), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.75,Ylim * (0.9 - 0.10),'imp_20ms:{} N.sec'.format(imp_20ms), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.75,Ylim * (0.9 - 0.15),'imp_30ms:{} N.sec'.format(imp_30ms), bbox=dict(facecolor='white', edgecolor='none'))
     ax.text(Xlim*0.75,Ylim * (0.9 - 0.20),'imp_50ms:{} N.sec'.format(imp_50ms), bbox=dict(facecolor='white', edgecolor='none'))
