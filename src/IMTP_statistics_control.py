@@ -59,7 +59,8 @@ def update_user_IMTP_statistics(data_dir):
     result_list = get_IMTP_analysis_result_list(file_list)
     user_statistics_path = data_dir + '____user_IMTP_statistics.csv'
 
-    feature_list = ['data_name', 'TtPF_sec', 'RFD', 'RFD_20ms', 'RFD_30ms', 'RFD_50ms', 'RFD_90ms', 'RFD_100ms', 'RFD_150ms', 'RFD_200ms', 'RFD_250ms', 'imp_20ms', 'imp_30ms', 'imp_50ms', 'imp_90ms', 'imp_100ms', 'imp_150ms', 'imp_200ms', 'imp_250ms', 'imp_total', 'PF', 'date', 'jump_type', 'try_num', 'pRFD', 'pRFD_sec']
+    #feature_list = ['data_name', 'TtPF_sec', 'RFD', 'RFD_20ms', 'RFD_30ms', 'RFD_50ms', 'RFD_90ms', 'RFD_100ms', 'RFD_150ms', 'RFD_200ms', 'RFD_250ms', 'imp_20ms', 'imp_30ms', 'imp_50ms', 'imp_90ms', 'imp_100ms', 'imp_150ms', 'imp_200ms', 'imp_250ms', 'imp_total', 'PF', 'date', 'jump_type', 'try_num', 'pRFD', 'pRFD_sec']
+    feature_list = ['data_name', 'TtPF_sec', 'RFD', 'RFD_20ms', 'RFD_30ms', 'RFD_50ms', 'RFD_90ms', 'RFD_100ms', 'RFD_150ms', 'RFD_200ms', 'RFD_250ms', 'imp_20ms', 'imp_30ms', 'imp_50ms', 'imp_90ms', 'imp_100ms', 'imp_150ms', 'imp_200ms', 'imp_250ms', 'PF', 'date', 'jump_type', 'try_num', 'pRFD', 'pRFD_sec']
 
     s_feature_d = defaultdict(list)
     for feature in feature_list:
