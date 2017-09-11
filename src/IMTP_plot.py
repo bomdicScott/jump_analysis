@@ -16,6 +16,8 @@ from math import radians, cos, sin, asin, sqrt
 
 def get_fig_IMTP_time_force_notiation(data_name, time_sec_tick, force_N_join, stable_start, stable_start_tick, stable_end, stable_end_tick, pull_start, pull_start_tick, pf, pf_tick, pull_end, pull_end_tick, TtPF_sec, RFD, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, imp_20ms, imp_30ms, imp_50ms, imp_90ms, imp_100ms, imp_150ms, imp_200ms, imp_250ms, imp_total, PF, pRFD, pRFD_sec):
 
+    print("[get_fig_IMTP_time_force_notiation]data_name:{}, pRFD_sec:{}".format(data_name, pRFD_sec))
+
     fig = plt.figure()
     ax = fig.add_subplot(111)
 

@@ -26,13 +26,13 @@ def get_fig_no_data_with_err_msg(error_code,err_msg):
 
     return fig
 
-def get_fig_time_force_with_err_msg(time_sec_tick, force_N_join, err_msg):
+def get_fig_time_force_with_err_msg(time_sec_tick, force_N_join, err_msg, data_name):
     fig = plt.figure()
 
     ax = fig.add_subplot(111)
 
     ax.plot(time_sec_tick, force_N_join, 'b', label='force join')
-
+    ax.set_title(data_name)
     #ax.set_title('Heartrate')
     #ax.set_xlabel('distance (km)')
     ax.set_ylabel('Force (N)')

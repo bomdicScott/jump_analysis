@@ -36,7 +36,7 @@ def IMTP_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2,
 
         print(err_msg)
         # plot err msg
-        fig = DP.get_fig_time_force_with_err_msg(time_sec_tick, force_N_join, err_msg)
+        fig = DP.get_fig_time_force_with_err_msg(time_sec_tick, force_N_join, err_msg, data_name)
         fig.savefig( data_dir + '{}_error_message.png'.format(data_name))
         #list_new_error_fig_path += [data_dir + '{}_error_message.png'.format(data_name)]
         new_error_fig_path = data_dir + '{}_error_message.png'.format(data_name)

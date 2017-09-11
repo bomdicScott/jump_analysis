@@ -15,7 +15,10 @@ def get_IMTP_record_statistics(T, time_sec_tick, force_N_join, stable_start, sta
 
     # statistics
     TtPF_sec = pf - pull_start     # time to peak force
-    RFD = (force_N_join[pf_tick] - force_N_join[pull_start_tick]) / TtPF_sec
+    if TtPF_sec == 0:
+        RFD = -1
+    else:
+        RFD = (force_N_join[pf_tick] - force_N_join[pull_start_tick]) / TtPF_sec
 
     # extended RFD calculation
     RFD_20ms = -1
@@ -149,9 +152,9 @@ def get_IMTP_features_of_join_force(data_name, time_sec_tick, force_N_join):
     print("get_IMTP_features_of_join_force")
 
     # calculate force slop
-    force_slope = [0]
-    for i in range(1,len(force_N_join)):
-        force_slope += [force_N_join[i]-force_N_join[i-1]]
+    force_slope = [0,0,0,0,0]
+    for i in range(5,len(force_N_join)):
+        force_slope += [(force_N_join[i]-force_N_join[i-5])/5.0]
 
     stages = ['stand_by', 'pull_stage', 'release_stage']
     stg_num = 0
@@ -182,16 +185,16 @@ def get_IMTP_features_of_join_force(data_name, time_sec_tick, force_N_join):
     print("data_name:{}".format(data_name))
     print("[Stage:{}]".format(stages[stg_num]))
     for i in range(len(time_sec_tick)):
-        #print("i:{}, time_sec_tick[i]:{}, force_N_join[i]:{}, [Stage:{}], stg_num:{}, std:{}, stable_start:{}, stable_end:{}, mean:{}, stable_length:{}, pf_tick:{}".format(i,time_sec_tick[i], force_N_join[i], stages[stg_num], stg_num, std, stable_start, stable_end, mean, stable_length, pf_tick))
+        #print("i:{}, time_sec_tick[i]:{}, force_N_join[i]:{}, [Stage:{}], stg_num:{}, std:{}, stable_start:{}, stable_end:{}, mean:{}, stable_length:{}, pf_tick:{}, pull_start_tick:{}, pull_end_tick:{}".format(i,time_sec_tick[i], force_N_join[i], stages[stg_num], stg_num, std, stable_start, stable_end, mean, stable_length, pf_tick, pull_start_tick, pull_end_tick))
         # find the starting point of stabd_by stage
         # conditions:
         # 1. force > 100N
         # 2. force moving std < 10N ?
-        if force_N_join[i] > 100.0 and stg_num == 0: 
+        if force_N_join[i] > 400.0 and stg_num == 0: 
             
             #print("stable_start_tick:{}, stable_end_tick:{}, std:{}, stable_length:{}, mean:{}, stable_start:{}, stable_end:{}".format(stable_start_tick, stable_end_tick, std, stable_length, mean, stable_start, stable_end))
 
-            if std < 30.0:
+            if std < 80.0:
                 mean = (force_N_join[i] + mean*(stable_length-1))/stable_length
                 diff_pow2_mean = (math.pow(abs(force_N_join[i] - mean), 2) + diff_pow2_mean*(stable_length-1))/stable_length
                 if diff_pow2_mean > 0:
@@ -206,7 +209,7 @@ def get_IMTP_features_of_join_force(data_name, time_sec_tick, force_N_join):
                     stable_end = time_sec_tick[i]
                     stable_end_tick = i
                 #print("i:{}, force_slope[i]:{}".format(i, force_slope[i]))
-                if force_slope[i] <= 1:
+                if force_slope[i] <= 1 and abs(mean - force_N_join[i]) < 300:
                     stable_end_fix = time_sec_tick[i]
                     stable_end_fix_tick = i
                     #print("stable_end_fix:{}".format(stable_end_fix))
@@ -248,13 +251,13 @@ def get_IMTP_features_of_join_force(data_name, time_sec_tick, force_N_join):
             stable_end_fix_tick = stable_start_tick
 
         # find the end point of pull_stage
-        if stg_num == 1:
+        elif stg_num == 1:
             #print("mean:{}, abs(force_N_join[i] - mean):{}".format(mean, abs(force_N_join[i] - mean)))
             # go back to stg_num 0 ?
             if abs(force_N_join[i] - mean) < 50:
 
                 goback_condition_count += 1
-                #print("goback_condition_count:{}".format(goback_condition_count))
+                print("goback_condition_count:{}".format(goback_condition_count))
                 if goback_condition_count >= 100:
                     stg_num = 0
                     mean = force_N_join[i]
@@ -313,25 +316,29 @@ def get_IMTP_features_of_join_force(data_name, time_sec_tick, force_N_join):
                 pull_height = force_N_join[i]
                 pf = time_sec_tick[i]
                 pf_tick = i
+
+            pull_end = time_sec_tick[i]
+            pull_end_tick = i
+
             #elif force_N_join[i] <= force_N_join[ec_deacc_start_tick]: # keep searching
             #    co_height = force_N_join[ec_deacc_start_tick]
-            if abs(force_N_join[i] - mean) < 10 and (pull_height - mean) > 200: # condition of leaving pull_stage
+            if abs(force_N_join[i] - mean) < 500 and (pull_height - mean) > 600 and stable_start_tick != pf_tick and stable_end_tick > stable_start_tick: # condition of leaving pull_stage
                     stg_num = 2
                     #print("[Stage:{}]".format(stages[stg_num]))
-                    pull_end = time_sec_tick[i]
-                    pull_end_tick = i
-
-    print("stable_start_tick:{}, stable_end_tick:{}".format(stable_start_tick, stable_end_tick))
-    print("stable_start:{}, stable_end:{}".format(stable_start, stable_end))
-    print("stable_end_fix:{}, stable_end_fix_tick:{}".format(stable_end_fix, stable_end_fix_tick))
-    print("pull_start_tick:{}, pf_tick:{}".format(pull_start_tick, pf_tick))
-    print("pull_end_tick:{}, pf_tick:{}".format(pull_end_tick, pf_tick))
+                    #pull_end = time_sec_tick[i]
+                    #pull_end_tick = i
 
     # fix stable end position
     stable_end = stable_end_fix
     stable_end_tick = stable_end_fix_tick
     pull_start = stable_end
     pull_start_tick = stable_end_tick
+
+    print("stable_start_tick:{}, stable_end_tick:{}".format(stable_start_tick, stable_end_tick))
+    print("stable_start:{}, stable_end:{}".format(stable_start, stable_end))
+    print("stable_end_fix:{}, stable_end_fix_tick:{}".format(stable_end_fix, stable_end_fix_tick))
+    print("pull_start_tick:{}, pf_tick:{}".format(pull_start_tick, pf_tick))
+    print("pull_end_tick:{}, pf_tick:{}".format(pull_end_tick, pf_tick))
 
     return stg_num, stable_start, stable_start_tick, stable_end, stable_end_tick, pull_start, pull_start_tick, pf, pf_tick, pull_end, pull_end_tick
 

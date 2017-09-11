@@ -204,9 +204,9 @@ def get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
     print("get_SJ_features_of_join_force")
 
     # calculate force slop
-    force_slope = [0]
-    for i in range(1,len(force_N_join)):
-        force_slope += [force_N_join[i]-force_N_join[i-1]]
+    force_slope = [0,0,0,0,0]
+    for i in range(5,len(force_N_join)):
+        force_slope += [(force_N_join[i]-force_N_join[i-5])/5.0]
 
     stages = ['stand_by', 'concetric_stage', 'on_air','landing']
     stg_num = 0

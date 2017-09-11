@@ -185,6 +185,7 @@ def parsing_force_plate_raw_data(force_plate_raw_data_path):
                     print("[is_KISLER_file = 1]")
 
             if is_KISLER_file != 1:
+                #print("row[0]:{}, row[1]:{}, row[2]:{}, row[3]:{}".format(row[0], row[1], row[2], row[3]))
                 if (
                     len(row) == 4 and
                     idx >=2 and 
@@ -193,7 +194,7 @@ def parsing_force_plate_raw_data(force_plate_raw_data_path):
                     row[2] != '' and
                     row[3] != ''
                    ):
-                    
+                    #print("row[0]:{}".format(row[0]))
                     # format detection
                     try:
                         val = float(row[0])
@@ -210,6 +211,13 @@ def parsing_force_plate_raw_data(force_plate_raw_data_path):
                             assert float(row[0]) == 0.001
                         except:
                             error_code = 10003
+                    #if time_sec_tick[-1] < 1.0 and len(time_sec_tick) >= 2:
+                    #    print("[before]time_sec_tick:{}, (time_sec_tick[-1] - time_sec_tick[-2]):{}".format(time_sec_tick, (time_sec_tick[-1] - time_sec_tick[-2])))
+                    if len(time_sec_tick) >= 2 and ((time_sec_tick[-1] - time_sec_tick[-2]) - 0.001) > 0.0001:
+                        #if time_sec_tick[-1] < 1.0:
+                            #print("time_sec_tick:{}, (time_sec_tick[-1] - time_sec_tick[-2]):{}".format(time_sec_tick, (time_sec_tick[-1] - time_sec_tick[-2])))
+                        error_code = 10007
+
                 elif idx >=2 and len(row) != 4:
                     error_code = 10006   
                     print("[error_code = 10006] row:{}, idx:{}".format(row, idx))

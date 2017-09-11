@@ -52,7 +52,8 @@ for f_name in file_list:
         user_list += [f_name]
 print("user_list:{}".format(user_list))        
 #print("this is a test version")
-
+#print("file_list:{}".format(file_list))
+#print("user_list:{}".format(user_list))
 
 for user_name in user_list:
     data_dir = users_dir + "{}/".format(user_name)
