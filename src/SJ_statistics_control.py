@@ -226,7 +226,7 @@ def update_user_SJ_statistics(data_dir):
     result_list = get_SJ_analysis_result_list(file_list)
     user_statistics_path = data_dir + '____user_SJ_statistics.csv'
 
-    feature_list = ['data_name', 'contact_time_sec', 'TtPF_sec', 'RFD', 'jump_height_m', 'jump_power', 'date', 'jump_type', 'try_num', 'fly_time_sec', 'PF', 'RFD_20ms', 'RFD_30ms', 'RFD_50ms', 'RFD_90ms', 'RFD_100ms', 'RFD_150ms', 'RFD_200ms', 'RFD_250ms', 'time_con_sec', 'fly_contact_ratio', 'RSI_mod', 'mean_co_force', 'velocity_pp', 'force_pf', 'force_pp', 'pVelocity', 'mean_power_con', 'time_to_pp_sec', 'mean_con_power', 'velocity_take_off', 'imp_con', 'RNI', 'pRFD', 'pRFD_sec']
+    feature_list = ['data_name', 'contact_time_sec', 'TtPF_sec', 'RFD', 'jump_height_m', 'jump_height_m_by_v', 'jump_power', 'date', 'jump_type', 'try_num', 'fly_time_sec', 'PF', 'RFD_20ms', 'RFD_30ms', 'RFD_50ms', 'RFD_90ms', 'RFD_100ms', 'RFD_150ms', 'RFD_200ms', 'RFD_250ms', 'time_con_sec', 'fly_contact_ratio', 'RSI_mod', 'mean_co_force', 'velocity_pp', 'force_pf', 'force_pp', 'pVelocity', 'mean_power_con', 'time_to_pp_sec', 'mean_con_power', 'velocity_take_off', 'imp_con', 'RNI', 'pRFD', 'pRFD_sec']
 
     s_feature_d = defaultdict(list)
     for feature in feature_list:

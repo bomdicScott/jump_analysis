@@ -94,13 +94,25 @@ def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stab
     mean_ec_con_power = np.mean(p_watt[ec_start_tick:co_end_tick])
     velocity_take_off = v_mps[air_start_tick]
 
+    # alternative jump calculation
+    jump_height_m_by_v = velocity_take_off * velocity_take_off / 2 / 9.81
+
     # impulse calculation
     imp_ec_deacc_con = 0
+    imp_ec_deacc = 0
+    imp_con = 0
     body_weight_N = np.mean(force_N_join[stable_start_tick:stable_end_tick])
     print("T:{}, body_weight_N:{}".format(T, body_weight_N))
     for i in range(ec_deacc_start_tick, co_end_tick, 1):
         #print("i:{}, force_N_join[i]:{}".format(i, force_N_join[i]))
         imp_ec_deacc_con += (force_N_join[i] - body_weight_N) * T
+
+    for i in range(ec_deacc_start_tick, ec_deacc_end_tick, 1):
+        #print("i:{}, force_N_join[i]:{}".format(i, force_N_join[i]))
+        imp_ec_deacc += (force_N_join[i] - body_weight_N) * T
+
+    imp_con = imp_ec_deacc_con - imp_ec_deacc
+
     RNI = imp_ec_deacc_con / body_weight_N # check definition ??
 
     imp_ec_acc = 0
@@ -144,6 +156,7 @@ def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stab
     print("RFD_250ms:{}".format(RFD_250ms))
     print("PF:{}".format(PF))
     print("jump_height_m:{}".format(jump_height_m))
+    print("jump_height_m_by_v:{}".format(jump_height_m_by_v))
     print("jump_power:{}".format(jump_power))
 
     print("time_ecc_sec:{}".format(time_ecc_sec))
@@ -165,14 +178,16 @@ def get_CMJ_record_statistics(T, time_sec_tick, force_N_join, stable_start, stab
     print("force_at_zero_velocity:{}".format(force_at_zero_velocity))
     print("mean_ec_con_power:{}".format(mean_ec_con_power))
     print("velocity_take_off:{}".format(velocity_take_off))  
-    print("imp_ec_deacc_con:{}".format(imp_ec_deacc_con))  
+    print("imp_ec_deacc_con:{}".format(imp_ec_deacc_con)) 
+    print("imp_ec_deacc:{}".format(imp_ec_deacc)) 
+    print("imp_con:{}".format(imp_con)) 
     print("RNI:{}".format(RNI))
     print("imp_ec_acc:{}".format(imp_ec_acc))
     print("area_force_velocity:{}".format(area_force_velocity))
     print("ec_displacement_cm:{}".format(ec_displacement_cm))
     print("vertical_stiffness:{}".format(vertical_stiffness))
 
-    return fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power, time_ecc_sec, time_con_sec, total_time_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pf, force_pf, pVelocity, mean_power_con, time_to_pp_sec, min_velocity, force_at_zero_velocity, mean_ec_con_power, velocity_take_off, imp_ec_deacc_con, RNI, imp_ec_acc, area_force_velocity, ec_displacement_cm, vertical_stiffness, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, pRFD, pRFD_sec, force_pp, velocity_pp, time_ecc_acc_sec, time_ecc_deacc_sec
+    return fly_time_sec, contact_time_sec, TtPF_sec, RFD, PF, jump_height_m, jump_power, time_ecc_sec, time_con_sec, total_time_sec, fly_contact_ratio, RSI_mod, mean_co_force, velocity_pf, force_pf, pVelocity, mean_power_con, time_to_pp_sec, min_velocity, force_at_zero_velocity, mean_ec_con_power, velocity_take_off, imp_ec_deacc_con, RNI, imp_ec_acc, area_force_velocity, ec_displacement_cm, vertical_stiffness, RFD_20ms, RFD_30ms, RFD_50ms, RFD_90ms, RFD_100ms, RFD_150ms, RFD_200ms, RFD_250ms, pRFD, pRFD_sec, force_pp, velocity_pp, time_ecc_acc_sec, time_ecc_deacc_sec, imp_ec_deacc, imp_con, jump_height_m_by_v
 
 
 def get_CMJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_acc_end, ec_acc_end_tick, ec_low, ec_deacc_start, ec_deacc_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick):
