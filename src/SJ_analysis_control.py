@@ -26,7 +26,7 @@ def SJ_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2, f
     #print("get_SJ_features_of_join_force")
     stg_num, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, co_end, co_end_tick = SJAM.get_SJ_features_of_join_force(data_name, time_sec_tick, force_N_join)
 
-    a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick, co_end, co_end_tick = SJAM.get_SJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, co_end, co_end_tick)
+    a_mss, v_mps, p_watt, p_watt_max, p_watt_max_tick, co_end, co_end_tick, stable_end, stable_end_tick, co_start, co_start_tick, air_start, air_start_tick, air_end, air_end_tick = SJAM.get_SJ_a_v_p(T, time_sec_tick, force_N_join, stable_start, stable_end, stable_start_tick, stable_end_tick, co_start, co_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, co_end, co_end_tick)
 
     if stg_num != 3: # not finish test correctly. should return error message.
         print("stg_num:{}".format(stg_num))
