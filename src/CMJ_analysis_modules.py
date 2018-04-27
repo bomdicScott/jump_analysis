@@ -323,6 +323,7 @@ def get_CMJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
     ec_acc_end = -1
     ec_acc_end_tick = -1
     ec_low = -1
+    ec_low_tick = -1
     goback_condition_count = 0
 
     ec_deacc_start = -1 
@@ -429,6 +430,7 @@ def get_CMJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
 
             if force_N_join[i] <= ec_low:
                 ec_low = force_N_join[i]
+                ec_low_tick = i
                 ec_acc_end = time_sec_tick[i]
                 ec_acc_end_tick = i
             elif force_N_join[i] >= force_N_join[ec_start_tick]: # keep searching
@@ -487,6 +489,7 @@ def get_CMJ_features_of_join_force(data_name, time_sec_tick, force_N_join):
     print("pf_tick:{}, co_end_tick:{}".format(pf_tick, co_end_tick))
 
     print("air_start_tick:{}, air_end_tick:{}".format(air_start_tick, air_end_tick))
+    print("ec_low:{}, ec_low_tick:{}".format(ec_low, ec_low_tick))
     
 
-    return stg_num, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_acc_end, ec_acc_end_tick, ec_low, ec_deacc_start, ec_deacc_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick
+    return stg_num, stable_start, stable_end, stable_start_tick, stable_end_tick, ec_start, ec_start_tick, ec_acc_end, ec_acc_end_tick, ec_low, ec_deacc_start, ec_deacc_start_tick, pf, pf_tick, co_height, air_start, air_start_tick, air_end, air_end_tick, ec_deacc_end, ec_deacc_end_tick, co_start, co_start_tick, co_end, co_end_tick, ec_low_tick
