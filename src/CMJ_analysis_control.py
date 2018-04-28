@@ -139,6 +139,9 @@ def CMJ_processing(data_dir, data_name, T, time_sec_tick, force_N_1, force_N_2, 
         csv_header += ["ec_low"]
         csv_header += ["ec_low_tick"]
 
+        csv_header += ["ec_start_tick"]
+        csv_header += ["air_start_tick"]
+
                 
         with open(data_analysis_results_path, 'w') as csvfile:
             writer = csv.writer(csvfile)
